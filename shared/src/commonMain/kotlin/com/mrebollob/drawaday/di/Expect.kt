@@ -1,4 +1,4 @@
-package com.mrebollob.drawaday.repository
+package com.mrebollob.drawaday.di
 
 import org.koin.core.module.Module
 

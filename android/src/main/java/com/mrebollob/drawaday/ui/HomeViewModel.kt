@@ -3,15 +3,15 @@ package com.mrebollob.drawaday.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import co.touchlab.kermit.Kermit
-import com.mrebollob.drawaday.remote.Assignment
-import com.mrebollob.drawaday.remote.IssPosition
-import com.mrebollob.drawaday.repository.DrawADayRepository
+import com.mrebollob.drawaday.data.network.Assignment
+import com.mrebollob.drawaday.data.network.IssPosition
+import com.mrebollob.drawaday.data.DrawADayRepositoryImp
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
 class HomeViewModel(
-    private val drawRepository: DrawADayRepository,
+    private val drawRepository: DrawADayRepositoryImp,
     private val logger: Kermit
 ) : ViewModel() {
 

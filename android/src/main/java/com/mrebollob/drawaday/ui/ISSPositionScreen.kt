@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mrebollob.drawaday.remote.IssPosition
+import com.mrebollob.drawaday.data.network.IssPosition
 import com.mrebollob.drawaday.utils.collectAsStateWithLifecycle
 import org.koin.androidx.compose.getViewModel
 import org.osmdroid.util.GeoPoint

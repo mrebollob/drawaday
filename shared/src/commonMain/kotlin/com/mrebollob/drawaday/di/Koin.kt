@@ -1,9 +1,9 @@
 package com.mrebollob.drawaday.di
 
 import co.touchlab.kermit.Kermit
-import com.mrebollob.drawaday.remote.DrawADayApi
-import com.mrebollob.drawaday.repository.DrawADayRepository
-import com.mrebollob.drawaday.repository.platformModule
+import com.mrebollob.drawaday.data.network.DrawADayApi
+import com.mrebollob.drawaday.data.DrawADayRepositoryImp
+import com.mrebollob.drawaday.domain.repository.DrawADayRepository
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -16,7 +16,10 @@ import org.koin.dsl.module
 fun initKoin(enableNetworkLogs: Boolean = false, appDeclaration: KoinAppDeclaration = {}) =
     startKoin {
         appDeclaration()
-        modules(commonModule(enableNetworkLogs = enableNetworkLogs), platformModule())
+        modules(
+            commonModule(enableNetworkLogs = enableNetworkLogs),
+            platformModule()
+        )
     }
 
 // called by iOS etc
@@ -25,7 +28,7 @@ fun initKoin() = initKoin(enableNetworkLogs = false) {}
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
-    single { DrawADayRepository() }
+    single<DrawADayRepository> { DrawADayRepositoryImp() }
     single { DrawADayApi(get()) }
     single { Kermit(logger = get()) }
 }

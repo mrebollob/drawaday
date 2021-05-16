@@ -1,4 +1,4 @@
-package com.mrebollob.drawaday.di
+package com.mrebollob.drawaday.data.local
 
 import com.mrebollob.drawaday.db.DrawADayDatabase
 

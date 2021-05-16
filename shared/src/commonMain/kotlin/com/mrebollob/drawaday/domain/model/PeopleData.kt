@@ -1,4 +1,4 @@
-package com.mrebollob.drawaday.model
+package com.mrebollob.drawaday.domain.model
 
 val personImages = mapOf(
     "Chris Cassidy" to "https://www.nasa.gov/sites/default/files/styles/side_image/public/thumbnails/image/9368855148_f79942efb7_o.jpg?itok=-w5yoryN",

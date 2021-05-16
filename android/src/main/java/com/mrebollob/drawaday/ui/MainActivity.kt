@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.navigation.compose.*
 import com.mrebollob.drawaday.BuildConfig
-import com.mrebollob.drawaday.remote.Assignment
+import com.mrebollob.drawaday.data.network.Assignment
 import org.osmdroid.config.Configuration
 
 class MainActivity : ComponentActivity() {
