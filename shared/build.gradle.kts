@@ -4,6 +4,8 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("kotlinx-serialization")
+    id("com.squareup.sqldelight")
 }
 
 version = "1.0"
@@ -26,9 +28,30 @@ kotlin {
         frameworkName = "shared"
         podfile = project.file("../ios/Podfile")
     }
-    
+
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}") {
+                    isForce = true
+                }
+
+                implementation(Ktor.clientCore)
+                implementation(Ktor.clientJson)
+                implementation(Ktor.clientLogging)
+                implementation(Ktor.clientSerialization)
+
+                implementation(Serialization.core)
+
+                implementation(SqlDelight.runtime)
+                implementation(SqlDelight.coroutineExtensions)
+
+                api(Koin.core)
+                api(Koin.test)
+
+                api(Deps.kermit)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
