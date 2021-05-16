@@ -1,4 +1,3 @@
-
 object Versions {
     const val kotlin = "1.4.32"
     const val kotlinCoroutines = "1.4.3-native-mt"
@@ -40,7 +39,7 @@ object Compose {
     const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
-    const val accompanist= "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
+    const val accompanist = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
 }
 
 object Koin {

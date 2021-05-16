@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.navigation.compose.*
 import com.mrebollob.drawaday.BuildConfig
-import com.mrebollob.drawaday.data.network.Assignment
 import org.osmdroid.config.Configuration
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +31,7 @@ class MainActivity : ComponentActivity() {
 }
 
 sealed class Screen(val title: String) {
-    object PersonList : Screen("PersonList")
+    object HomeScreen : Screen("PersonList")
     object PersonDetails : Screen("PersonDetails")
     object ISSPositionScreen : Screen("ISSPosition")
 }
@@ -45,7 +44,7 @@ data class BottomNavigationitem(
 
 val bottomNavigationItems = listOf(
     BottomNavigationitem(
-        Screen.PersonList.title,
+        Screen.HomeScreen.title,
         Icons.Default.Person,
         "People"
     ),
@@ -87,32 +86,18 @@ fun MainLayout() {
                 }
             }
         ) { paddingValues ->
-            NavHost(navController, startDestination = Screen.PersonList.title) {
-                composable(Screen.PersonList.title) {
-                    PersonListScreen(paddingValues = paddingValues,
-                        personSelected = {
-                            navController.navigate(Screen.PersonDetails.title + "/${it.name}")
+            NavHost(navController, startDestination = Screen.HomeScreen.title) {
+                composable(Screen.HomeScreen.title) {
+                    HomeScreen(paddingValues = paddingValues,
+                        imageSelected = {
+
                         }
                     )
-                }
-                composable(Screen.PersonDetails.title + "/{person}") { backStackEntry ->
-                    PersonDetailsScreen(
-                        backStackEntry.arguments?.get("person") as String,
-                        popBack = { navController.popBackStack() })
                 }
                 composable(Screen.ISSPositionScreen.title) {
                     ISSPositionScreen()
                 }
             }
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun DefaultPreview(@PreviewParameter(PersonProvider::class) person: Assignment) {
-    MaterialTheme {
-        PersonView("", person, personSelected = {})
     }
 }

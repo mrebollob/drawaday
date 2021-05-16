@@ -10,25 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mrebollob.drawaday.data.network.IssPosition
-import com.mrebollob.drawaday.utils.collectAsStateWithLifecycle
-import org.koin.androidx.compose.getViewModel
-import org.osmdroid.util.GeoPoint
-import androidx.compose.runtime.getValue
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
 @Composable
 fun ISSPositionScreen() {
-    val homeViewModel = getViewModel<HomeViewModel>()
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    val issPosition by homeViewModel.issPosition
-        .collectAsStateWithLifecycle(lifecycleOwner, IssPosition(0.0, 0.0))
 
     val context = LocalContext.current
     val map = remember { MapView(context) }
@@ -45,12 +33,8 @@ fun ISSPositionScreen() {
 
                     val mapController = map.controller
                     mapController.setZoom(5.0)
-                    val issPositionPoint = GeoPoint(issPosition.latitude, issPosition.longitude)
-                    mapController.setCenter(issPositionPoint)
-
                     map.overlays.clear()
                     val stationMarker = Marker(map)
-                    stationMarker.position = issPositionPoint
                     stationMarker.title = "ISS"
                     map.overlays.add(stationMarker)
                 }
@@ -58,4 +42,3 @@ fun ISSPositionScreen() {
         }
     }
 }
-

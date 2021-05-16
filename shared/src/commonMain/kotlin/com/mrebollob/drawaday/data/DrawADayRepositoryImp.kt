@@ -32,12 +32,14 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
     }
 
     override fun fetchDrawImages(): Flow<List<DrawImage>> {
-        return drawImageQueries?.selectAll(mapper = { date, image, source ->
+        return drawImageQueries?.selectAll(mapper = { id, title, image, source, publishDate ->
             DrawImage(
+                id = id,
+                title = title,
                 image = image,
                 source = source,
                 publishDate = try {
-                    LocalDate.parse(date)
+                    LocalDate.parse(publishDate)
                 } catch (exception: DateTimeParseException) {
                     LocalDate.now()
                 }
@@ -55,9 +57,11 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         drawImageQueries?.deleteAll()
         result.values.forEach {
             drawImageQueries?.insertItem(
-                date = it.publishDate,
+                id = it.id,
+                title = it.title,
                 image = it.image,
-                source = it.source
+                source = it.source,
+                publish_date = it.publishDate
             )
         }
     }

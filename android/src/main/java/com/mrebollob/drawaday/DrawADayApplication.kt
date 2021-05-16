@@ -15,7 +15,7 @@ class DrawADayApplication : Application(), KoinComponent {
     override fun onCreate() {
         super.onCreate()
 
-        initKoin {
+        initKoin(enableNetworkLogs = true) {
             androidLogger()
             androidContext(this@DrawADayApplication)
             modules(appModule)
