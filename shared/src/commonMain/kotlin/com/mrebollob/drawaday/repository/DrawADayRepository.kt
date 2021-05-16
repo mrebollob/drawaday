@@ -78,7 +78,7 @@ class DrawADayRepository : KoinComponent {
         while (true) {
             val position = drawApi.fetchISSPosition().iss_position
             emit(position)
-            logger.d("PeopleInSpaceRepository") { position.toString() }
+            logger.d("DrawADayRepository") { position.toString() }
             delay(POLL_INTERVAL)
         }
     }
