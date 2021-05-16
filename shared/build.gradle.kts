@@ -58,14 +58,24 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Ktor.clientAndroid)
+                implementation(SqlDelight.androidDriver)
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation(Ktor.clientIos)
+                implementation(SqlDelight.nativeDriver)
+            }
+        }
         val iosTest by getting
     }
 }
@@ -76,5 +86,12 @@ android {
     defaultConfig {
         minSdkVersion(21)
         targetSdkVersion(30)
+    }
+}
+
+sqldelight {
+    database("DrawADayDatabase") {
+        packageName = "com.mrebollob.drawaday.db"
+        sourceFolders = listOf("sqldelight")
     }
 }
