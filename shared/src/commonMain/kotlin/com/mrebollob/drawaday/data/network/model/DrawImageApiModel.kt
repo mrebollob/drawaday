@@ -9,8 +9,8 @@ class DrawImageApiModel(
     val id: String,
     @SerialName("title")
     val title: String,
-    @SerialName("image")
-    val image: String,
+    @SerialName("drawing")
+    val drawing: String,
     @SerialName("source")
     val source: String,
     @SerialName("publish_date")

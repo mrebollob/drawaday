@@ -1,6 +1,7 @@
 package com.mrebollob.drawaday
 
 import android.app.Application
+import android.os.StrictMode
 import co.touchlab.kermit.Kermit
 import com.mrebollob.drawaday.di.appModule
 import com.mrebollob.drawaday.di.initKoin
@@ -13,6 +14,9 @@ class DrawADayApplication : Application(), KoinComponent {
     private val logger: Kermit by inject()
 
     override fun onCreate() {
+        if (BuildConfig.DEBUG) {
+//            enableStrictMode()
+        }
         super.onCreate()
 
         initKoin(enableNetworkLogs = true) {
@@ -22,5 +26,16 @@ class DrawADayApplication : Application(), KoinComponent {
         }
 
         logger.d { "DrawADayApplication" }
+    }
+
+    private fun enableStrictMode() {
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .build()
+        )
     }
 }

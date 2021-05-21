@@ -42,7 +42,7 @@ fun createHttpClient(json: Json, enableNetworkLogs: Boolean) = HttpClient {
     if (enableNetworkLogs) {
         install(Logging) {
             logger = Logger.DEFAULT
-            level = LogLevel.INFO
+            level = LogLevel.ALL
         }
     }
 }

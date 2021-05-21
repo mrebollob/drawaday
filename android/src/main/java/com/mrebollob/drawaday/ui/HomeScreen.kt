@@ -52,7 +52,7 @@ fun PersonView(
 
         Image(
             painter = rememberCoilPainter(
-                request = drawImage.image,
+                request = drawImage.drawing,
                 shouldRefetchOnSizeChange = { _, _ -> false },
             ),
             contentDescription = drawImage.title,
