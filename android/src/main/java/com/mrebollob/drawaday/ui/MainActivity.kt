@@ -1,103 +1,93 @@
 package com.mrebollob.drawaday.ui
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.navigation.compose.*
-import com.mrebollob.drawaday.BuildConfig
-import org.osmdroid.config.Configuration
+import androidx.core.view.WindowCompat
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // needed for osmandroid
-        Configuration.getInstance().userAgentValue = BuildConfig.APPLICATION_ID
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            MainLayout()
+            DrawADayTheme {
+                ProvideWindowInsets {
+                    val systemUiController = rememberSystemUiController()
+                    SideEffect {
+                        systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = false)
+                    }
+
+                    val navController = rememberNavController()
+                    val scaffoldState = rememberScaffoldState()
+
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentRoute =
+                        navBackStackEntry?.destination?.route ?: MainDestinations.HOME_ROUTE
+
+                    Scaffold(
+                        scaffoldState = scaffoldState,
+                        bottomBar = {
+                            BottomNavigation {
+                                bottomNavigationItems.forEach { bottomNavigationItem ->
+                                    BottomNavigationItem(
+                                        icon = {
+                                            Icon(
+                                                bottomNavigationItem.icon,
+                                                contentDescription = bottomNavigationItem.iconContentDescription
+                                            )
+                                        },
+                                        selected = currentRoute == bottomNavigationItem.route,
+                                        onClick = {
+                                            navController.navigate(bottomNavigationItem.route) {
+                                                popUpTo(navController.graph.startDestinationId)
+                                                launchSingleTop = true
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    ) {
+                        DrawADayNavGraph(
+                            navController = navController,
+                            scaffoldState = scaffoldState
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
-sealed class Screen(val title: String) {
-    object HomeScreen : Screen("PersonList")
-    object PersonDetails : Screen("PersonDetails")
-    object ISSPositionScreen : Screen("ISSPosition")
-}
-
-data class BottomNavigationitem(
+data class BottomNavigationItem(
     val route: String,
     val icon: ImageVector,
     val iconContentDescription: String
 )
 
 val bottomNavigationItems = listOf(
-    BottomNavigationitem(
-        Screen.HomeScreen.title,
+    BottomNavigationItem(
+        MainDestinations.HOME_ROUTE,
         Icons.Default.Person,
-        "People"
+        "Home"
     ),
-    BottomNavigationitem(
-        Screen.ISSPositionScreen.title,
+    BottomNavigationItem(
+        MainDestinations.INTERESTS_ROUTE,
         Icons.Filled.LocationOn,
-        "ISS Position"
+        "Learn"
     )
 )
-
-@Composable
-fun MainLayout() {
-    val navController = rememberNavController()
-
-    PeopleInSpaceTheme {
-        Scaffold(
-            bottomBar = {
-                BottomNavigation {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-
-                    bottomNavigationItems.forEach { bottomNavigationitem ->
-                        BottomNavigationItem(
-                            icon = {
-                                Icon(
-                                    bottomNavigationitem.icon,
-                                    contentDescription = bottomNavigationitem.iconContentDescription
-                                )
-                            },
-                            selected = currentRoute == bottomNavigationitem.route,
-                            onClick = {
-                                navController.navigate(bottomNavigationitem.route) {
-                                    popUpTo = navController.graph.startDestination
-                                    launchSingleTop = true
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-        ) { paddingValues ->
-            NavHost(navController, startDestination = Screen.HomeScreen.title) {
-                composable(Screen.HomeScreen.title) {
-                    HomeScreen(paddingValues = paddingValues,
-                        imageSelected = {
-
-                        }
-                    )
-                }
-                composable(Screen.ISSPositionScreen.title) {
-                    ISSPositionScreen()
-                }
-            }
-        }
-    }
-}

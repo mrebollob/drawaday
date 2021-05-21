@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(AndroidSdk.compile)
+    compileSdk = AndroidSdk.compile
     defaultConfig {
         applicationId = "com.mrebollob.drawaday"
-        minSdkVersion(AndroidSdk.min)
-        targetSdkVersion(AndroidSdk.target)
+        minSdk = AndroidSdk.min
+        targetSdk = AndroidSdk.target
 
         versionCode = 1
         versionName = "1.0"
@@ -68,6 +68,9 @@ dependencies {
     implementation(Compose.material)
     implementation(Compose.navigation)
     implementation(Compose.accompanist)
+    implementation(Compose.accompanistSwiperefresh)
+    implementation(Compose.accompanistInsets)
+    implementation(Compose.accompanistSystemuicontroller)
 
     implementation(Koin.core)
     implementation(Koin.android)

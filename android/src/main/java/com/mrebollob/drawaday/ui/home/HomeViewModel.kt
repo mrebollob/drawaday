@@ -1,4 +1,4 @@
-package com.mrebollob.drawaday.ui
+package com.mrebollob.drawaday.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

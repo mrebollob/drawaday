@@ -1,6 +1,6 @@
 package com.mrebollob.drawaday.di
 
-import com.mrebollob.drawaday.ui.HomeViewModel
+import com.mrebollob.drawaday.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

@@ -10,6 +10,25 @@ plugins {
 
 version = "1.0"
 
+android {
+    compileSdk = 30
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 30
+    }
+
+    // Workaround from https://youtrack.jetbrains.com/issue/KT-43944
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+}
+
 kotlin {
     android()
 
@@ -78,15 +97,6 @@ kotlin {
             }
         }
         val iosTest by getting
-    }
-}
-
-android {
-    compileSdkVersion(30)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(30)
     }
 }
 
