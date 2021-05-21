@@ -83,7 +83,6 @@ fun PersonView(
 @Preview("Home screen")
 @Preview("Home screen (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview("Home screen (big font)", fontScale = 1.5f)
-@Preview("Home screen (large screen)", device = Devices.PIXEL_C)
 @Composable
 fun PreviewHomeScreen() {
     val drawImages: List<DrawImage> = listOf(
