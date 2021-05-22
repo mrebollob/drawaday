@@ -30,6 +30,12 @@ import com.mrebollob.drawaday.utils.supportWideScreen
 import org.koin.androidx.compose.getViewModel
 import java.time.LocalDate
 
+/**
+ * Stateful HomeScreen which manages state using [produceUiState]
+ *
+ * @param navigateToDrawImage (event) request navigation to DrawImage screen
+ * @param scaffoldState (state) state for the [Scaffold] component on this screen
+ */
 @Composable
 fun HomeScreen(
     navigateToDrawImage: (DrawImage) -> Unit,
@@ -248,10 +254,8 @@ private fun DrawImageListDivider() {
 @Preview("Home screen (big font)", fontScale = 1.5f)
 @Preview("Home screen (large screen)", device = Devices.PIXEL_C)
 @Composable
-fun PreviewHomeScreen() {
-
+fun HomeScreenPreview() {
     val drawImages = TestDataUtils.getTestDrawImages(11)
-
     DrawADayTheme {
         HomeScreen(
             drawImages = UiState(data = drawImages),
