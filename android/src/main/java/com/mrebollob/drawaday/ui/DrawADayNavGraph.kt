@@ -7,13 +7,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mrebollob.drawaday.domain.model.DrawImage
+import com.mrebollob.drawaday.ui.MainDestinations.DRAWING_ID_KEY
+import com.mrebollob.drawaday.ui.drawing.DrawingScreen
 import com.mrebollob.drawaday.ui.home.HomeScreen
 
 object MainDestinations {
     const val HOME_ROUTE = "home"
     const val INTERESTS_ROUTE = "interests"
-    const val ARTICLE_ROUTE = "post"
-    const val ARTICLE_ID_KEY = "postId"
+    const val DRAWING_ROUTE = "drawing"
+    const val DRAWING_ID_KEY = "drawingId"
 }
 
 @Composable
@@ -32,6 +34,12 @@ fun DrawADayNavGraph(
                 navigateToDrawImage = actions.navigateToDrawImage
             )
         }
+        composable("${MainDestinations.DRAWING_ROUTE}/{$DRAWING_ID_KEY}") { backStackEntry ->
+            DrawingScreen(
+                drawingId = backStackEntry.arguments?.getString(DRAWING_ID_KEY),
+                onBack = actions.upPress
+            )
+        }
     }
 }
 
@@ -40,7 +48,7 @@ fun DrawADayNavGraph(
  */
 class MainActions(navController: NavHostController) {
     val navigateToDrawImage: (DrawImage) -> Unit = { drawImage: DrawImage ->
-        navController.navigate("${MainDestinations.ARTICLE_ROUTE}/${drawImage.id}")
+        navController.navigate("${MainDestinations.DRAWING_ROUTE}/${drawImage.id}")
     }
     val upPress: () -> Unit = {
         navController.navigateUp()
