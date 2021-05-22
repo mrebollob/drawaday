@@ -9,9 +9,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
+import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
@@ -30,8 +32,9 @@ fun DrawImageCardTop(drawImage: DrawImage, modifier: Modifier = Modifier) {
             .clip(shape = MaterialTheme.shapes.medium)
         Image(
             painter = rememberCoilPainter(
-                drawImage.drawing,
-                fadeIn = true
+                request = drawImage.drawing,
+                fadeIn = true,
+                previewPlaceholder = R.drawable.placeholder_1,
             ),
             contentDescription = drawImage.title,
             modifier = imageModifier,
@@ -62,12 +65,13 @@ fun DrawImageCardTop(drawImage: DrawImage, modifier: Modifier = Modifier) {
 @Preview("Default colors")
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview("Font scaling 1.5", fontScale = 1.5f)
+@Preview("Large screen", device = Devices.PIXEL_C)
 @Composable
-fun TutorialPreviewTemplate() {
-    val drawImages = TestDataUtils.getTestDrawImage("#1")
+fun DrawImageCardTopPreview() {
+    val drawImage = TestDataUtils.getTestDrawImage("#1")
     DrawADayTheme {
         Surface {
-            DrawImageCardTop(drawImages)
+            DrawImageCardTop(drawImage)
         }
     }
 }

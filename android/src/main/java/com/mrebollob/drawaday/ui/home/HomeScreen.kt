@@ -52,12 +52,9 @@ fun HomeScreen(
  * Stateless composable is not coupled to any specific state management.
  *
  * @param drawImages (state) the data to show on the screen
- * @param favorites (state) favorite posts
- * @param onToggleFavorite (event) toggles favorite for a post
- * @param onRefreshPosts (event) request a refresh of posts
+ * @param navigateToDrawImage (event) request navigation to Article screen
+ * @param onRefreshDrawImages (event) request a refresh of posts
  * @param onErrorDismiss (event) request the current error be dismissed
- * @param navigateToArticle (event) request navigation to Article screen
- * @param openDrawer (event) request opening the app drawer
  * @param scaffoldState (state) state for the [Scaffold] component on this screen
  */
 @OptIn(ExperimentalMaterialApi::class)
@@ -171,18 +168,14 @@ private fun DrawImageList(
     modifier: Modifier = Modifier
 ) {
     val todayDrawImage = drawImages[0]
-//    val postsSimple = drawImages.subList(1, 2)
-//    val postsPopular = drawImages.subList(2, 7)
-//    val postsHistory = drawImages.subList(7, 10)
+    val postsHistory = drawImages.subList(1, drawImages.size)
 
     LazyColumn(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
         item { DrawImageTopSection(todayDrawImage, navigateToDrawImage) }
-//        item { PostListSimpleSection(postsSimple, navigateToArticle, favorites, onToggleFavorite) }
-//        item { PostListPopularSection(postsPopular, navigateToArticle) }
-//        item { PostListHistorySection(postsHistory, navigateToArticle) }
+        item { DrawImageListHistorySection(postsHistory, navigateToDrawImage) }
     }
 }
 
@@ -218,6 +211,25 @@ private fun DrawImageTopSection(drawImage: DrawImage, navigateToDrawImage: (Draw
         modifier = Modifier.clickable(onClick = { navigateToDrawImage(drawImage) })
     )
     DrawImageListDivider()
+}
+
+/**
+ * Full-width list items that display "based on your history" for [DrawImageList]
+ *
+ * @param drawImages (state) to display
+ * @param navigateToArticle (event) request navigation to Article screen
+ */
+@Composable
+private fun DrawImageListHistorySection(
+    drawImages: List<DrawImage>,
+    navigateToDrawImage: (DrawImage) -> Unit
+) {
+    Column {
+        drawImages.forEach { drawImage ->
+            DrawImageCardHistory(drawImage, navigateToDrawImage)
+            DrawImageListDivider()
+        }
+    }
 }
 
 /**
