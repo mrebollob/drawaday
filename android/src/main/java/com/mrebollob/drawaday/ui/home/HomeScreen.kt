@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
+import com.mrebollob.drawaday.utils.TestDataUtils
 import org.koin.androidx.compose.getViewModel
 import java.time.LocalDate
 
@@ -28,12 +29,12 @@ import java.time.LocalDate
 fun HomeScreen(
     navigateToDrawImage: (DrawImage) -> Unit,
 ) {
-    val homeViewModel = getViewModel<HomeViewModel>()
-    val drawImages = homeViewModel.drawImages.collectAsState()
+//    val homeViewModel = getViewModel<HomeViewModel>()
+//    val drawImages = homeViewModel.drawImages.collectAsState()
 
     HomeScreen(
         navigateToDrawImage = navigateToDrawImage,
-        drawImages = drawImages.value
+        drawImages = TestDataUtils.getTestDrawImages(11)
     )
 }
 
@@ -61,7 +62,9 @@ fun PersonView(
     navigateToDrawImage: (person: DrawImage) -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = { navigateToDrawImage(drawImage) })
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { navigateToDrawImage(drawImage) })
             .padding(16.dp), verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -85,20 +88,9 @@ fun PersonView(
 @Preview("Home screen (big font)", fontScale = 1.5f)
 @Composable
 fun PreviewHomeScreen() {
-    val drawImages: List<DrawImage> = listOf(
-        DrawImage(
-            id = "test",
-            title = "test",
-            drawing = "test",
-            source = "test",
-            publishDate = LocalDate.of(2021, 5, 12),
-        )
-    )
-
-
     DrawADayTheme {
         HomeScreen(
-            drawImages = drawImages,
+            drawImages = TestDataUtils.getTestDrawImages(11),
             navigateToDrawImage = { /*TODO*/ }
         )
     }

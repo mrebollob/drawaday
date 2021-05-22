@@ -22,51 +22,42 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             DrawADayTheme {
-                ProvideWindowInsets {
-                    val systemUiController = rememberSystemUiController()
-                    SideEffect {
-                        systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = false)
-                    }
+                val navController = rememberNavController()
+                val scaffoldState = rememberScaffoldState()
 
-                    val navController = rememberNavController()
-                    val scaffoldState = rememberScaffoldState()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute =
+                    navBackStackEntry?.destination?.route ?: MainDestinations.HOME_ROUTE
 
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentRoute =
-                        navBackStackEntry?.destination?.route ?: MainDestinations.HOME_ROUTE
-
-                    Scaffold(
-                        scaffoldState = scaffoldState,
-                        bottomBar = {
-                            BottomNavigation {
-                                bottomNavigationItems.forEach { bottomNavigationItem ->
-                                    BottomNavigationItem(
-                                        icon = {
-                                            Icon(
-                                                bottomNavigationItem.icon,
-                                                contentDescription = bottomNavigationItem.iconContentDescription
-                                            )
-                                        },
-                                        selected = currentRoute == bottomNavigationItem.route,
-                                        onClick = {
-                                            navController.navigate(bottomNavigationItem.route) {
-                                                popUpTo(navController.graph.startDestinationId)
-                                                launchSingleTop = true
-                                            }
+                Scaffold(
+                    scaffoldState = scaffoldState,
+                    bottomBar = {
+                        BottomNavigation {
+                            bottomNavigationItems.forEach { bottomNavigationItem ->
+                                BottomNavigationItem(
+                                    icon = {
+                                        Icon(
+                                            bottomNavigationItem.icon,
+                                            contentDescription = bottomNavigationItem.iconContentDescription
+                                        )
+                                    },
+                                    selected = currentRoute == bottomNavigationItem.route,
+                                    onClick = {
+                                        navController.navigate(bottomNavigationItem.route) {
+                                            popUpTo(navController.graph.startDestinationId)
+                                            launchSingleTop = true
                                         }
-                                    )
-                                }
+                                    }
+                                )
                             }
                         }
-                    ) {
-                        DrawADayNavGraph(
-                            navController = navController,
-                            scaffoldState = scaffoldState
-                        )
                     }
+                ) {
+                    DrawADayNavGraph(
+                        navController = navController
+                    )
                 }
             }
         }
