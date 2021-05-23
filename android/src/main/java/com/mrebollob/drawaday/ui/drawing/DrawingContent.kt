@@ -1,14 +1,13 @@
 package com.mrebollob.drawaday.ui.drawing
 
 import android.content.res.Configuration
-import android.graphics.ColorMatrixColorFilter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.FilterBAndW
+import androidx.compose.material.icons.outlined.FilterBAndW
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -97,7 +96,7 @@ fun BlackAndWhiteButton(
             }
         ) {
             Icon(
-                imageVector = if (isBlackAndWhite) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
+                imageVector = if (isBlackAndWhite) Icons.Filled.FilterBAndW else Icons.Outlined.FilterBAndW,
                 contentDescription = stringResource(id = R.string.drawing_screen_black_and_white_mode)
             )
         }

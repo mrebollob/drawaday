@@ -5,6 +5,7 @@
     <string name="app_name">Draw a day</string>
 
     <!--  Home screen  -->
+    <string name="home_screen_history_category">History</string>
     <string name="home_screen_feed_section">Home</string>
     <string name="home_screen_learn_section">Learn</string>
 

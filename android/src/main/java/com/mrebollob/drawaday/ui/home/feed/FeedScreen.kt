@@ -18,8 +18,6 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.state.UiState
-import com.mrebollob.drawaday.ui.home.DrawImageCardHistory
-import com.mrebollob.drawaday.ui.home.DrawImageCardTop
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
@@ -42,7 +40,7 @@ fun FeedScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FeedScreen(
+private fun FeedScreen(
     drawImages: UiState<List<DrawImage>>,
     onDrawingClick: (String) -> Unit,
     onRefreshDrawImages: () -> Unit,
@@ -123,14 +121,14 @@ private fun DrawImageList(
     modifier: Modifier = Modifier
 ) {
     val todayDrawImage = drawImages[0]
-    val postsHistory = drawImages.subList(1, drawImages.size)
+    val drawingsHistory = drawImages.subList(1, drawImages.size)
 
     LazyColumn(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
         item { DrawImageTopSection(todayDrawImage, onDrawingClick) }
-        item { DrawImageListHistorySection(postsHistory, onDrawingClick) }
+        item { DrawingHistory(drawingsHistory, onDrawingClick) }
     }
 }
 
@@ -160,19 +158,6 @@ private fun DrawImageTopSection(
         modifier = Modifier.clickable(onClick = { onDrawingClick(drawImage.id) })
     )
     DrawImageListDivider()
-}
-
-@Composable
-private fun DrawImageListHistorySection(
-    drawImages: List<DrawImage>,
-    onDrawingClick: (String) -> Unit
-) {
-    Column {
-        drawImages.forEach { drawImage ->
-            DrawImageCardHistory(drawImage, onDrawingClick)
-            DrawImageListDivider()
-        }
-    }
 }
 
 @Composable

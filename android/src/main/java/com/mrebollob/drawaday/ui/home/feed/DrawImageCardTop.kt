@@ -1,4 +1,4 @@
-package com.mrebollob.drawaday.ui.home
+package com.mrebollob.drawaday.ui.home.feed
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
