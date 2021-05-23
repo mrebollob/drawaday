@@ -21,10 +21,13 @@ import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 
 @Composable
-fun DrawImageCardHistory(drawImage: DrawImage, navigateToDrawImage: (DrawImage) -> Unit) {
+fun DrawImageCardHistory(
+    drawImage: DrawImage,
+    onDrawingClick: (String) -> Unit
+) {
     Row(
         Modifier
-            .clickable(onClick = { navigateToDrawImage(drawImage) })
+            .clickable(onClick = { onDrawingClick(drawImage.id) })
             .padding(16.dp)
     ) {
         PostImage(
@@ -68,7 +71,10 @@ fun AuthorAndReadTime(
 }
 
 @Composable
-fun PostImage(drawImage: DrawImage, modifier: Modifier = Modifier) {
+fun PostImage(
+    drawImage: DrawImage,
+    modifier: Modifier = Modifier
+) {
     Image(
         painter = rememberCoilPainter(
             request = drawImage.drawing,

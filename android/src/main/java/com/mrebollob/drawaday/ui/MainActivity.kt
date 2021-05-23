@@ -9,14 +9,17 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 
 class MainActivity : AppCompatActivity() {
@@ -31,22 +34,23 @@ class MainActivity : AppCompatActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute =
                     navBackStackEntry?.destination?.route ?: MainDestinations.HOME_ROUTE
+                val tabs = remember { HomeSections.values() }
 
                 Scaffold(
                     scaffoldState = scaffoldState,
                     bottomBar = {
                         BottomNavigation {
-                            bottomNavigationItems.forEach { bottomNavigationItem ->
+                            tabs.forEach { tab ->
                                 BottomNavigationItem(
                                     icon = {
                                         Icon(
-                                            bottomNavigationItem.icon,
-                                            contentDescription = bottomNavigationItem.iconContentDescription
+                                            tab.icon,
+                                            contentDescription = stringResource(id = tab.title)
                                         )
                                     },
-                                    selected = currentRoute == bottomNavigationItem.route,
+                                    selected = currentRoute == tab.route,
                                     onClick = {
-                                        navController.navigate(bottomNavigationItem.route) {
+                                        navController.navigate(tab.route) {
                                             popUpTo(navController.graph.startDestinationId)
                                             launchSingleTop = true
                                         }
@@ -64,22 +68,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-data class BottomNavigationItem(
-    val route: String,
-    val icon: ImageVector,
-    val iconContentDescription: String
-)
-
-val bottomNavigationItems = listOf(
-    BottomNavigationItem(
-        MainDestinations.HOME_ROUTE,
-        Icons.Default.Person,
-        "Home"
-    ),
-    BottomNavigationItem(
-        MainDestinations.INTERESTS_ROUTE,
-        Icons.Filled.LocationOn,
-        "Learn"
-    )
-)

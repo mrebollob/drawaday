@@ -25,15 +25,9 @@ import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
 import kotlinx.coroutines.launch
 
-/**
- * Stateful Drawing Screen that manages state using [produceUiState]
- *
- * @param drawingId (state) the post to show
- * @param onBack (event) request back navigation
- */
 @Composable
 fun DrawingScreen(
-    drawingId: String?,
+    drawingId: String,
     onBack: () -> Unit
 ) {
     val drawImage = TestDataUtils.getTestDrawImage("$drawingId")
@@ -49,14 +43,6 @@ fun DrawingScreen(
     )
 }
 
-/**
- * Stateless DrawImage Screen that displays a single post.
- *
- * @param drawImage (state) item to display
- * @param onBack (event) request navigate back
- * @param isBlackAndWhite (state) if this drawing is currently in black and white
- * @param onToggleBlackAndWhite (event) request this drawing toggle it's black and white status
- */
 @Composable
 fun DrawingScreen(
     drawImage: DrawImage,
@@ -105,12 +91,6 @@ fun DrawingScreen(
     }
 }
 
-/**
- * Bottom bar for Drawing screen
- *
- * @param isBlackAndWhite (state) if this drawing is currently in black and white
- * @param onToggleBlackAndWhite (event) request this drawing toggle it's black and white status
- */
 @Composable
 private fun BottomBar(
     isBlackAndWhite: Boolean,

@@ -24,55 +24,36 @@ import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
 
-/**
- * Stateful HomeScreen which manages state using [produceUiState]
- *
- * @param navigateToDrawImage (event) request navigation to DrawImage screen
- * @param scaffoldState (state) state for the [Scaffold] component on this screen
- */
 @Composable
 fun FeedScreen(
-    navigateToDrawImage: (DrawImage) -> Unit,
-    scaffoldState: ScaffoldState = rememberScaffoldState()
+    onDrawingClick: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 //    val homeViewModel = getViewModel<HomeViewModel>()
 //    val drawImages = homeViewModel.drawImages.collectAsState()
 
     FeedScreen(
         drawImages = UiState(data = TestDataUtils.getTestDrawImages(11)),
-        navigateToDrawImage = navigateToDrawImage,
+        onDrawingClick = onDrawingClick,
         onRefreshDrawImages = {},
-        scaffoldState = scaffoldState
+        modifier = modifier
     )
 }
 
-/**
- * Responsible for displaying the Home Screen of this application.
- *
- * Stateless composable is not coupled to any specific state management.
- *
- * @param drawImages (state) the data to show on the screen
- * @param navigateToDrawImage (event) request navigation to Article screen
- * @param onRefreshDrawImages (event) request a refresh of posts
- * @param onErrorDismiss (event) request the current error be dismissed
- * @param scaffoldState (state) state for the [Scaffold] component on this screen
- */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FeedScreen(
     drawImages: UiState<List<DrawImage>>,
-    navigateToDrawImage: (DrawImage) -> Unit,
+    onDrawingClick: (String) -> Unit,
     onRefreshDrawImages: () -> Unit,
-    scaffoldState: ScaffoldState
+    modifier: Modifier = Modifier
 ) {
-
     Scaffold(
-        scaffoldState = scaffoldState,
+        modifier = modifier,
         topBar = {
             TopAppBar(title = { Text("Draw a day") })
         }
-    ) { innerPadding ->
-        val modifier = Modifier.padding(innerPadding)
+    ) {
         LoadingContent(
             empty = drawImages.initialLoad,
             emptyContent = { FullScreenLoading() },
@@ -84,7 +65,7 @@ fun FeedScreen(
                     onRefresh = {
                         onRefreshDrawImages()
                     },
-                    navigateToDrawImage = navigateToDrawImage,
+                    onDrawingClick = onDrawingClick,
                     modifier = modifier.supportWideScreen()
                 )
             }
@@ -92,15 +73,6 @@ fun FeedScreen(
     }
 }
 
-/**
- * Display an initial empty state or swipe to refresh content.
- *
- * @param empty (state) when true, display [emptyContent]
- * @param emptyContent (slot) the content to display for the empty state
- * @param loading (state) when true, display a loading spinner over [content]
- * @param onRefresh (event) event to request refresh
- * @param content (slot) the main content to show
- */
 @Composable
 private fun LoadingContent(
     empty: Boolean,
@@ -120,25 +92,17 @@ private fun LoadingContent(
     }
 }
 
-/**
- * Responsible for displaying any error conditions around [DrawImageList].
- *
- * @param drawImages (state) list of drawImages and error state to display
- * @param onRefresh (event) request to refresh data
- * @param navigateToDrawImage (event) request navigation to drawImage screen
- * @param modifier modifier for root element
- */
 @Composable
 private fun HomeScreenErrorAndContent(
     drawImages: UiState<List<DrawImage>>,
     onRefresh: () -> Unit,
-    navigateToDrawImage: (DrawImage) -> Unit,
+    onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (drawImages.data != null) {
         DrawImageList(
             drawImages = drawImages.data,
-            navigateToDrawImage = navigateToDrawImage,
+            onDrawingClick = onDrawingClick,
             modifier = modifier
         )
     } else if (!drawImages.hasError) {
@@ -152,19 +116,10 @@ private fun HomeScreenErrorAndContent(
     }
 }
 
-/**
- * Display a list of drawImages.
- *
- * When a drawImage is clicked on, [navigateToDrawImage] will be called to navigate to the detail screen
- * for that drawImage.
- *
- * @param drawImages (state) the list to display
- * @param navigateToDrawImage (event) request navigation to DrawImage screen
- */
 @Composable
 private fun DrawImageList(
     drawImages: List<DrawImage>,
-    navigateToDrawImage: (drawImage: DrawImage) -> Unit,
+    onDrawingClick: (drawingId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val todayDrawImage = drawImages[0]
@@ -174,14 +129,11 @@ private fun DrawImageList(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
-        item { DrawImageTopSection(todayDrawImage, navigateToDrawImage) }
-        item { DrawImageListHistorySection(postsHistory, navigateToDrawImage) }
+        item { DrawImageTopSection(todayDrawImage, onDrawingClick) }
+        item { DrawImageListHistorySection(postsHistory, onDrawingClick) }
     }
 }
 
-/**
- * Full screen circular progress indicator
- */
 @Composable
 private fun FullScreenLoading() {
     Box(
@@ -193,14 +145,11 @@ private fun FullScreenLoading() {
     }
 }
 
-/**
- * Top section of [DrawImageList]
- *
- * @param drawImage (state) highlighted post to display
- * @param navigateToDrawImage (event) request navigation to DrawImage screen
- */
 @Composable
-private fun DrawImageTopSection(drawImage: DrawImage, navigateToDrawImage: (DrawImage) -> Unit) {
+private fun DrawImageTopSection(
+    drawImage: DrawImage,
+    onDrawingClick: (String) -> Unit
+) {
     Text(
         modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
         text = "Your drawing for today",
@@ -208,33 +157,24 @@ private fun DrawImageTopSection(drawImage: DrawImage, navigateToDrawImage: (Draw
     )
     DrawImageCardTop(
         drawImage = drawImage,
-        modifier = Modifier.clickable(onClick = { navigateToDrawImage(drawImage) })
+        modifier = Modifier.clickable(onClick = { onDrawingClick(drawImage.id) })
     )
     DrawImageListDivider()
 }
 
-/**
- * Full-width list items that display "based on your history" for [DrawImageList]
- *
- * @param drawImages (state) to display
- * @param navigateToArticle (event) request navigation to Article screen
- */
 @Composable
 private fun DrawImageListHistorySection(
     drawImages: List<DrawImage>,
-    navigateToDrawImage: (DrawImage) -> Unit
+    onDrawingClick: (String) -> Unit
 ) {
     Column {
         drawImages.forEach { drawImage ->
-            DrawImageCardHistory(drawImage, navigateToDrawImage)
+            DrawImageCardHistory(drawImage, onDrawingClick)
             DrawImageListDivider()
         }
     }
 }
 
-/**
- * Full-width divider with padding for [DrawImageList]
- */
 @Composable
 private fun DrawImageListDivider() {
     Divider(
@@ -253,9 +193,8 @@ fun HomeScreenPreview() {
     DrawADayTheme {
         FeedScreen(
             drawImages = UiState(data = drawImages),
-            navigateToDrawImage = { /*TODO*/ },
-            onRefreshDrawImages = { /*TODO*/ },
-            scaffoldState = rememberScaffoldState()
+            onDrawingClick = { /*TODO*/ },
+            onRefreshDrawImages = { /*TODO*/ }
         )
     }
 }
