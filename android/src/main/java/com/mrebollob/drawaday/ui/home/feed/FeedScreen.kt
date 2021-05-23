@@ -1,34 +1,28 @@
-package com.mrebollob.drawaday.ui.home
+package com.mrebollob.drawaday.ui.home.feed
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.state.UiState
+import com.mrebollob.drawaday.ui.home.DrawImageCardHistory
+import com.mrebollob.drawaday.ui.home.DrawImageCardTop
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
-import org.koin.androidx.compose.getViewModel
-import java.time.LocalDate
 
 /**
  * Stateful HomeScreen which manages state using [produceUiState]
@@ -37,14 +31,14 @@ import java.time.LocalDate
  * @param scaffoldState (state) state for the [Scaffold] component on this screen
  */
 @Composable
-fun HomeScreen(
+fun FeedScreen(
     navigateToDrawImage: (DrawImage) -> Unit,
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
 //    val homeViewModel = getViewModel<HomeViewModel>()
 //    val drawImages = homeViewModel.drawImages.collectAsState()
 
-    HomeScreen(
+    FeedScreen(
         drawImages = UiState(data = TestDataUtils.getTestDrawImages(11)),
         navigateToDrawImage = navigateToDrawImage,
         onRefreshDrawImages = {},
@@ -65,7 +59,7 @@ fun HomeScreen(
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen(
+fun FeedScreen(
     drawImages: UiState<List<DrawImage>>,
     navigateToDrawImage: (DrawImage) -> Unit,
     onRefreshDrawImages: () -> Unit,
@@ -257,7 +251,7 @@ private fun DrawImageListDivider() {
 fun HomeScreenPreview() {
     val drawImages = TestDataUtils.getTestDrawImages(11)
     DrawADayTheme {
-        HomeScreen(
+        FeedScreen(
             drawImages = UiState(data = drawImages),
             navigateToDrawImage = { /*TODO*/ },
             onRefreshDrawImages = { /*TODO*/ },

@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.MainDestinations.DRAWING_ID_KEY
 import com.mrebollob.drawaday.ui.drawing.DrawingScreen
-import com.mrebollob.drawaday.ui.home.HomeScreen
+import com.mrebollob.drawaday.ui.home.feed.FeedScreen
 
 object MainDestinations {
     const val HOME_ROUTE = "home"
@@ -30,7 +30,7 @@ fun DrawADayNavGraph(
         startDestination = startDestination
     ) {
         composable(MainDestinations.HOME_ROUTE) {
-            HomeScreen(
+            FeedScreen(
                 navigateToDrawImage = actions.navigateToDrawImage
             )
         }
