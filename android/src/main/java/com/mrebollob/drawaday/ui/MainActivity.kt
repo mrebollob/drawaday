@@ -29,33 +29,38 @@ class MainActivity : AppCompatActivity() {
         setContent {
             DrawADayTheme {
                 val navController = rememberNavController()
+                val modifier = Modifier
                 val scaffoldState = rememberScaffoldState()
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute =
                     navBackStackEntry?.destination?.route ?: MainDestinations.HOME_ROUTE
-                val tabs = remember { HomeSections.values() }
+                val sections = remember { HomeSections.values() }
+                val routes = remember { sections.map { it.route } }
 
                 Scaffold(
+                    modifier = modifier,
                     scaffoldState = scaffoldState,
                     bottomBar = {
-                        BottomNavigation {
-                            tabs.forEach { tab ->
-                                BottomNavigationItem(
-                                    icon = {
-                                        Icon(
-                                            tab.icon,
-                                            contentDescription = stringResource(id = tab.title)
-                                        )
-                                    },
-                                    selected = currentRoute == tab.route,
-                                    onClick = {
-                                        navController.navigate(tab.route) {
-                                            popUpTo(navController.graph.startDestinationId)
-                                            launchSingleTop = true
+                        if (currentRoute in routes) {
+                            BottomNavigation {
+                                sections.forEach { section ->
+                                    BottomNavigationItem(
+                                        icon = {
+                                            Icon(
+                                                section.icon,
+                                                contentDescription = stringResource(id = section.title)
+                                            )
+                                        },
+                                        selected = currentRoute == section.route,
+                                        onClick = {
+                                            navController.navigate(section.route) {
+                                                popUpTo(navController.graph.startDestinationId)
+                                                launchSingleTop = true
+                                            }
                                         }
-                                    }
-                                )
+                                    )
+                                }
                             }
                         }
                     }

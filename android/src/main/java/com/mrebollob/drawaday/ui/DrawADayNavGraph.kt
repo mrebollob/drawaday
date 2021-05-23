@@ -52,7 +52,7 @@ fun DrawADayNavGraph(
             val arguments = requireNotNull(backStackEntry.arguments)
             val drawingId = arguments.getString(DRAWING_ID_KEY)
             DrawingScreen(
-                drawingId = drawingId,
+                drawingId = drawingId!!,
                 onBack = { navController.navigateUp() }
             )
         }
