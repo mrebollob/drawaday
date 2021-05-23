@@ -5,12 +5,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.navigationBarsPadding
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.components.InsetAwareTopAppBar
@@ -18,6 +23,7 @@ import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
+import kotlinx.coroutines.launch
 
 /**
  * Stateful Drawing Screen that manages state using [produceUiState]
@@ -31,9 +37,15 @@ fun DrawingScreen(
     onBack: () -> Unit
 ) {
     val drawImage = TestDataUtils.getTestDrawImage("$drawingId")
+    var isBlackAndWhite by rememberSaveable { mutableStateOf(false) }
+
     DrawingScreen(
         drawImage = drawImage,
-        onBack = onBack
+        onBack = onBack,
+        isBlackAndWhite = isBlackAndWhite,
+        onToggleBlackAndWhite = {
+            isBlackAndWhite = isBlackAndWhite.not()
+        }
     )
 }
 
@@ -42,18 +54,16 @@ fun DrawingScreen(
  *
  * @param drawImage (state) item to display
  * @param onBack (event) request navigate back
+ * @param isBlackAndWhite (state) if this drawing is currently in black and white
+ * @param onToggleBlackAndWhite (event) request this drawing toggle it's black and white status
  */
 @Composable
 fun DrawingScreen(
     drawImage: DrawImage,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    isBlackAndWhite: Boolean,
+    onToggleBlackAndWhite: () -> Unit
 ) {
-
-    var showDialog by rememberSaveable { mutableStateOf(false) }
-    if (showDialog) {
-        FunctionalityNotAvailablePopup { showDialog = false }
-    }
-
     Scaffold(
         topBar = {
             InsetAwareTopAppBar(
@@ -74,6 +84,12 @@ fun DrawingScreen(
                 }
             )
         },
+        bottomBar = {
+            BottomBar(
+                isBlackAndWhite = isBlackAndWhite,
+                onToggleBlackAndWhite = onToggleBlackAndWhite
+            )
+        }
     ) { innerPadding ->
         DrawingContent(
             drawImage = drawImage,
@@ -83,32 +99,37 @@ fun DrawingScreen(
                 // offset content in landscape mode to account for the navigation bar
                 .navigationBarsPadding(bottom = false)
                 // center content in landscape mode
-                .supportWideScreen()
+                .supportWideScreen(),
+            isBlackAndWhite = isBlackAndWhite
         )
     }
 }
 
 /**
- * Display a popup explaining functionality not available.
+ * Bottom bar for Drawing screen
  *
- * @param onDismiss (event) request the popup be dismissed
+ * @param isBlackAndWhite (state) if this drawing is currently in black and white
+ * @param onToggleBlackAndWhite (event) request this drawing toggle it's black and white status
  */
 @Composable
-private fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        text = {
-            Text(
-                text = "Functionality not available \uD83D\uDE48",
-                style = MaterialTheme.typography.body2
+private fun BottomBar(
+    isBlackAndWhite: Boolean,
+    onToggleBlackAndWhite: () -> Unit
+) {
+    Surface(elevation = 8.dp) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .navigationBarsPadding()
+                .height(56.dp)
+                .fillMaxWidth()
+        ) {
+            BlackAndWhiteButton(
+                isBlackAndWhite = isBlackAndWhite,
+                onClick = onToggleBlackAndWhite
             )
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = "CLOSE")
-            }
         }
-    )
+    }
 }
 
 @Preview("Article screen")
@@ -119,6 +140,11 @@ private fun FunctionalityNotAvailablePopup(onDismiss: () -> Unit) {
 fun ArticlePreview() {
     val drawImage = TestDataUtils.getTestDrawImage("#1")
     DrawADayTheme {
-        DrawingScreen(drawImage) {}
+        DrawingScreen(
+            drawImage = drawImage,
+            onBack = { /*TODO*/ },
+            isBlackAndWhite = true,
+            onToggleBlackAndWhite = { /*TODO*/ }
+        )
     }
 }

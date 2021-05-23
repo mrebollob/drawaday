@@ -39,6 +39,7 @@ object Compose {
     const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
+    const val iconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val accompanist = "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
     const val accompanistSwiperefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}"
     const val accompanistInsets = "com.google.accompanist:accompanist-insets:${Versions.accompanist}"

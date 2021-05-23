@@ -77,6 +77,7 @@ dependencies {
     implementation(Compose.foundationLayout)
     implementation(Compose.material)
     implementation(Compose.navigation)
+    implementation(Compose.iconsExtended)
     implementation(Compose.accompanist)
     implementation(Compose.accompanistSwiperefresh)
     implementation(Compose.accompanistInsets)
