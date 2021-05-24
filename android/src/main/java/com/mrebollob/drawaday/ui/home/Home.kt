@@ -3,7 +3,7 @@ package com.mrebollob.drawaday.ui.home
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.School
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavBackStackEntry
@@ -30,5 +30,5 @@ enum class HomeSections(
     val route: String
 ) {
     FEED(R.string.home_screen_feed_section, Icons.Outlined.Home, "home/feed"),
-    LEARN(R.string.home_screen_learn_section, Icons.Outlined.Search, "home/learn")
+    LEARN(R.string.home_screen_learn_section, Icons.Outlined.School, "home/learn")
 }

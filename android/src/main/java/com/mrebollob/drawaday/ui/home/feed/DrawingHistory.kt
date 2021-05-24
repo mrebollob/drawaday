@@ -65,7 +65,7 @@ private fun DrawingHistoryItem(
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
-        elevation = 8.dp,
+        elevation = 4.dp,
         modifier = modifier
             .clickable { onDrawingClick(drawing.id) },
         content = {

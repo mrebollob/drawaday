@@ -127,7 +127,7 @@ private fun DrawImageList(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
-        item { DrawImageTopSection(todayDrawImage, onDrawingClick) }
+        item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
         item { DrawingHistory(drawingsHistory, onDrawingClick) }
     }
 }
@@ -141,31 +141,6 @@ private fun FullScreenLoading() {
     ) {
         CircularProgressIndicator()
     }
-}
-
-@Composable
-private fun DrawImageTopSection(
-    drawImage: DrawImage,
-    onDrawingClick: (String) -> Unit
-) {
-    Text(
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-        text = "Your drawing for today",
-        style = MaterialTheme.typography.subtitle1
-    )
-    DrawImageCardTop(
-        drawImage = drawImage,
-        modifier = Modifier.clickable(onClick = { onDrawingClick(drawImage.id) })
-    )
-    DrawImageListDivider()
-}
-
-@Composable
-private fun DrawImageListDivider() {
-    Divider(
-        modifier = Modifier.padding(horizontal = 14.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
-    )
 }
 
 @Preview("Home screen")
