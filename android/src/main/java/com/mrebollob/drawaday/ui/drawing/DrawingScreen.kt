@@ -7,12 +7,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material.icons.filled.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,12 +33,16 @@ fun DrawingScreen(
     val drawImage = TestDataUtils.getTestDrawImage(drawingId)
     var isBlackAndWhite by rememberSaveable { mutableStateOf(false) }
     var gridSize by rememberSaveable { mutableStateOf(0) }
+    val scale = remember { mutableStateOf(1f) }
+    val rotation = remember { mutableStateOf(0f) }
 
     DrawingScreen(
         drawImage = drawImage,
         onBack = onBack,
         isBlackAndWhite = isBlackAndWhite,
         gridSize = gridSize.dp,
+        scale = scale.value,
+        rotation = rotation.value,
         onToggleBlackAndWhite = {
             isBlackAndWhite = isBlackAndWhite.not()
         },
@@ -51,25 +52,39 @@ fun DrawingScreen(
                 100 -> 50
                 else -> 0
             }
+        },
+        onToggleScale = {
+            scale.value = when (scale.value) {
+                1f -> 1.5f
+                1.5f -> 2f
+                else -> 1f
+            }
+        },
+        onToggleRotation = {
+            rotation.value = rotation.value + 90f
         }
     )
 }
 
 @Composable
-fun DrawingScreen(
+private fun DrawingScreen(
     drawImage: DrawImage,
     onBack: () -> Unit,
     isBlackAndWhite: Boolean,
     gridSize: Dp,
+    scale: Float,
+    rotation: Float,
     onToggleBlackAndWhite: () -> Unit,
-    onToggleGridSize: () -> Unit
+    onToggleGridSize: () -> Unit,
+    onToggleScale: () -> Unit,
+    onToggleRotation: () -> Unit
 ) {
     Scaffold(
         topBar = {
             InsetAwareTopAppBar(
                 title = {
                     Text(
-                        text = "Published in: ${drawImage.publishDate}",
+                        text = drawImage.title,
                         style = MaterialTheme.typography.subtitle2,
                         color = LocalContentColor.current
                     )
@@ -88,8 +103,11 @@ fun DrawingScreen(
             BottomBar(
                 isBlackAndWhite = isBlackAndWhite,
                 gridSize = gridSize,
+                scale = scale,
                 onToggleBlackAndWhite = onToggleBlackAndWhite,
-                onToggleGridSize = onToggleGridSize
+                onToggleGridSize = onToggleGridSize,
+                onToggleScale = onToggleScale,
+                onToggleRotation = onToggleRotation
             )
         }
     ) { innerPadding ->
@@ -103,7 +121,9 @@ fun DrawingScreen(
                 // center content in landscape mode
                 .supportWideScreen(),
             isBlackAndWhite = isBlackAndWhite,
-            gridSize = gridSize
+            gridSize = gridSize,
+            scale = scale,
+            rotation = rotation
         )
     }
 }
@@ -112,8 +132,11 @@ fun DrawingScreen(
 private fun BottomBar(
     isBlackAndWhite: Boolean,
     gridSize: Dp,
+    scale: Float,
     onToggleBlackAndWhite: () -> Unit,
-    onToggleGridSize: () -> Unit
+    onToggleGridSize: () -> Unit,
+    onToggleScale: () -> Unit,
+    onToggleRotation: () -> Unit
 ) {
     Surface(elevation = 8.dp) {
         Row(
@@ -123,13 +146,37 @@ private fun BottomBar(
                 .height(56.dp)
                 .fillMaxWidth()
         ) {
-            BlackAndWhiteButton(
-                isBlackAndWhite = isBlackAndWhite,
-                onClick = onToggleBlackAndWhite
+            BottomBarButton(
+                isEnabled = isBlackAndWhite,
+                onClick = onToggleBlackAndWhite,
+                enableIcon = Icons.Filled.Palette,
+                disableIcon = Icons.Filled.FilterBAndW,
+                enableText = R.string.drawing_screen_color_mode,
+                disableText = R.string.drawing_screen_black_and_white_mode,
             )
-            GridViewButton(
-                isGridEnabled = gridSize != 0.dp,
-                onClick = onToggleGridSize
+            BottomBarButton(
+                isEnabled = gridSize == 50.dp,
+                onClick = onToggleGridSize,
+                enableIcon = Icons.Filled.GridOff,
+                disableIcon = Icons.Filled.GridOn,
+                enableText = R.string.drawing_screen_hide_grid,
+                disableText = R.string.drawing_screen_show_grid,
+            )
+            BottomBarButton(
+                isEnabled = scale == 2f,
+                onClick = onToggleScale,
+                enableIcon = Icons.Filled.ZoomOut,
+                disableIcon = Icons.Filled.ZoomIn,
+                enableText = R.string.drawing_screen_zoom_out,
+                disableText = R.string.drawing_screen_zoom_in,
+            )
+            BottomBarButton(
+                isEnabled = false,
+                onClick = onToggleRotation,
+                enableIcon = Icons.Filled.RotateRight,
+                disableIcon = Icons.Filled.RotateRight,
+                enableText = R.string.drawing_screen_rotate,
+                disableText = R.string.drawing_screen_rotate,
             )
         }
     }
@@ -148,8 +195,12 @@ fun ArticlePreview() {
             onBack = { /*TODO*/ },
             isBlackAndWhite = true,
             gridSize = 100.dp,
+            scale = 1f,
+            rotation = 0f,
             onToggleBlackAndWhite = { /*TODO*/ },
-            onToggleGridSize = { /*TODO*/ }
+            onToggleGridSize = { /*TODO*/ },
+            onToggleScale = { /*TODO*/ },
+            onToggleRotation = { /*TODO*/ }
         )
     }
 }

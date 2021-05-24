@@ -1,25 +1,24 @@
 package com.mrebollob.drawaday.ui.drawing
 
-import android.content.res.Configuration
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterBAndW
-import androidx.compose.material.icons.filled.GridOn
-import androidx.compose.material.icons.outlined.FilterBAndW
-import androidx.compose.material.icons.outlined.GridOff
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -32,14 +31,21 @@ import com.mrebollob.drawaday.utils.TestDataUtils
 @Composable
 fun DrawingContent(
     drawImage: DrawImage,
-    modifier: Modifier = Modifier,
     isBlackAndWhite: Boolean,
-    gridSize: Dp
+    gridSize: Dp,
+    scale: Float,
+    rotation: Float,
+    modifier: Modifier = Modifier,
 ) {
-    Box(modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
         DrawingImage(
             drawImage = drawImage,
-            isBlackAndWhite = isBlackAndWhite
+            isBlackAndWhite = isBlackAndWhite,
+            scale = scale,
+            rotation = rotation
         )
         if (gridSize != 0.dp) {
             DrawingGridView(
@@ -53,6 +59,9 @@ fun DrawingContent(
 private fun DrawingImage(
     drawImage: DrawImage,
     isBlackAndWhite: Boolean,
+    scale: Float,
+    rotation: Float,
+    modifier: Modifier = Modifier
 ) {
     Image(
         painter = rememberCoilPainter(
@@ -61,7 +70,14 @@ private fun DrawingImage(
             previewPlaceholder = R.drawable.placeholder,
         ),
         contentDescription = drawImage.title,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxSize()
+            .graphicsLayer(
+                // adding some zoom limits (min 50%, max 200%)
+                scaleX = maxOf(.5f, minOf(3f, scale)),
+                scaleY = maxOf(.5f, minOf(3f, scale)),
+                rotationZ = rotation
+            ),
         contentScale = ContentScale.Fit,
         colorFilter = if (isBlackAndWhite) {
             ColorFilter.colorMatrix(ColorMatrix().apply {
@@ -74,84 +90,61 @@ private fun DrawingImage(
 }
 
 @Composable
-fun BlackAndWhiteButton(
-    isBlackAndWhite: Boolean,
+fun BottomBarButton(
+    isEnabled: Boolean,
     onClick: () -> Unit,
+    enableIcon: ImageVector,
+    disableIcon: ImageVector,
+    @StringRes enableText: Int,
+    @StringRes disableText: Int,
     modifier: Modifier = Modifier
 ) {
     val clickLabel = stringResource(
-        if (isBlackAndWhite) R.string.drawing_screen_color_mode else R.string.drawing_screen_black_and_white_mode
+        if (isEnabled) enableText else disableText
     )
     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
         IconToggleButton(
-            checked = isBlackAndWhite,
+            checked = isEnabled,
             onCheckedChange = { onClick() },
             modifier = modifier.semantics {
                 this.onClick(label = clickLabel, action = null)
             }
         ) {
             Icon(
-                imageVector = if (isBlackAndWhite) Icons.Filled.FilterBAndW else Icons.Outlined.FilterBAndW,
-                contentDescription = stringResource(id = R.string.drawing_screen_black_and_white_mode)
+                imageVector = if (isEnabled) enableIcon else disableIcon,
+                contentDescription = clickLabel
             )
         }
     }
 }
 
-@Composable
-fun GridViewButton(
-    isGridEnabled: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val clickLabel = stringResource(
-        if (isGridEnabled) R.string.drawing_screen_hide_grid else R.string.drawing_screen_show_grid
-    )
-    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-        IconToggleButton(
-            checked = isGridEnabled,
-            onCheckedChange = { onClick() },
-            modifier = modifier.semantics {
-                this.onClick(label = clickLabel, action = null)
-            }
-        ) {
-            Icon(
-                imageVector = if (isGridEnabled) Icons.Filled.GridOn else Icons.Outlined.GridOff,
-                contentDescription = stringResource(id = R.string.drawing_screen_show_grid)
-            )
-        }
-    }
-}
-
-@Preview("Default colors")
-@Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("Font scaling 1.5", fontScale = 1.5f)
-@Preview("Large screen", device = Devices.PIXEL_C)
+@Preview("DrawingContent")
 @Composable
 fun DrawingContentPreview() {
     val drawImage = TestDataUtils.getTestDrawImage("#1")
     DrawADayTheme {
-        Surface {
-            DrawingContent(
-                drawImage = drawImage,
-                isBlackAndWhite = false,
-                gridSize = 100.dp
-            )
-        }
+        DrawingContent(
+            drawImage = drawImage,
+            isBlackAndWhite = false,
+            gridSize = 100.dp,
+            scale = 1f,
+            rotation = 1f
+        )
     }
 }
 
-@Preview("Default colors")
-@Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview("Font scaling 1.5", fontScale = 1.5f)
-@Preview("Large screen", device = Devices.PIXEL_C)
+@Preview("BottomBarButton")
 @Composable
-fun BlackAndWhiteButtonPreview() {
+fun BottomBarButtonPreview() {
     DrawADayTheme {
         Surface {
-            BlackAndWhiteButton(
-                isBlackAndWhite = true,
-                onClick = { /*TODO*/ }
+            BottomBarButton(
+                isEnabled = true,
+                onClick = { /*TODO*/ },
+                enableIcon = Icons.Filled.FilterBAndW,
+                disableIcon = Icons.Filled.FilterBAndW,
+                enableText = R.string.drawing_screen_color_mode,
+                disableText = R.string.drawing_screen_black_and_white_mode,
             )
         }
     }

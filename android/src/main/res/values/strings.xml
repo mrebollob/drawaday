@@ -15,5 +15,8 @@
     <string name="drawing_screen_black_and_white_mode">Black and white</string>
     <string name="drawing_screen_show_grid">Show grid</string>
     <string name="drawing_screen_hide_grid">Hide grid</string>
+    <string name="drawing_screen_zoom_in">Zoom in</string>
+    <string name="drawing_screen_zoom_out">Zoom out</string>
+    <string name="drawing_screen_rotate">Rotate</string>
 
 </resources>
