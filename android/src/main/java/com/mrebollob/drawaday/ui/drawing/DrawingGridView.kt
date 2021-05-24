@@ -1,27 +1,71 @@
 package com.mrebollob.drawaday.ui.drawing
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 
 @Composable
-private fun DrawingGridView() {
-    Divider(
-        modifier = Modifier.padding(horizontal = 14.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
-    )
+fun DrawingGridView(
+    modifier: Modifier = Modifier,
+    size: Dp = 100.dp
+) {
+    val rows = 20
+
+    Box(modifier) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            for (i in 0..rows) {
+                Column(
+                    Modifier
+                        .fillMaxHeight()
+                        .width(size)
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxHeight()
+                            .width(1.dp)
+                            .background(color = Color.Gray)
+                    )
+                }
+            }
+        }
+
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            for (i in 0..rows) {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(size)
+                ) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(color = Color.Gray)
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Preview("Default view")
 @Composable
 fun DrawingGridViewPreview() {
     DrawADayTheme {
-        DrawingGridView(
-        )
+        DrawingGridView()
     }
 }

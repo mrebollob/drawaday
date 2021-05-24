@@ -9,10 +9,10 @@ object TestDataUtils {
         getTestDrawImage("#$it")
     }
 
-     fun getTestDrawImage(seed: String): DrawImage = DrawImage(
+    fun getTestDrawImage(seed: String): DrawImage = DrawImage(
         id = "id_$seed",
         title = "Item $seed",
-        drawing = "https://images.unsplash.com/photo-1587132137056-bfbf0166836e",
+        drawing = "https://images.unsplash.com/photo-1605666807892-8c11d020bede",
         source = "Source: $seed",
         publishDate = LocalDate.of(2021, 5, 12),
     )
