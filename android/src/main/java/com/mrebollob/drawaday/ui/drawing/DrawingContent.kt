@@ -62,7 +62,7 @@ private fun DrawingImage(
         ),
         contentDescription = drawImage.title,
         modifier = Modifier.fillMaxWidth(),
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Fit,
         colorFilter = if (isBlackAndWhite) {
             ColorFilter.colorMatrix(ColorMatrix().apply {
                 setToSaturation(0f)
