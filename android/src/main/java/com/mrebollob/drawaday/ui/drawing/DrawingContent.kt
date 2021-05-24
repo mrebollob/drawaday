@@ -58,7 +58,7 @@ private fun DrawingImage(
         painter = rememberCoilPainter(
             request = drawImage.drawing,
             fadeIn = true,
-            previewPlaceholder = R.drawable.placeholder_1,
+            previewPlaceholder = R.drawable.placeholder,
         ),
         contentDescription = drawImage.title,
         modifier = Modifier.fillMaxWidth(),

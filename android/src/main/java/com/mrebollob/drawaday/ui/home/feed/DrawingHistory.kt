@@ -1,23 +1,19 @@
 package com.mrebollob.drawaday.ui.home.feed
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.R
+import com.mrebollob.drawaday.components.ImageCard
 import com.mrebollob.drawaday.components.VerticalGrid
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
@@ -44,9 +40,16 @@ fun DrawingHistory(
         )
         VerticalGrid(modifier) {
             drawings.forEach { drawing ->
-                DrawingHistoryItem(
-                    drawing = drawing,
-                    onDrawingClick = onDrawingClick,
+                ImageCard(
+                    painter = rememberCoilPainter(
+                        request = drawing.getScaledDrawing(200),
+                        previewPlaceholder = R.drawable.placeholder,
+                    ),
+                    title = drawing.title,
+                    contentDescription = drawing.title,
+                    onClick = {
+                        onDrawingClick(drawing.id)
+                    },
                     modifier = Modifier.padding(8.dp)
                 )
             }
@@ -56,54 +59,17 @@ fun DrawingHistory(
     Spacer(Modifier.height(32.dp))
 }
 
-@Composable
-private fun DrawingHistoryItem(
-    drawing: DrawImage,
-    onDrawingClick: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp,
-        modifier = modifier
-            .clickable { onDrawingClick(drawing.id) },
-        content = {
-            Column {
-                Image(
-                    painter = rememberCoilPainter(
-                        request = drawing.getScaledDrawing(400),
-                        fadeIn = true,
-                        previewPlaceholder = R.drawable.placeholder_1,
-                    ),
-                    contentDescription = drawing.title,
-                    contentScale = ContentScale.Inside,
-                    modifier = Modifier
-                        .aspectRatio(1.45f)
-                        .fillMaxWidth()
-                )
-                Text(
-                    text = drawing.title,
-                    style = MaterialTheme.typography.subtitle1,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .padding(start = 8.dp)
-                )
-            }
-        }
-    )
-}
-
 @Preview("Default colors")
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview("Font scaling 1.5", fontScale = 1.5f)
 @Preview("Large screen", device = Devices.PIXEL_C)
 @Composable
 fun DrawingHistoryItemPreview() {
-    val drawImage = TestDataUtils.getTestDrawImage("#1")
+    val drawings = TestDataUtils.getTestDrawImages(8)
     DrawADayTheme {
         Surface {
-            DrawingHistoryItem(
-                drawing = drawImage,
+            DrawingHistory(
+                drawings = drawings,
                 onDrawingClick = { /*TODO*/ }
             )
         }
