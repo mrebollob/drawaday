@@ -11,14 +11,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.R
@@ -26,7 +22,6 @@ import com.mrebollob.drawaday.components.VerticalGrid
 import com.mrebollob.drawaday.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
-import kotlin.math.max
 
 @Composable
 fun DrawingHistory(
@@ -34,16 +29,20 @@ fun DrawingHistory(
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         Text(
             text = stringResource(id = R.string.home_screen_history_category),
             style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .heightIn(min = 56.dp)
-                .padding(horizontal = 24.dp, vertical = 4.dp)
+                .padding(vertical = 4.dp)
                 .wrapContentHeight()
         )
-        VerticalGrid(Modifier.padding(horizontal = 16.dp)) {
+        VerticalGrid(modifier) {
             drawings.forEach { drawing ->
                 DrawingHistoryItem(
                     drawing = drawing,
@@ -54,7 +53,7 @@ fun DrawingHistory(
         }
         Spacer(Modifier.height(4.dp))
     }
-    Spacer(Modifier.height(8.dp))
+    Spacer(Modifier.height(32.dp))
 }
 
 @Composable
@@ -72,7 +71,7 @@ private fun DrawingHistoryItem(
             Column {
                 Image(
                     painter = rememberCoilPainter(
-                        request = drawing.drawing,
+                        request = drawing.getScaledDrawing(400),
                         fadeIn = true,
                         previewPlaceholder = R.drawable.placeholder_1,
                     ),

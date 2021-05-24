@@ -8,4 +8,6 @@ data class DrawImage(
     val drawing: String,
     val source: String,
     val publishDate: LocalDate
-)
+) {
+    fun getScaledDrawing(widthInPx: Int) = "$drawing?fit=crop&w=$widthInPx&q=80"
+}

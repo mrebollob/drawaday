@@ -5,11 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -48,7 +49,7 @@ fun DrawImageCardTop(
             content = {
                 Image(
                     painter = rememberCoilPainter(
-                        request = drawing.drawing,
+                        request = drawing.getScaledDrawing(800),
                         previewPlaceholder = R.drawable.placeholder_1,
                     ),
                     contentDescription = drawing.title,
