@@ -57,6 +57,7 @@ fun DrawingScreen(
             scale.value = when (scale.value) {
                 1f -> 1.5f
                 1.5f -> 2f
+                2f -> 2.5f
                 else -> 1f
             }
         },
@@ -163,7 +164,7 @@ private fun BottomBar(
                 disableText = R.string.drawing_screen_show_grid,
             )
             BottomBarButton(
-                isEnabled = scale == 2f,
+                isEnabled = scale == 2.5f,
                 onClick = onToggleScale,
                 enableIcon = Icons.Filled.ZoomOut,
                 disableIcon = Icons.Filled.ZoomIn,
