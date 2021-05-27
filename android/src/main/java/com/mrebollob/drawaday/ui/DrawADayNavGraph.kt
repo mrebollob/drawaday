@@ -15,8 +15,11 @@ import com.mrebollob.drawaday.ui.MainDestinations.DRAWING_ID_KEY
 import com.mrebollob.drawaday.ui.drawing.DrawingScreen
 import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.home.addHomeGraph
+import com.mrebollob.drawaday.ui.onboarding.OnBoardingScreen
+import com.mrebollob.drawaday.ui.onboarding.OnBoardingState
 
 object MainDestinations {
+    const val ONBOARDING_ROUTE = "onboarding"
     const val HOME_ROUTE = "home"
     const val DRAWING_ROUTE = "drawing"
     const val DRAWING_ID_KEY = "drawingId"
@@ -34,8 +37,16 @@ fun DrawADayNavGraph(
     ) {
         navigation(
             route = MainDestinations.HOME_ROUTE,
-            startDestination = HomeSections.FEED.route
+            startDestination = MainDestinations.ONBOARDING_ROUTE//HomeSections.FEED.route
         ) {
+            composable(MainDestinations.ONBOARDING_ROUTE) {
+                OnBoardingScreen(
+                    onBoardingState = OnBoardingState.newInstance(),
+                    onSkipPressed = {},
+                    onNextPressed = {},
+                    onDonePressed = {},
+                )
+            }
             addHomeGraph(
                 onDrawingClick = { drawingId: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {

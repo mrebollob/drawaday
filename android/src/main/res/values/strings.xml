@@ -4,6 +4,18 @@
     <string name="cd_navigate_up">Navigate up</string>
     <string name="app_name">Draw a day</string>
 
+
+    <!--  OnBoarding screen  -->
+    <string name="on_boarding_screen_title_1">Your drawing for today</string>
+    <string name="on_boarding_screen_body_1">Lorem fistrum está la cosa muy malar te voy a borrar el cerito fistro. Tiene musho peligro mamaar hasta luego Lucas va usté muy cargadoo condemor.</string>
+    <string name="on_boarding_screen_title_2">Your drawing for today</string>
+    <string name="on_boarding_screen_body_2">Lorem fistrum está la cosa muy malar te voy a borrar el cerito fistro. Tiene musho peligro mamaar hasta luego Lucas va usté muy cargadoo condemor.</string>
+    <string name="on_boarding_screen_title_3">Your drawing for today</string>
+    <string name="on_boarding_screen_body_3">Lorem fistrum está la cosa muy malar te voy a borrar el cerito fistro. Tiene musho peligro mamaar hasta luego Lucas va usté muy cargadoo condemor.</string>
+    <string name="on_boarding_screen_skip">Skip</string>
+    <string name="on_boarding_screen_next">Next</string>
+    <string name="on_boarding_screen_done">Done</string>
+
     <!--  Home screen  -->
     <string name="home_screen_today_category">Your drawing for today</string>
     <string name="home_screen_history_category">History</string>

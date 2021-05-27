@@ -1,13 +1,14 @@
 package com.mrebollob.drawaday.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightThemeColors = lightColors(
+private val LightThemeColors: Colors = lightColors(
     primary = Red700,
     primaryVariant = Red900,
     onPrimary = Color.White,
@@ -33,6 +34,19 @@ fun DrawADayTheme(
 ) {
     MaterialTheme(
         colors = if (darkTheme) DarkThemeColors else LightThemeColors,
+        typography = DrawADayTypography,
+        shapes = DrawADayShapes,
+        content = content
+    )
+}
+
+@Composable
+fun ColorTheme(
+    colors: Colors,
+    content: @Composable () -> Unit
+) {
+    MaterialTheme(
+        colors = colors,
         typography = DrawADayTypography,
         shapes = DrawADayShapes,
         content = content
