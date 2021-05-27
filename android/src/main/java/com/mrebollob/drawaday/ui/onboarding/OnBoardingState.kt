@@ -10,7 +10,6 @@ class OnBoardingContentState(
     val content: OnBoardingContent,
     val index: Int,
     val totalCount: Int,
-    val showPrevious: Boolean,
     val showDone: Boolean
 )
 
@@ -29,7 +28,6 @@ data class OnBoardingState(
                         content = onBoardingContent,
                         index = index,
                         totalCount = content.size,
-                        showPrevious = index > 0,
                         showDone = index == content.size - 1
                     )
                 )

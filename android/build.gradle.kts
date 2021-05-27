@@ -71,6 +71,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01")
     implementation("androidx.activity:activity-compose:1.3.0-alpha08")
 
+    implementation("com.google.accompanist:accompanist-pager:0.10.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.10.0")
+
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
     implementation(Compose.uiTooling)

@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,57 +15,55 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
+import com.google.accompanist.pager.rememberPagerState
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.ui.theme.ColorTheme
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.supportWideScreen
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
-    onBoardingState: OnBoardingState,
-    onSkipPressed: () -> Unit,
-    onNextPressed: () -> Unit,
+    onBoardingContent: List<OnBoardingContent>,
     onDonePressed: () -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val pagerState = rememberPagerState(pageCount = onBoardingContent.size)
 
-    val contentState = remember(onBoardingState.currentIndex) {
-        onBoardingState.contentStates[onBoardingState.currentIndex]
-    }
-
-    ColorTheme(
-        colors = contentState.content.colors
-    ) {
+    ColorTheme(colors = onBoardingContent[pagerState.currentPage].colors) {
         Surface(
             modifier = modifier.supportWideScreen()
         ) {
-            Column(
-                Modifier
-                    .fillMaxSize()
-                    .padding(30.dp)
-                    .wrapContentSize(Alignment.TopCenter)
-            ) {
-                Image(
-                    painter = painterResource(contentState.content.image),
-                    contentDescription = stringResource(id = contentState.content.title),
-                    contentScale = ContentScale.Fit,
-                )
-                Text(
-                    text = stringResource(id = R.string.on_boarding_screen_title_1),
-                    style = MaterialTheme.typography.h5,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.wrapContentHeight()
-                )
-                Text(
-                    text = stringResource(id = R.string.on_boarding_screen_body_1),
-                    style = MaterialTheme.typography.body2,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.wrapContentHeight()
+            Column(Modifier.fillMaxSize()) {
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.weight(1f)
+                ) { page ->
+                    OnBoardingContentView(
+
+                        onBoardingContent = onBoardingContent[page]
+                    )
+                }
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(16.dp),
                 )
                 NavigationBottomBar(
-                    contentState = contentState,
-                    onSkipPressed = onSkipPressed,
-                    onNextPressed = { onBoardingState.currentIndex++ },
+                    showDone = onBoardingContent.size - 1 == pagerState.currentPage,
+                    onNextPressed = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(
+                                pagerState.currentPage + 1
+                            )
+                        }
+                    },
                     onDonePressed = onDonePressed,
                 )
             }
@@ -74,9 +72,34 @@ fun OnBoardingScreen(
 }
 
 @Composable
+private fun OnBoardingContentView(
+    modifier: Modifier = Modifier,
+    onBoardingContent: OnBoardingContent
+) {
+    Column(modifier) {
+        Image(
+            painter = painterResource(onBoardingContent.image),
+            contentDescription = stringResource(id = onBoardingContent.title),
+            contentScale = ContentScale.Fit,
+        )
+        Text(
+            text = stringResource(id = R.string.on_boarding_screen_title_1),
+            style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.wrapContentHeight()
+        )
+        Text(
+            text = stringResource(id = R.string.on_boarding_screen_body_1),
+            style = MaterialTheme.typography.body2,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.wrapContentHeight()
+        )
+    }
+}
+
+@Composable
 private fun NavigationBottomBar(
-    contentState: OnBoardingContentState,
-    onSkipPressed: () -> Unit,
+    showDone: Boolean,
     onNextPressed: () -> Unit,
     onDonePressed: () -> Unit
 ) {
@@ -88,21 +111,7 @@ private fun NavigationBottomBar(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 20.dp)
         ) {
-            if (contentState.showPrevious && contentState.showDone.not()) {
-                TextButton(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(48.dp),
-                    onClick = onSkipPressed,
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.on_boarding_screen_skip),
-                        color = Color.White
-                    )
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-            }
-            if (contentState.showDone) {
+            if (showDone) {
                 Button(
                     modifier = Modifier
                         .weight(1f)
@@ -115,6 +124,18 @@ private fun NavigationBottomBar(
                     )
                 }
             } else {
+                TextButton(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
+                    onClick = onDonePressed,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.on_boarding_screen_skip),
+                        color = Color.White
+                    )
+                }
+                Spacer(modifier = Modifier.width(16.dp))
                 TextButton(
                     modifier = Modifier
                         .weight(1f)
@@ -135,24 +156,9 @@ private fun NavigationBottomBar(
 @Preview("OnBoarding screen (dark)", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun OnBoardingScreenPreview() {
-
-    val onBoardingState = OnBoardingState(
-        contentStates = listOf(
-            OnBoardingContentState(
-                content = OnBoardingContent.getOnBoardingContent()[0],
-                index = 1,
-                totalCount = 3,
-                showPrevious = true,
-                showDone = false
-            )
-        )
-    )
-
     DrawADayTheme {
         OnBoardingScreen(
-            onBoardingState = onBoardingState,
-            onSkipPressed = { /*TODO*/ },
-            onNextPressed = { /*TODO*/ },
+            onBoardingContent = OnBoardingContent.getOnBoardingContent(),
             onDonePressed = { /*TODO*/ },
         )
     }
