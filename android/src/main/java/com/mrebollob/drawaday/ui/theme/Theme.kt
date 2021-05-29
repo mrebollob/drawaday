@@ -42,9 +42,17 @@ fun DrawADayTheme(
 
 @Composable
 fun ColorTheme(
-    colors: Colors,
+    color: Color,
     content: @Composable () -> Unit
 ) {
+
+    val colors = lightColors(
+        primary = color,
+        primaryVariant = color,
+        secondary = color,
+        surface = color
+    )
+
     MaterialTheme(
         colors = colors,
         typography = DrawADayTypography,

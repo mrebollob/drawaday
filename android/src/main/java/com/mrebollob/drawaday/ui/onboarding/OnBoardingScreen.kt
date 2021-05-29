@@ -35,7 +35,7 @@ fun OnBoardingScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = onBoardingContent.size)
 
-    ColorTheme(colors = onBoardingContent[pagerState.currentPage].colors) {
+    ColorTheme(color = onBoardingContent[pagerState.currentPage].color) {
         Surface(
             modifier = modifier.supportWideScreen()
         ) {
@@ -76,21 +76,30 @@ private fun OnBoardingContentView(
     modifier: Modifier = Modifier,
     onBoardingContent: OnBoardingContent
 ) {
-    Column(modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom,
+        modifier = modifier
+            .padding(24.dp)
+            .fillMaxSize(),
+    ) {
         Image(
+            modifier = Modifier.weight(1f),
             painter = painterResource(onBoardingContent.image),
             contentDescription = stringResource(id = onBoardingContent.title),
             contentScale = ContentScale.Fit,
         )
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = stringResource(id = R.string.on_boarding_screen_title_1),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.h4,
             textAlign = TextAlign.Center,
             modifier = Modifier.wrapContentHeight()
         )
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = stringResource(id = R.string.on_boarding_screen_body_1),
-            style = MaterialTheme.typography.body2,
+            style = MaterialTheme.typography.body1,
             textAlign = TextAlign.Center,
             modifier = Modifier.wrapContentHeight()
         )
@@ -135,7 +144,7 @@ private fun NavigationBottomBar(
                         color = Color.White
                     )
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(24.dp))
                 TextButton(
                     modifier = Modifier
                         .weight(1f)
