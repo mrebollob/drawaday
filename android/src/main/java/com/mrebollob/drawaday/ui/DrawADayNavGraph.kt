@@ -14,7 +14,6 @@ import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.home.addHomeGraph
 import com.mrebollob.drawaday.ui.onboarding.OnBoardingContent
 import com.mrebollob.drawaday.ui.onboarding.OnBoardingScreen
-import com.mrebollob.drawaday.ui.onboarding.OnBoardingState
 
 object MainDestinations {
     const val ONBOARDING_ROUTE = "onboarding"
@@ -27,7 +26,7 @@ object MainDestinations {
 fun DrawADayNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MainDestinations.HOME_ROUTE
+    startDestination: String = MainDestinations.ONBOARDING_ROUTE //.HOME_ROUTE
 ) {
     NavHost(
         navController = navController,
@@ -35,21 +34,8 @@ fun DrawADayNavGraph(
     ) {
         navigation(
             route = MainDestinations.HOME_ROUTE,
-            startDestination = MainDestinations.ONBOARDING_ROUTE//HomeSections.FEED.route
+            startDestination = HomeSections.FEED.route
         ) {
-            composable(MainDestinations.ONBOARDING_ROUTE) {
-                OnBoardingScreen(
-                    onBoardingContent = OnBoardingContent.getOnBoardingContent(),
-                    onDonePressed = {
-                        navController.navigate(
-                            HomeSections.FEED.route,
-                            NavOptions.Builder()
-                                .setLaunchSingleTop(true)
-                                .build()
-                        )
-                    }
-                )
-            }
             addHomeGraph(
                 onDrawingClick = { drawingId: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {
@@ -57,6 +43,16 @@ fun DrawADayNavGraph(
                     }
                 },
                 modifier = modifier
+            )
+        }
+        composable(MainDestinations.ONBOARDING_ROUTE) {
+            OnBoardingScreen(
+                onBoardingContent = OnBoardingContent.getOnBoardingContent(),
+                onDonePressed = {
+                    navController.navigate(MainDestinations.HOME_ROUTE) {
+                        popUpTo(MainDestinations.ONBOARDING_ROUTE) { inclusive = true }
+                    }
+                }
             )
         }
         composable(
