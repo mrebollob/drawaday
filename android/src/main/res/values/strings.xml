@@ -8,13 +8,17 @@
     <!--  OnBoarding screen  -->
     <string name="on_boarding_screen_title_1">Welcome!</string>
     <string name="on_boarding_screen_body_1">You are about to start a journey, a journey that can be long and hard but above all it will be fun. This is the start of your journey to learn and improve your drawing skills.</string>
-    <string name="on_boarding_screen_title_2">Your drawing for today</string>
-    <string name="on_boarding_screen_body_2">Lorem fistrum está la cosa muy malar te voy a borrar el cerito fistro. Tiene musho peligro mamaar hasta luego Lucas va usté muy cargadoo condemor.</string>
-    <string name="on_boarding_screen_title_3">Your drawing for today</string>
-    <string name="on_boarding_screen_body_3">Lorem fistrum está la cosa muy malar te voy a borrar el cerito fistro. Tiene musho peligro mamaar hasta luego Lucas va usté muy cargadoo condemor.</string>
+    <string name="on_boarding_screen_title_2">What\'s the plan?</string>
+    <string name="on_boarding_screen_body_2">The plan is simple, to improve your drawings all you need is to practice, practice, and keep practicing.</string>
+    <string name="on_boarding_screen_title_3">Draw every day</string>
+    <string name="on_boarding_screen_body_3">You will find a new image every day for you to take as inspiration. Your job is just to practice.</string>
+    <string name="on_boarding_screen_title_4">Time is no excuse</string>
+    <string name="on_boarding_screen_body_4">You can take only 5 minutes or 2 hours to make your drawing but the important thing is that you practice every day.</string>
+    <string name="on_boarding_screen_title_5">Let\'s draw!</string>
+    <string name="on_boarding_screen_body_5">And remember, the important thing here is to practice, have fun, and keep practicing.</string>
     <string name="on_boarding_screen_skip">Skip</string>
     <string name="on_boarding_screen_next">Next</string>
-    <string name="on_boarding_screen_done">Done</string>
+    <string name="on_boarding_screen_done">Get started</string>
 
     <!--  Home screen  -->
     <string name="home_screen_today_category">Your drawing for today</string>

@@ -3,11 +3,13 @@ package com.mrebollob.drawaday.ui.onboarding
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -21,6 +23,7 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.ui.theme.ColorTheme
+import com.mrebollob.drawaday.ui.theme.CustomOrange1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.supportWideScreen
 import kotlinx.coroutines.launch
@@ -35,7 +38,7 @@ fun OnBoardingScreen(
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = onBoardingContent.size)
 
-    ColorTheme(color = onBoardingContent[pagerState.currentPage].color) {
+    ColorTheme(color = onBoardingContent[pagerState.currentPage].screenColor) {
         Surface(
             modifier = modifier.supportWideScreen()
         ) {
@@ -45,7 +48,6 @@ fun OnBoardingScreen(
                     modifier = Modifier.weight(1f)
                 ) { page ->
                     OnBoardingContentView(
-
                         onBoardingContent = onBoardingContent[page]
                     )
                 }
@@ -84,21 +86,25 @@ private fun OnBoardingContentView(
             .fillMaxSize(),
     ) {
         Image(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .padding(24.dp),
             painter = painterResource(onBoardingContent.image),
             contentDescription = stringResource(id = onBoardingContent.title),
             contentScale = ContentScale.Fit,
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(id = R.string.on_boarding_screen_title_1),
+            text = stringResource(id = onBoardingContent.title),
+            color = Color.White,
             style = MaterialTheme.typography.h4,
             textAlign = TextAlign.Center,
             modifier = Modifier.wrapContentHeight()
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(id = R.string.on_boarding_screen_body_1),
+            text = stringResource(id = onBoardingContent.body),
+            color = Color.White,
             style = MaterialTheme.typography.body1,
             textAlign = TextAlign.Center,
             modifier = Modifier.wrapContentHeight()
@@ -124,12 +130,14 @@ private fun NavigationBottomBar(
                 Button(
                     modifier = Modifier
                         .weight(1f)
-                        .height(48.dp),
+                        .height(48.dp)
+                        .clip(RoundedCornerShape(50)),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = CustomOrange1),
                     onClick = onDonePressed,
                 ) {
                     Text(
                         text = stringResource(id = R.string.on_boarding_screen_done),
-                        color = Color.White
+                        color = Color.White,
                     )
                 }
             } else {
@@ -141,7 +149,7 @@ private fun NavigationBottomBar(
                 ) {
                     Text(
                         text = stringResource(id = R.string.on_boarding_screen_skip),
-                        color = Color.White
+                        color = Color.White,
                     )
                 }
                 Spacer(modifier = Modifier.width(24.dp))
@@ -153,7 +161,7 @@ private fun NavigationBottomBar(
                 ) {
                     Text(
                         text = stringResource(id = R.string.on_boarding_screen_next),
-                        color = Color.White
+                        color = Color.White,
                     )
                 }
             }
