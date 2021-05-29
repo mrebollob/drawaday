@@ -15,7 +15,7 @@ class DrawADayApplication : Application(), KoinComponent {
 
     override fun onCreate() {
         if (BuildConfig.DEBUG) {
-//            enableStrictMode()
+            enableStrictMode()
         }
         super.onCreate()
 

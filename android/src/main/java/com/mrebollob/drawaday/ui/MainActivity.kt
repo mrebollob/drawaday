@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -12,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
+import org.koin.androidx.compose.getViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DrawADayTheme {
+                val mainViewModel = getViewModel<MainViewModel>()
+                val isNewUser = mainViewModel.isNewUser.collectAsState()
+
                 val navController = rememberNavController()
                 val modifier = Modifier
                 val scaffoldState = rememberScaffoldState()
@@ -58,6 +64,11 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     DrawADayNavGraph(
                         navController = navController,
+                        startDestination = if (true) {
+                            MainDestinations.ONBOARDING_ROUTE
+                        } else {
+                            MainDestinations.HOME_ROUTE
+                        }
                     )
                 }
             }
