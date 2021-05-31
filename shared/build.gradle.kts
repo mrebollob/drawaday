@@ -11,7 +11,7 @@ plugins {
 version = "1.0"
 
 android {
-    compileSdk =AndroidSdk.compile
+    compileSdk = AndroidSdk.compile
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = AndroidSdk.min
@@ -87,7 +87,7 @@ kotlin {
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation(Test.junit)
             }
         }
         val iosMain by getting {

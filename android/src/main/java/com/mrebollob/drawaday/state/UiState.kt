@@ -1,6 +1,6 @@
 package com.mrebollob.drawaday.state
 
-import com.mrebollob.drawaday.domain.model.Result
+import com.mrebollob.drawaday.shared.domain.model.Result
 
 /**
  * Immutable data class that allows for loading, data, and exception to be managed independently.

@@ -16,7 +16,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.mrebollob.drawaday.domain.model.DrawImage
+import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.state.UiState
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils

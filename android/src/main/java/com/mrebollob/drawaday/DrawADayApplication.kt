@@ -3,8 +3,8 @@ package com.mrebollob.drawaday
 import android.app.Application
 import android.os.StrictMode
 import co.touchlab.kermit.Kermit
-import com.mrebollob.drawaday.di.appModule
-import com.mrebollob.drawaday.di.initKoin
+import com.mrebollob.drawaday.shared.di.appModule
+import com.mrebollob.drawaday.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent

@@ -3,7 +3,7 @@ object Versions {
     const val kotlinCoroutines = "1.4.3-native-mt"
     const val ktor = "1.5.4"
     const val kotlinxSerialization = "1.1.0"
-    const val koin = "3.0.2"
+    const val koin = "3.0.1"
     const val sqlDelight = "1.5.0"
     const val kermit = "0.1.8"
 
@@ -20,7 +20,7 @@ object Versions {
 
 object AndroidSdk {
     const val min = 21
-    const val compile = 30
+    const val compile = 29
     const val target = compile
 }
 

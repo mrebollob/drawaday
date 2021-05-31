@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.R
-import com.mrebollob.drawaday.domain.model.DrawImage
+import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 
