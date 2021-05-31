@@ -71,12 +71,8 @@ kotlin {
                 api(Deps.kermit)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
-        }
+        val commonTest by getting
+
         val androidMain by getting {
             dependencies {
                 implementation(Ktor.clientAndroid)
@@ -84,12 +80,9 @@ kotlin {
                 implementation(SqlDelight.androidDriver)
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation(Test.junit)
-            }
-        }
+
+        val androidTest by getting
+
         val iosMain by getting {
             dependencies {
                 implementation(Ktor.clientIos)
