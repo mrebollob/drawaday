@@ -13,6 +13,7 @@ import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.home.addHomeGraph
 import com.mrebollob.drawaday.ui.onboarding.OnBoardingContent
 import com.mrebollob.drawaday.ui.onboarding.OnBoardingScreen
+import org.koin.androidx.compose.getViewModel
 
 object MainDestinations {
     const val ONBOARDING_ROUTE = "onboarding"
@@ -27,6 +28,8 @@ fun DrawADayNavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = MainDestinations.HOME_ROUTE
 ) {
+    val mainViewModel = getViewModel<MainViewModel>()
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -48,6 +51,7 @@ fun DrawADayNavGraph(
             OnBoardingScreen(
                 onBoardingContent = OnBoardingContent.getOnBoardingContent(),
                 onDonePressed = {
+                    mainViewModel.setIsNewUser(false)
                     navController.navigate(MainDestinations.HOME_ROUTE) {
                         popUpTo(MainDestinations.ONBOARDING_ROUTE) { inclusive = true }
                     }

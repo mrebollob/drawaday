@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     DrawADayNavGraph(
                         navController = navController,
-                        startDestination = if (true) {
+                        startDestination = if (isNewUser.value) {
                             MainDestinations.ONBOARDING_ROUTE
                         } else {
                             MainDestinations.HOME_ROUTE

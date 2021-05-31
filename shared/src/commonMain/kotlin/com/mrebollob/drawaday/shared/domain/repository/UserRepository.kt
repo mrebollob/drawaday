@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
 
     fun getIsNewUser(): Flow<Boolean>
+
+    suspend fun setIsNewUser(isNewUser: Boolean)
 }
