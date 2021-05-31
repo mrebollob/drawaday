@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.PLUGIN_CLASSPATH_CONFIGURATION_NAME
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -51,28 +49,20 @@ android {
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf(
-            "-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check",
-            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-Xopt-in=kotlin.RequiresOptIn", "-Xopt-in=kotlin.Experimental"
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check",
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
         )
     }
 }
 
 dependencies {
-    add(
-        PLUGIN_CLASSPATH_CONFIGURATION_NAME,
-        "androidx.compose.compiler:compiler:${Versions.compose}"
-    )
-    implementation("androidx.compose.runtime:runtime:${Versions.compose}")
-
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01")
     implementation("androidx.activity:activity-compose:1.3.0-alpha08")
 
-    implementation("com.google.accompanist:accompanist-pager:0.10.0")
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.10.0")
+    implementation("com.google.accompanist:accompanist-pager:${Versions.accompanist}")
+    implementation("com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}")
 
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
@@ -89,8 +79,6 @@ dependencies {
     implementation(Koin.core)
     implementation(Koin.android)
     implementation(Koin.compose)
-
-    implementation("org.osmdroid:osmdroid-android:6.1.10")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("androidx.test:core:1.3.0")

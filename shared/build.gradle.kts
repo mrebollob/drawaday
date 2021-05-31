@@ -2,12 +2,14 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
-    id("com.android.library")
     id("kotlinx-serialization")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.native.cocoapods")
     id("com.squareup.sqldelight")
+    id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
 }
 
+// CocoaPods requires the podspec to have a version.
 version = "1.0"
 
 android {
@@ -93,9 +95,23 @@ kotlin {
     }
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
 sqldelight {
     database("DrawADayDatabase") {
         packageName = "com.mrebollob.drawaday.db"
         sourceFolders = listOf("sqldelight")
+    }
+}
+
+multiplatformSwiftPackage {
+    packageName("DrawADay")
+    swiftToolsVersion("5.3")
+    targetPlatforms {
+        iOS { v("13") }
     }
 }

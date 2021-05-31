@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute =
-                    navBackStackEntry?.destination?.route ?: MainDestinations.HOME_ROUTE
+                    navBackStackEntry?.destination?.navigatorName ?: MainDestinations.HOME_ROUTE
                 val sections = remember { HomeSections.values() }
                 val routes = remember { sections.map { it.route } }
 
@@ -52,7 +52,8 @@ class MainActivity : AppCompatActivity() {
                                         selected = currentRoute == section.route,
                                         onClick = {
                                             navController.navigate(section.route) {
-                                                popUpTo(navController.graph.startDestinationId)
+                                                popUpTo(navController.graph.startDestination) {
+                                                }
                                                 launchSingleTop = true
                                             }
                                         }
