@@ -59,7 +59,7 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha08")
+    implementation("androidx.activity:activity-compose:1.3.0-alpha05")
 
     implementation("com.google.accompanist:accompanist-pager:${Versions.accompanist}")
     implementation("com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}")
