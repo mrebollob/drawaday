@@ -10,13 +10,14 @@ class UserRepositoryImp(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
 
-    override fun getUser(): Flow<User> {
+    override fun getUser(): Flow<User?> {
         return flow {
-            emit(
-                User(
-                    name = userLocalDataSource.getUserName()
-                )
-            )
+            val userName = userLocalDataSource.getUserName()
+            if (userName.isEmpty()) {
+                emit(null)
+            } else {
+                emit(User(userName))
+            }
         }
     }
 
