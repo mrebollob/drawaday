@@ -1,6 +1,7 @@
 package com.mrebollob.drawaday.ui.home.feed
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -18,6 +19,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.state.UiState
+import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
@@ -61,7 +63,9 @@ private fun FeedScreen(
                         onRefreshDrawImages()
                     },
                     onDrawingClick = onDrawingClick,
-                    modifier = modifier.supportWideScreen()
+                    modifier = modifier
+                        .supportWideScreen()
+                        .background(CustomTeal500)
                 )
             }
         )

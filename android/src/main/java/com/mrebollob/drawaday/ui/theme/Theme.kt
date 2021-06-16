@@ -11,11 +11,11 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightThemeColors: Colors = lightColors(
-    primary = Red700,
-    primaryVariant = Red900,
+    primary = CustomTeal500,
+    primaryVariant = CustomTeal700,
     onPrimary = Color.White,
-    secondary = Red700,
-    secondaryVariant = Red900,
+    secondary = CustomBrown500,
+    secondaryVariant = CustomBrown700,
     onSecondary = Color.White,
     error = Red800
 )
@@ -37,7 +37,7 @@ fun DrawADayTheme(
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
-        systemUiController.setStatusBarColor(LightThemeColors.primaryVariant)
+        systemUiController.setStatusBarColor(LightThemeColors.primary)
     }
 
     MaterialTheme(
