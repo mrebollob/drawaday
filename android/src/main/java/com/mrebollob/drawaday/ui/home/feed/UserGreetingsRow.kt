@@ -27,7 +27,7 @@ import java.util.*
 
 @Composable
 fun UserGreetingsRow(
-    user: User,
+    user: User?,
     onProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -47,7 +47,7 @@ fun UserGreetingsRow(
                 color = CustomWhite1
             )
             Text(
-                text = user.name.capitalize(Locale.getDefault()),
+                text = user?.name?.capitalize(Locale.getDefault()) ?: "",
                 style = MaterialTheme.typography.h5,
                 color = CustomWhite1
             )

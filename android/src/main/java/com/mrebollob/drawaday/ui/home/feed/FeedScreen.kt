@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -18,22 +19,26 @@ import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
+import com.mrebollob.drawaday.shared.domain.model.User
 import com.mrebollob.drawaday.state.UiState
 import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FeedScreen(
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-//    val homeViewModel = getViewModel<HomeViewModel>()
-//    val drawImages = homeViewModel.drawImages.collectAsState()
+    val feedViewModel = getViewModel<FeedViewModel>()
+    val drawImages = feedViewModel.drawImages.collectAsState()
+    val user = feedViewModel.user.collectAsState()
 
     FeedScreen(
         drawImages = UiState(data = TestDataUtils.getTestDrawImages(11)),
+        user = user.value,
         onDrawingClick = onDrawingClick,
         onRefreshDrawImages = {},
         modifier = modifier
@@ -44,6 +49,7 @@ fun FeedScreen(
 @Composable
 private fun FeedScreen(
     drawImages: UiState<List<DrawImage>>,
+    user: User?,
     onDrawingClick: (String) -> Unit,
     onRefreshDrawImages: () -> Unit,
     modifier: Modifier = Modifier
@@ -59,6 +65,7 @@ private fun FeedScreen(
             content = {
                 HomeScreenErrorAndContent(
                     drawImages = drawImages,
+                    user = user,
                     onRefresh = {
                         onRefreshDrawImages()
                     },
@@ -94,6 +101,7 @@ private fun LoadingContent(
 @Composable
 private fun HomeScreenErrorAndContent(
     drawImages: UiState<List<DrawImage>>,
+    user: User?,
     onRefresh: () -> Unit,
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -101,6 +109,7 @@ private fun HomeScreenErrorAndContent(
     if (drawImages.data != null) {
         DrawImageList(
             drawImages = drawImages.data,
+            user = user,
             onDrawingClick = onDrawingClick,
             modifier = modifier
         )
@@ -118,6 +127,7 @@ private fun HomeScreenErrorAndContent(
 @Composable
 private fun DrawImageList(
     drawImages: List<DrawImage>,
+    user: User?,
     onDrawingClick: (drawingId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -128,7 +138,7 @@ private fun DrawImageList(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
-        item { UserGreetingsRow(TestDataUtils.getTestUser("demo"), {}) }
+        item { UserGreetingsRow(user, {}) }
         item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
         item { DrawingHistory(drawingsHistory, onDrawingClick) }
     }
@@ -155,6 +165,7 @@ fun HomeScreenPreview() {
     DrawADayTheme {
         FeedScreen(
             drawImages = UiState(data = drawImages),
+            user = TestDataUtils.getTestUser("demo"),
             onDrawingClick = { /*TODO*/ },
             onRefreshDrawImages = { /*TODO*/ }
         )

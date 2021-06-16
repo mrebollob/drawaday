@@ -17,5 +17,5 @@ object TestDataUtils {
         publishDate = "2021-5=12"
     )
 
-    fun getTestUser(seed: String) = User("id_$seed", "$seed user", "$seed@mail.com")
+    fun getTestUser(seed: String) = User("$seed user")
 }
