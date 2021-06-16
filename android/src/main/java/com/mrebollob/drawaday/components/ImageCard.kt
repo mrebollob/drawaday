@@ -34,8 +34,8 @@ fun ImageCard(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        shape = RoundedCornerShape(8.dp),
-        elevation = 4.dp
+        shape = RoundedCornerShape(16.dp),
+        elevation = 8.dp
     ) {
         Box {
             Image(

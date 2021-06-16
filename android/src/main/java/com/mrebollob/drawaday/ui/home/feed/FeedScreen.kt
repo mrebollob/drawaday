@@ -47,10 +47,7 @@ private fun FeedScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(title = { Text("Draw a day") })
-        }
+        modifier = modifier
     ) {
         LoadingContent(
             empty = drawImages.initialLoad,
@@ -127,6 +124,7 @@ private fun DrawImageList(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
+        item { UserGreetingsRow(TestDataUtils.getTestUser("demo"), {}) }
         item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
         item { DrawingHistory(drawingsHistory, onDrawingClick) }
     }

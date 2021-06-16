@@ -1,6 +1,7 @@
 package com.mrebollob.drawaday.utils
 
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
+import com.mrebollob.drawaday.shared.domain.model.User
 
 object TestDataUtils {
 
@@ -15,4 +16,6 @@ object TestDataUtils {
         source = "Source: $seed",
         publishDate = "2021-5=12"
     )
+
+    fun getTestUser(seed: String) = User("id_$seed", "$seed user", "$seed@mail.com")
 }

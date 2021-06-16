@@ -25,6 +25,11 @@
     <string name="home_screen_history_category">History</string>
     <string name="home_screen_feed_section">Home</string>
     <string name="home_screen_learn_section">Learn</string>
+    <string name="home_screen_user_profile">Profile</string>
+    <string name="home_screen_user_greetings_morning">Good morning!</string>
+    <string name="home_screen_user_greetings_afternoon">Good afternoon!</string>
+    <string name="home_screen_user_greetings_evening">Good evening!</string>
+    <string name="home_screen_user_greetings_night">Good night!</string>
 
     <!--  Drawing screen  -->
     <string name="drawing_screen_color_mode">Color</string>
