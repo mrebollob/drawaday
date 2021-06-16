@@ -11,7 +11,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -19,6 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.shared.domain.model.User
+import com.mrebollob.drawaday.ui.theme.CustomBrown500
+import com.mrebollob.drawaday.ui.theme.CustomWhite1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import java.util.*
@@ -43,12 +44,12 @@ fun UserGreetingsRow(
             Text(
                 text = stringResource(id = getUserGreetingsByTime(Calendar.getInstance())),
                 style = MaterialTheme.typography.subtitle2,
-                color = Color.White
+                color = CustomWhite1
             )
             Text(
                 text = user.name.capitalize(Locale.getDefault()),
                 style = MaterialTheme.typography.h5,
-                color = Color.White
+                color = CustomWhite1
             )
         }
 
@@ -58,7 +59,8 @@ fun UserGreetingsRow(
                 .width(48.dp)
                 .clickable { onProfileClick() },
             shape = CircleShape,
-            elevation = 4.dp
+            elevation = 4.dp,
+            backgroundColor = CustomBrown500
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_user),

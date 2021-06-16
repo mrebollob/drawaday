@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mrebollob.drawaday.R
+import com.mrebollob.drawaday.ui.theme.CustomWhite1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 
 @Composable
@@ -68,7 +69,10 @@ fun ImageCard(
                         .padding(12.dp),
                     contentAlignment = Alignment.BottomStart
                 ) {
-                    Text(text = title, style = TextStyle(color = Color.White, fontSize = 16.sp))
+                    Text(
+                        text = title,
+                        style = TextStyle(color = CustomWhite1, fontSize = 16.sp)
+                    )
                 }
             }
         }

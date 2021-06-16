@@ -13,10 +13,10 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 private val LightThemeColors: Colors = lightColors(
     primary = CustomTeal500,
     primaryVariant = CustomTeal700,
-    onPrimary = Color.White,
+    onPrimary = CustomWhite1,
     secondary = CustomBrown500,
     secondaryVariant = CustomBrown700,
-    onSecondary = Color.White,
+    onSecondary = CustomWhite1,
     error = Red800
 )
 

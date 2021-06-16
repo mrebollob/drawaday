@@ -24,3 +24,5 @@ val CustomTeal900 = Color(0xff1e5b5e)
 // https://www.colorhexa.com/A24017
 val CustomBrown500 = Color(0xffA24017) // secondary
 val CustomBrown700 = Color(0xff8c3714)
+
+val CustomWhite1 = Color(0xfff1fbf5)
