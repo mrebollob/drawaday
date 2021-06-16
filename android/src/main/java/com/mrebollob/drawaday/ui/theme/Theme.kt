@@ -6,7 +6,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightThemeColors: Colors = lightColors(
     primary = Red700,
@@ -32,6 +34,12 @@ fun DrawADayTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(LightThemeColors.primaryVariant)
+    }
+
     MaterialTheme(
         colors = if (darkTheme) DarkThemeColors else LightThemeColors,
         typography = DrawADayTypography,
@@ -45,6 +53,10 @@ fun ColorTheme(
     color: Color,
     content: @Composable () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setStatusBarColor(color)
+    }
 
     val colors = lightColors(
         primary = color,

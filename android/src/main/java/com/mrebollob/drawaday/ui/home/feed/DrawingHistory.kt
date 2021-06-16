@@ -26,19 +26,21 @@ fun DrawingHistory(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
     ) {
         Text(
             text = stringResource(id = R.string.home_screen_history_category),
             style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .heightIn(min = 56.dp)
-                .padding(vertical = 4.dp)
+                .padding(horizontal = 16.dp)
                 .wrapContentHeight()
         )
-        VerticalGrid(modifier) {
+        VerticalGrid(
+            modifier
+                .padding(horizontal = 8.dp)
+        ) {
             drawings.forEach { drawing ->
                 ImageCard(
                     painter = rememberCoilPainter(

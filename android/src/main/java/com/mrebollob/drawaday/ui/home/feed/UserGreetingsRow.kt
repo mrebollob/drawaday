@@ -63,7 +63,7 @@ fun UserGreetingsRow(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .padding(12.dp)
             )
         }
     }
@@ -75,10 +75,10 @@ private fun getUserGreetingsByTime(calendar: Calendar): Int =
         in 0..11 -> {
             R.string.home_screen_user_greetings_morning
         }
-        in 12..15 -> {
+        in 12..16 -> {
             R.string.home_screen_user_greetings_afternoon
         }
-        in 16..20 -> {
+        in 17..20 -> {
             R.string.home_screen_user_greetings_evening
         }
         in 21..23 -> {

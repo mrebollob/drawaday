@@ -32,7 +32,7 @@ fun DrawImageCardTop(
             style = MaterialTheme.typography.h6,
             modifier = Modifier
                 .heightIn(min = 56.dp)
-                .padding(vertical = 4.dp)
+                .padding(vertical = 8.dp)
                 .wrapContentHeight()
         )
 
