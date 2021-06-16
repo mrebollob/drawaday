@@ -33,7 +33,7 @@ fun DrawingGridView(
                         Modifier
                             .fillMaxHeight()
                             .width(1.dp)
-                            .background(color = Color.Gray)
+                            .background(color = Color.White)
                     )
                 }
             }
@@ -54,7 +54,7 @@ fun DrawingGridView(
                         Modifier
                             .fillMaxWidth()
                             .height(1.dp)
-                            .background(color = Color.Gray)
+                            .background(color = Color.White)
                     )
                 }
             }
