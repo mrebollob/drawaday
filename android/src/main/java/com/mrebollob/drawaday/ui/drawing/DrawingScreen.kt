@@ -1,11 +1,15 @@
 package com.mrebollob.drawaday.ui.drawing
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
@@ -21,6 +25,8 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.components.InsetAwareTopAppBar
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
+import com.mrebollob.drawaday.ui.theme.CustomBrown500
+import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
@@ -83,12 +89,13 @@ private fun DrawingScreen(
     Scaffold(
         topBar = {
             InsetAwareTopAppBar(
+                elevation = 0.dp,
                 title = {
-                    Text(
-                        text = drawImage.title,
-                        style = MaterialTheme.typography.subtitle2,
-                        color = LocalContentColor.current
-                    )
+//                    Text(
+//                        text = drawImage.title,
+//                        style = MaterialTheme.typography.subtitle2,
+//                        color = LocalContentColor.current
+//                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
@@ -115,12 +122,10 @@ private fun DrawingScreen(
         DrawingContent(
             drawImage = drawImage,
             modifier = Modifier
-                // innerPadding takes into account the top and bottom bar
                 .padding(innerPadding)
-                // offset content in landscape mode to account for the navigation bar
                 .navigationBarsPadding(bottom = false)
-                // center content in landscape mode
-                .supportWideScreen(),
+                .supportWideScreen()
+                .background(CustomTeal500),
             isBlackAndWhite = isBlackAndWhite,
             gridSize = gridSize,
             scale = scale,
@@ -154,6 +159,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.FilterBAndW,
                 enableText = R.string.drawing_screen_color_mode,
                 disableText = R.string.drawing_screen_black_and_white_mode,
+                tint = CustomBrown500
             )
             BottomBarButton(
                 isEnabled = gridSize == 50.dp,
@@ -162,6 +168,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.GridOn,
                 enableText = R.string.drawing_screen_hide_grid,
                 disableText = R.string.drawing_screen_show_grid,
+                tint = CustomBrown500
             )
             BottomBarButton(
                 isEnabled = scale == 2.5f,
@@ -170,6 +177,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.ZoomIn,
                 enableText = R.string.drawing_screen_zoom_out,
                 disableText = R.string.drawing_screen_zoom_in,
+                tint = CustomBrown500
             )
             BottomBarButton(
                 isEnabled = false,
@@ -178,6 +186,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.RotateRight,
                 enableText = R.string.drawing_screen_rotate,
                 disableText = R.string.drawing_screen_rotate,
+                tint = CustomBrown500
             )
         }
     }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.graphicsLayer
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
+import com.mrebollob.drawaday.ui.theme.CustomBrown500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 
@@ -97,6 +99,7 @@ fun BottomBarButton(
     disableIcon: ImageVector,
     @StringRes enableText: Int,
     @StringRes disableText: Int,
+    tint: Color,
     modifier: Modifier = Modifier
 ) {
     val clickLabel = stringResource(
@@ -112,7 +115,8 @@ fun BottomBarButton(
         ) {
             Icon(
                 imageVector = if (isEnabled) enableIcon else disableIcon,
-                contentDescription = clickLabel
+                contentDescription = clickLabel,
+                tint = tint
             )
         }
     }
@@ -145,6 +149,7 @@ fun BottomBarButtonPreview() {
                 disableIcon = Icons.Filled.FilterBAndW,
                 enableText = R.string.drawing_screen_color_mode,
                 disableText = R.string.drawing_screen_black_and_white_mode,
+                tint = CustomBrown500
             )
         }
     }
