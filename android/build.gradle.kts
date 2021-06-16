@@ -71,10 +71,10 @@ dependencies {
     implementation(Compose.material)
     implementation(Compose.navigation)
     implementation(Compose.iconsExtended)
-    implementation(Compose.accompanist)
-    implementation(Compose.accompanistSwiperefresh)
+    implementation(Compose.accompanistCoil)
+    implementation(Compose.accompanistSwipeRefresh)
     implementation(Compose.accompanistInsets)
-    implementation(Compose.accompanistSystemuicontroller)
+    implementation(Compose.accompanistSystemUIController)
 
     implementation(Koin.core)
     implementation(Koin.android)
