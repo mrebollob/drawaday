@@ -117,10 +117,10 @@ private fun DrawingScreen(
         DrawingContent(
             drawImage = drawImage,
             modifier = Modifier
+                .background(MaterialTheme.colors.surface)
                 .padding(innerPadding)
                 .navigationBarsPadding(bottom = false)
-                .supportWideScreen()
-                .background(MaterialTheme.colors.surface),
+                .supportWideScreen(),
             isBlackAndWhite = isBlackAndWhite,
             gridSize = gridSize,
             scale = scale,

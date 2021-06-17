@@ -10,9 +10,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mrebollob.drawaday.BuildConfig
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.components.InsetAwareTopAppBar
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
@@ -41,8 +43,9 @@ fun ProfileScreen(
         ProfileScreenContent(
             modifier = Modifier
                 .padding(innerPadding)
-                .supportWideScreen()
                 .background(MaterialTheme.colors.surface)
+                .supportWideScreen()
+
         )
     }
 }
@@ -63,7 +66,7 @@ private fun ProfileScreenContent(
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
         ) {
-            Text("Button")
+            Text(stringResource(id = R.string.profile_screen_contact))
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -74,8 +77,32 @@ private fun ProfileScreenContent(
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
         ) {
-            Text("Button")
+            Text(stringResource(id = R.string.profile_screen_terms))
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = { },
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+        ) {
+            Text(stringResource(id = R.string.profile_screen_privacy))
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Text(
+            stringResource(
+                id = R.string.profile_screen_version,
+                BuildConfig.VERSION_NAME,
+                BuildConfig.VERSION_CODE.toString()
+            ),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
