@@ -19,9 +19,7 @@ import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
-import com.mrebollob.drawaday.shared.domain.model.User
 import com.mrebollob.drawaday.state.UiState
-import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
@@ -29,16 +27,16 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FeedScreen(
+    onProfileClick: () -> Unit,
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val feedViewModel = getViewModel<FeedViewModel>()
     val drawImages = feedViewModel.drawImages.collectAsState()
-    val user = feedViewModel.user.collectAsState()
 
     FeedScreen(
         drawImages = UiState(data = TestDataUtils.getTestDrawImages(11)),
-        user = user.value,
+        onProfileClick = onProfileClick,
         onDrawingClick = onDrawingClick,
         onRefreshDrawImages = {},
         modifier = modifier
@@ -49,7 +47,7 @@ fun FeedScreen(
 @Composable
 private fun FeedScreen(
     drawImages: UiState<List<DrawImage>>,
-    user: User?,
+    onProfileClick: () -> Unit,
     onDrawingClick: (String) -> Unit,
     onRefreshDrawImages: () -> Unit,
     modifier: Modifier = Modifier
@@ -65,14 +63,14 @@ private fun FeedScreen(
             content = {
                 HomeScreenErrorAndContent(
                     drawImages = drawImages,
-                    user = user,
+                    onProfileClick = onProfileClick,
                     onRefresh = {
                         onRefreshDrawImages()
                     },
                     onDrawingClick = onDrawingClick,
                     modifier = modifier
                         .supportWideScreen()
-                        .background(CustomTeal500)
+                        .background(MaterialTheme.colors.primary)
                 )
             }
         )
@@ -101,7 +99,7 @@ private fun LoadingContent(
 @Composable
 private fun HomeScreenErrorAndContent(
     drawImages: UiState<List<DrawImage>>,
-    user: User?,
+    onProfileClick: () -> Unit,
     onRefresh: () -> Unit,
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -109,17 +107,15 @@ private fun HomeScreenErrorAndContent(
     if (drawImages.data != null) {
         DrawImageList(
             drawImages = drawImages.data,
-            user = user,
+            onProfileClick = onProfileClick,
             onDrawingClick = onDrawingClick,
             modifier = modifier
         )
     } else if (!drawImages.hasError) {
-        // if there are no posts, and no error, let the user refresh manually
         TextButton(onClick = onRefresh, modifier.fillMaxSize()) {
             Text("Tap to load content", textAlign = TextAlign.Center)
         }
     } else {
-        // there's currently an error showing, don't show any content
         Box(modifier.fillMaxSize()) { /* empty screen */ }
     }
 }
@@ -127,7 +123,7 @@ private fun HomeScreenErrorAndContent(
 @Composable
 private fun DrawImageList(
     drawImages: List<DrawImage>,
-    user: User?,
+    onProfileClick: () -> Unit,
     onDrawingClick: (drawingId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -138,7 +134,7 @@ private fun DrawImageList(
         modifier = modifier,
         contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
     ) {
-        item { UserGreetingsRow(user, {}) }
+        item { UserGreetingsRow(onProfileClick) }
         item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
         item { DrawingHistory(drawingsHistory, onDrawingClick) }
     }
@@ -165,7 +161,7 @@ fun HomeScreenPreview() {
     DrawADayTheme {
         FeedScreen(
             drawImages = UiState(data = drawImages),
-            user = TestDataUtils.getTestUser("demo"),
+            onProfileClick = { /*TODO*/ },
             onDrawingClick = { /*TODO*/ },
             onRefreshDrawImages = { /*TODO*/ }
         )

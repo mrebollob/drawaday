@@ -39,6 +39,9 @@ fun DrawADayNavGraph(
             startDestination = HomeSections.FEED.route
         ) {
             addHomeGraph(
+                onProfileClick = {
+
+                },
                 onDrawingClick = { drawingId: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {
                         navController.navigate("${MainDestinations.DRAWING_ROUTE}/$drawingId")

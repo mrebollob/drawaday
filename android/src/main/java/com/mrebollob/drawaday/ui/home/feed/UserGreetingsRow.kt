@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -17,17 +17,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mrebollob.drawaday.R
-import com.mrebollob.drawaday.shared.domain.model.User
-import com.mrebollob.drawaday.ui.theme.CustomBrown500
 import com.mrebollob.drawaday.ui.theme.CustomWhite1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import java.util.*
 
-
 @Composable
 fun UserGreetingsRow(
-    user: User?,
     onProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -43,11 +39,6 @@ fun UserGreetingsRow(
         ) {
             Text(
                 text = stringResource(id = getUserGreetingsByTime(Calendar.getInstance())),
-                style = MaterialTheme.typography.subtitle2,
-                color = CustomWhite1
-            )
-            Text(
-                text = user?.name?.capitalize(Locale.getDefault()) ?: "",
                 style = MaterialTheme.typography.h5,
                 color = CustomWhite1
             )
@@ -58,9 +49,9 @@ fun UserGreetingsRow(
                 .height(48.dp)
                 .width(48.dp)
                 .clickable { onProfileClick() },
-            shape = CircleShape,
+            shape = RoundedCornerShape(42),
             elevation = 4.dp,
-            backgroundColor = CustomBrown500
+            backgroundColor = MaterialTheme.colors.secondary
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_user),
@@ -101,7 +92,6 @@ fun UserGreetingsRowPreview() {
     DrawADayTheme {
         Surface {
             UserGreetingsRow(
-                user = user,
                 onProfileClick = { /*TODO*/ }
             )
         }

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
-import com.mrebollob.drawaday.ui.theme.CustomBrown500
+import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 
@@ -149,7 +149,7 @@ fun BottomBarButtonPreview() {
                 disableIcon = Icons.Filled.FilterBAndW,
                 enableText = R.string.drawing_screen_color_mode,
                 disableText = R.string.drawing_screen_black_and_white_mode,
-                tint = CustomBrown500
+                tint = CustomTeal500
             )
         }
     }

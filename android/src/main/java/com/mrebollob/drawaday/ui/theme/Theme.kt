@@ -14,8 +14,8 @@ private val LightThemeColors: Colors = lightColors(
     primary = CustomTeal500,
     primaryVariant = CustomTeal700,
     onPrimary = CustomWhite1,
-    secondary = CustomBrown500,
-    secondaryVariant = CustomBrown700,
+    secondary = CustomYellow500,
+    secondaryVariant = CustomYellow700,
     onSecondary = CustomWhite1,
     error = Red800
 )

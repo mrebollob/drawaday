@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
@@ -25,8 +22,6 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.components.InsetAwareTopAppBar
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
-import com.mrebollob.drawaday.ui.theme.CustomBrown500
-import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
@@ -125,7 +120,7 @@ private fun DrawingScreen(
                 .padding(innerPadding)
                 .navigationBarsPadding(bottom = false)
                 .supportWideScreen()
-                .background(CustomTeal500),
+                .background(MaterialTheme.colors.primary),
             isBlackAndWhite = isBlackAndWhite,
             gridSize = gridSize,
             scale = scale,
@@ -159,7 +154,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.FilterBAndW,
                 enableText = R.string.drawing_screen_color_mode,
                 disableText = R.string.drawing_screen_black_and_white_mode,
-                tint = CustomBrown500
+                tint = MaterialTheme.colors.primary
             )
             BottomBarButton(
                 isEnabled = gridSize == 50.dp,
@@ -168,7 +163,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.GridOn,
                 enableText = R.string.drawing_screen_hide_grid,
                 disableText = R.string.drawing_screen_show_grid,
-                tint = CustomBrown500
+                tint = MaterialTheme.colors.primary
             )
             BottomBarButton(
                 isEnabled = scale == 2.5f,
@@ -177,7 +172,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.ZoomIn,
                 enableText = R.string.drawing_screen_zoom_out,
                 disableText = R.string.drawing_screen_zoom_in,
-                tint = CustomBrown500
+                tint = MaterialTheme.colors.primary
             )
             BottomBarButton(
                 isEnabled = false,
@@ -186,7 +181,7 @@ private fun BottomBar(
                 disableIcon = Icons.Filled.RotateRight,
                 enableText = R.string.drawing_screen_rotate,
                 disableText = R.string.drawing_screen_rotate,
-                tint = CustomBrown500
+                tint = MaterialTheme.colors.primary
             )
         }
     }
