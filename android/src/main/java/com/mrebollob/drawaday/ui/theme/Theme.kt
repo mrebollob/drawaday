@@ -17,7 +17,7 @@ private val LightThemeColors: Colors = lightColors(
     secondary = CustomYellow500,
     secondaryVariant = CustomYellow700,
     onSecondary = Color.White,
-    surface = CustomCream500,
+    surface = Surface,
     error = Red800
 )
 

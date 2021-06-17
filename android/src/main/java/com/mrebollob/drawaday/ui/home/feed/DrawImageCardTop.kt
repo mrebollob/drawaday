@@ -6,7 +6,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +30,6 @@ fun DrawImageCardTop(
         Text(
             text = stringResource(id = R.string.home_screen_today_category),
             style = MaterialTheme.typography.h6,
-            color = Color.White,
             modifier = Modifier
                 .heightIn(min = 56.dp)
                 .padding(vertical = 8.dp)

@@ -24,52 +24,62 @@ val DrawADayTypography = Typography(
     h4 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 30.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
+        color = PrimaryText
     ),
     h5 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
+        color = PrimaryText
     ),
     h6 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 20.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
+        color = PrimaryText
     ),
     subtitle1 = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        letterSpacing = 0.15.sp
+        letterSpacing = 0.15.sp,
+        color = PrimaryText
     ),
     subtitle2 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.1.sp
+        letterSpacing = 0.1.sp,
+        color = PrimaryText
     ),
     body1 = TextStyle(
         fontFamily = Domine,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        letterSpacing = 0.5.sp
+        letterSpacing = 0.5.sp,
+        color = PrimaryText
     ),
     body2 = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 14.sp,
-        letterSpacing = 0.25.sp
+        letterSpacing = 0.25.sp,
+        color = PrimaryText
     ),
     button = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp,
-        letterSpacing = 1.25.sp
+        letterSpacing = 1.25.sp,
+        color = PrimaryText
     ),
     caption = TextStyle(
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
-        letterSpacing = 0.4.sp
+        letterSpacing = 0.4.sp,
+        color = PrimaryText
     ),
     overline = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp,
-        letterSpacing = 1.sp
+        letterSpacing = 1.sp,
+        color = PrimaryText
     )
 )

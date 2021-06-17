@@ -20,5 +20,6 @@ val CustomTeal700 = Color(0xff0c686f)
 val CustomYellow500 = Color(0xffF4BA25) // secondary
 val CustomYellow700 = Color(0xfff3b20d)
 
-// https://www.colorhexa.com/F2F0E4
-val CustomCream500 = Color(0xFFF2F0E4)
+val Surface = Color(0xFFF2F0E4)
+val PrimaryText = Color(0xFF333333)
+val Primary = Color(0xFF26AE60)
