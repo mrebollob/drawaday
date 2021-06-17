@@ -14,7 +14,6 @@ import com.google.accompanist.coil.rememberCoilPainter
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.components.ImageCard
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
-import com.mrebollob.drawaday.ui.theme.CustomWhite1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 
@@ -32,7 +31,7 @@ fun DrawImageCardTop(
         Text(
             text = stringResource(id = R.string.home_screen_today_category),
             style = MaterialTheme.typography.h6,
-            color = CustomWhite1,
+            color = Color.White,
             modifier = Modifier
                 .heightIn(min = 56.dp)
                 .padding(vertical = 8.dp)

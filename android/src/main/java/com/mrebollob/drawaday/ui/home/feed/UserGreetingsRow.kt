@@ -11,13 +11,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mrebollob.drawaday.R
-import com.mrebollob.drawaday.ui.theme.CustomWhite1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import java.util.*
@@ -40,7 +40,7 @@ fun UserGreetingsRow(
             Text(
                 text = stringResource(id = getUserGreetingsByTime(Calendar.getInstance())),
                 style = MaterialTheme.typography.h5,
-                color = CustomWhite1
+                color = Color.White
             )
         }
 

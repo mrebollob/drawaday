@@ -120,7 +120,7 @@ private fun DrawingScreen(
                 .padding(innerPadding)
                 .navigationBarsPadding(bottom = false)
                 .supportWideScreen()
-                .background(MaterialTheme.colors.primary),
+                .background(MaterialTheme.colors.surface),
             isBlackAndWhite = isBlackAndWhite,
             gridSize = gridSize,
             scale = scale,

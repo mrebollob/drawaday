@@ -70,7 +70,7 @@ private fun FeedScreen(
                     onDrawingClick = onDrawingClick,
                     modifier = modifier
                         .supportWideScreen()
-                        .background(MaterialTheme.colors.primary)
+                        .background(MaterialTheme.colors.surface)
                 )
             }
         )

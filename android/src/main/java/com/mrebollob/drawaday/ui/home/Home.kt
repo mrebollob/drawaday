@@ -13,20 +13,20 @@ import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.ui.home.feed.FeedScreen
 
 fun NavGraphBuilder.addHomeGraph(
-    onProfileClick: () -> Unit,
+    onProfileClick: (NavBackStackEntry) -> Unit,
     onDrawingClick: (String, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.FEED.route) { from ->
         FeedScreen(
-            onProfileClick = onProfileClick,
+            onProfileClick = { onProfileClick(from) },
             onDrawingClick = { id -> onDrawingClick(id, from) },
             modifier
         )
     }
     composable(HomeSections.LEARN.route) { from ->
         FeedScreen(
-            onProfileClick = onProfileClick,
+            onProfileClick = { onProfileClick(from) },
             onDrawingClick = { id -> onDrawingClick(id, from) },
             modifier
         )

@@ -13,11 +13,13 @@ import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.home.addHomeGraph
 import com.mrebollob.drawaday.ui.onboarding.OnBoardingContent
 import com.mrebollob.drawaday.ui.onboarding.OnBoardingScreen
+import com.mrebollob.drawaday.ui.profile.ProfileScreen
 import org.koin.androidx.compose.getViewModel
 
 object MainDestinations {
     const val ONBOARDING_ROUTE = "onboarding"
     const val HOME_ROUTE = "home"
+    const val PROFILE_ROUTE = "profile"
     const val DRAWING_ROUTE = "drawing"
     const val DRAWING_ID_KEY = "drawingId"
 }
@@ -39,8 +41,10 @@ fun DrawADayNavGraph(
             startDestination = HomeSections.FEED.route
         ) {
             addHomeGraph(
-                onProfileClick = {
-
+                onProfileClick = { from: NavBackStackEntry ->
+                    if (from.lifecycleIsResumed()) {
+                        navController.navigate(MainDestinations.PROFILE_ROUTE)
+                    }
                 },
                 onDrawingClick = { drawingId: String, from: NavBackStackEntry ->
                     if (from.lifecycleIsResumed()) {
@@ -59,6 +63,11 @@ fun DrawADayNavGraph(
                         popUpTo(MainDestinations.ONBOARDING_ROUTE) { inclusive = true }
                     }
                 }
+            )
+        }
+        composable(MainDestinations.PROFILE_ROUTE) {
+            ProfileScreen(
+                onBack = { navController.navigateUp() }
             )
         }
         composable(

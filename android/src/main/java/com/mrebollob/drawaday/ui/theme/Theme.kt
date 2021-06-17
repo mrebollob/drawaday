@@ -13,10 +13,11 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 private val LightThemeColors: Colors = lightColors(
     primary = CustomTeal500,
     primaryVariant = CustomTeal700,
-    onPrimary = CustomWhite1,
+    onPrimary = Color.White,
     secondary = CustomYellow500,
     secondaryVariant = CustomYellow700,
-    onSecondary = CustomWhite1,
+    onSecondary = Color.White,
+    surface = CustomCream500,
     error = Red800
 )
 
@@ -37,7 +38,7 @@ fun DrawADayTheme(
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
-        systemUiController.setStatusBarColor(LightThemeColors.primary)
+        systemUiController.setStatusBarColor(LightThemeColors.surface)
     }
 
     MaterialTheme(
