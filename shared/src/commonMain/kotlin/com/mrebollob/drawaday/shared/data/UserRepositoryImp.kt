@@ -1,8 +1,8 @@
 package com.mrebollob.drawaday.shared.data
 
 import com.mrebollob.drawaday.shared.data.local.UserLocalDataSource
-import com.mrebollob.drawaday.shared.domain.model.User
 import com.mrebollob.drawaday.shared.domain.repository.UserRepository
+import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -10,28 +10,22 @@ class UserRepositoryImp(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRepository {
 
-    override fun getUser(): Flow<User?> {
-        return flow {
-            val userName = userLocalDataSource.getUserName()
-            if (userName.isEmpty()) {
-                emit(null)
-            } else {
-                emit(User(userName))
-            }
-        }
-    }
-
-    override suspend fun saveUser(user: User) {
-        userLocalDataSource.saveUserName(userName = user.name)
-    }
-
     override fun getIsNewUser(): Flow<Boolean> {
         return flow {
-            emit(userLocalDataSource.getIsNewUser())
+            val startDate = userLocalDataSource.getStartDate()
+            emit(startDate == null)
         }
     }
 
-    override suspend fun setIsNewUser(isNewUser: Boolean) {
-        userLocalDataSource.setIsNewUser(isNewUser)
+    override suspend fun setStartDate(date: DateTime) {
+        userLocalDataSource.setStartDate(date)
+    }
+
+    override fun getDaysInTheApp(): Flow<Int> {
+        return flow {
+            val now = DateTime.now()
+            val startDate = userLocalDataSource.getStartDate() ?: now
+            emit((startDate - now).days.toInt())
+        }
     }
 }

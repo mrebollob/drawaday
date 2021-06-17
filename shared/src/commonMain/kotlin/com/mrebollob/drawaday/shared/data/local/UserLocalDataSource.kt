@@ -1,12 +1,10 @@
 package com.mrebollob.drawaday.shared.data.local
 
+import com.soywiz.klock.DateTime
+
 interface UserLocalDataSource {
 
-    fun getUserName(): String
+    fun setStartDate(date: DateTime)
 
-    fun saveUserName(userName: String)
-
-    fun getIsNewUser(): Boolean
-
-    fun setIsNewUser(isNewUser: Boolean)
+    fun getStartDate(): DateTime?
 }

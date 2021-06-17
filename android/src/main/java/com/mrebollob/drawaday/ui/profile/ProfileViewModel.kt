@@ -10,9 +10,5 @@ class ProfileViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    fun saveUser(user: User) {
-        viewModelScope.launch {
-            userRepository.saveUser(user)
-        }
-    }
+
 }

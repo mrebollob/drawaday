@@ -70,6 +70,7 @@ kotlin {
                 api(Koin.core)
                 api(Koin.test)
 
+                implementation(Deps.klock)
                 api(Deps.kermit)
             }
         }

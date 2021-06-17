@@ -2,6 +2,7 @@ package com.mrebollob.drawaday.shared.data
 
 import android.content.Context
 import com.mrebollob.drawaday.shared.data.local.UserLocalDataSource
+import com.soywiz.klock.DateTime
 
 class UserLocalDataSourceImp(
     context: Context
@@ -11,29 +12,29 @@ class UserLocalDataSourceImp(
         USER_PREFERENCES_FILE_KEY, Context.MODE_PRIVATE
     )
 
-    override fun getUserName(): String {
-        return sharedPref.getString(USER_NAME_KEY, "") ?: ""
-    }
-
-    override fun saveUserName(userName: String) {
+    override fun setStartDate(date: DateTime) {
         with(sharedPref.edit()) {
-            putString(USER_NAME_KEY, userName)
+            putString(USER_START_DATE_KEY, date.unixMillis.toString())
             apply()
         }
     }
 
-    override fun getIsNewUser(): Boolean = sharedPref.getBoolean(IS_NEW_USER_KEY, true)
+    override fun getStartDate(): DateTime? {
+        val unixMillis: Double? = try {
+            sharedPref.getString(USER_START_DATE_KEY, null)?.toDouble()
+        } catch (exception: NumberFormatException) {
+            null
+        }
 
-    override fun setIsNewUser(isNewUser: Boolean) {
-        with(sharedPref.edit()) {
-            putBoolean(IS_NEW_USER_KEY, isNewUser)
-            apply()
+        return if (unixMillis != null) {
+            DateTime(unixMillis)
+        } else {
+            null
         }
     }
 
     companion object {
-        private const val USER_NAME_KEY = "user_name_key"
-        private const val IS_NEW_USER_KEY = "is_new_user_key"
+        private const val USER_START_DATE_KEY = "user_start_date_key"
         private const val USER_PREFERENCES_FILE_KEY = "user_preferences_file_key"
     }
 }

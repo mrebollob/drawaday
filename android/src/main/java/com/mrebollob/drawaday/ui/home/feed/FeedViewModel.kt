@@ -17,6 +17,6 @@ class FeedViewModel(
     val drawImages: StateFlow<List<DrawImage>> = drawRepository.fetchDrawImages()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val user = userRepository.getUser()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+//    val user = userRepository.getUser()
+//        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }

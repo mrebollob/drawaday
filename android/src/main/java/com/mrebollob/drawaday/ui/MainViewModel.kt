@@ -3,6 +3,7 @@ package com.mrebollob.drawaday.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mrebollob.drawaday.shared.domain.repository.UserRepository
+import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -14,9 +15,9 @@ class MainViewModel(
     val isNewUser = userRepository.getIsNewUser()
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-    fun setIsNewUser(isNewUser: Boolean) {
+    fun setStartDate() {
         viewModelScope.launch {
-            userRepository.setIsNewUser(isNewUser)
+            userRepository.setStartDate(DateTime.now())
         }
     }
 }

@@ -58,7 +58,7 @@ fun DrawADayNavGraph(
             OnBoardingScreen(
                 onBoardingContent = OnBoardingContent.getOnBoardingContent(),
                 onDonePressed = {
-                    mainViewModel.setIsNewUser(false)
+                    mainViewModel.setStartDate()
                     navController.navigate(MainDestinations.HOME_ROUTE) {
                         popUpTo(MainDestinations.ONBOARDING_ROUTE) { inclusive = true }
                     }

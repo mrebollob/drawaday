@@ -26,6 +26,7 @@ object AndroidSdk {
 
 object Deps {
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
+    const val klock = "com.soywiz.korlibs.klock:klock:2.1.2"
 }
 
 object Test {
