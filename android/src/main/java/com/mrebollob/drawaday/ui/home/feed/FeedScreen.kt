@@ -129,16 +129,18 @@ private fun DrawImageList(
     onDrawingClick: (drawingId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val todayDrawImage = drawImages[0]
-    val drawingsHistory = drawImages.subList(1, drawImages.size)
+    if (drawImages.isNotEmpty()) {
+        val todayDrawImage = drawImages[0]
+        val drawingsHistory = drawImages.subList(1, drawImages.size)
 
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
-    ) {
-        item { UserGreetingsRow(onProfileClick) }
-        item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
-        item { DrawingHistory(drawingsHistory, onDrawingClick) }
+        LazyColumn(
+            modifier = modifier,
+            contentPadding = LocalWindowInsets.current.systemBars.toPaddingValues(top = false)
+        ) {
+            item { UserGreetingsRow(onProfileClick) }
+            item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
+            item { DrawingHistory(drawingsHistory, onDrawingClick) }
+        }
     }
 }
 

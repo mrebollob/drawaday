@@ -3,10 +3,12 @@ package com.mrebollob.drawaday.shared.data
 import co.touchlab.kermit.Kermit
 import com.mrebollob.drawaday.shared.data.local.DrawADayDatabaseWrapper
 import com.mrebollob.drawaday.shared.data.network.DrawADayApi
+import com.mrebollob.drawaday.shared.data.network.model.DrawImageApiModel
 import com.mrebollob.drawaday.shared.data.network.model.toDomain
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.shared.domain.model.Result
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
+import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,14 +28,20 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
     override suspend fun fetchDrawImages(index: Int): Flow<Result<List<DrawImage>>> = flow {
         emit(Result.Loading())
         val cachedImages = getCachedImages()
-        if (cachedImages != null) {
+        if (cachedImages != null && cachedImages.isNotEmpty()) {
             logger.d { "Emitting images from cache. count: ${cachedImages.size}" }
             emit(Result.Loading(cachedImages))
+        } else {
+            logger.d { "Empty cache" }
         }
 
         val freshImages = getFreshImages(index)
-        emit(Result.Success(freshImages))
-        saveImages(freshImages)
+        if (freshImages != null) {
+            emit(Result.Success(freshImages))
+            saveImages(freshImages)
+        } else {
+            emit(Result.Error(Exception("Network error")))
+        }
     }
 
     override suspend fun fetchDrawImage(id: String): Flow<Result<DrawImage>> = flow {
@@ -75,13 +83,21 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
                 })?.executeAsList()?.firstOrNull()
         }
 
-    private suspend fun getFreshImages(index: Int): List<DrawImage> {
-        val result = drawApi.fetchDrawImages()
-        return result.values.map { it.toDomain() }
+    private suspend fun getFreshImages(index: Int): List<DrawImage>? {
+
+        val result: Map<String, DrawImageApiModel>? = try {
+            drawApi.fetchDrawImages()
+        } catch (e: IOException) {
+            logger.e { "getFreshImages error" }
+            null
+        }
+
+        return result?.values?.map { it.toDomain() }
     }
 
     private suspend fun saveImages(images: List<DrawImage>) =
         withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+            logger.d { "${images.size} saved in cache" }
             drawImageQueries?.deleteAll()
             images.forEach {
                 drawImageQueries?.insertItem(
