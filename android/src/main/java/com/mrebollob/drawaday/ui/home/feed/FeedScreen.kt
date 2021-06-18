@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -18,6 +19,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.mrebollob.drawaday.components.ErrorSnackbar
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.state.UiState
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
@@ -33,12 +35,14 @@ fun FeedScreen(
 ) {
     val viewModel = getViewModel<FeedViewModel>()
     val drawImages = viewModel.drawImages.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     FeedScreen(
         drawImages = drawImages.value,
         onProfileClick = onProfileClick,
         onDrawingClick = onDrawingClick,
         onRefreshDrawImages = { viewModel.loadImages(true) },
+        snackbarHostState = snackbarHostState,
         modifier = modifier
     )
 }
@@ -50,6 +54,7 @@ private fun FeedScreen(
     onProfileClick: () -> Unit,
     onDrawingClick: (String) -> Unit,
     onRefreshDrawImages: () -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -68,6 +73,7 @@ private fun FeedScreen(
                         onRefreshDrawImages()
                     },
                     onDrawingClick = onDrawingClick,
+                    snackbarHostState = snackbarHostState,
                     modifier = modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colors.surface)
@@ -75,6 +81,14 @@ private fun FeedScreen(
 
                 )
             }
+        )
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        ErrorSnackbar(
+            snackbarHostState = snackbarHostState,
+            onDismiss = { snackbarHostState.currentSnackbarData?.dismiss() },
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
@@ -104,6 +118,7 @@ private fun HomeScreenErrorAndContent(
     onProfileClick: () -> Unit,
     onRefresh: () -> Unit,
     onDrawingClick: (String) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     if (drawImages.data != null) {
@@ -111,6 +126,7 @@ private fun HomeScreenErrorAndContent(
             drawImages = drawImages.data,
             onProfileClick = onProfileClick,
             onDrawingClick = onDrawingClick,
+            snackbarHostState = snackbarHostState,
             modifier = modifier
         )
     } else if (!drawImages.hasError) {
@@ -127,6 +143,7 @@ private fun DrawImageList(
     drawImages: List<DrawImage>,
     onProfileClick: () -> Unit,
     onDrawingClick: (drawingId: String) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     if (drawImages.isNotEmpty()) {
@@ -139,7 +156,7 @@ private fun DrawImageList(
         ) {
             item { UserGreetingsRow(onProfileClick) }
             item { DrawImageCardTop(todayDrawImage, onDrawingClick) }
-            item { DrawingHistory(drawingsHistory, onDrawingClick) }
+            item { DrawingHistory(drawingsHistory, onDrawingClick, snackbarHostState) }
         }
     }
 }
@@ -162,12 +179,15 @@ private fun FullScreenLoading() {
 @Composable
 fun HomeScreenPreview() {
     val drawImages = TestDataUtils.getTestDrawImages(11)
+    val snackbarHostState = remember { SnackbarHostState() }
+
     DrawADayTheme {
         FeedScreen(
             drawImages = UiState(data = drawImages),
             onProfileClick = { /*TODO*/ },
             onDrawingClick = { /*TODO*/ },
-            onRefreshDrawImages = { /*TODO*/ }
+            onRefreshDrawImages = { /*TODO*/ },
+            snackbarHostState = snackbarHostState
         )
     }
 }

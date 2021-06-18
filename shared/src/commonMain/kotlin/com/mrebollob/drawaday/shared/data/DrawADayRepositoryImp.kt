@@ -43,7 +43,7 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
 
         val freshImages = getFreshImages(index)
         if (freshImages != null) {
-            emit(Result.Success(freshImages))
+            emit(Result.Success(freshImages.subList(0, 1)))
             saveImages(freshImages)
         } else {
             emit(Result.Error(Exception("Network error")))

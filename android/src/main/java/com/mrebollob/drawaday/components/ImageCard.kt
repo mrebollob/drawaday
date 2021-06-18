@@ -28,7 +28,9 @@ fun ImageCard(
     contentDescription: String,
     title: String?,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    contentScale: ContentScale = ContentScale.Crop,
+    modifier: Modifier = Modifier,
+    imageModifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
@@ -41,8 +43,8 @@ fun ImageCard(
             Image(
                 painter = painter,
                 contentDescription = contentDescription,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
+                contentScale = contentScale,
+                modifier = imageModifier
                     .aspectRatio(1.45f)
                     .fillMaxWidth()
             )

@@ -3,7 +3,7 @@
     <string name="retry">Retry</string>
     <string name="cd_navigate_up">Navigate up</string>
     <string name="app_name">Draw a day</string>
-
+    <string name="dismiss">DISMISS</string>
 
     <!--  OnBoarding screen  -->
     <string name="on_boarding_screen_title_1">Welcome!</string>
@@ -24,6 +24,8 @@
     <string name="home_screen_today_category">Your drawing for today</string>
     <string name="home_screen_history_category">History</string>
     <string name="home_screen_feed_section">Home</string>
+    <string name="home_screen_feed_image_placeholder">Image placeholder</string>
+    <string name="home_screen_feed_history">This should be available tomorrow</string>
     <string name="home_screen_learn_section">Learn</string>
     <string name="home_screen_user_profile">Profile</string>
     <string name="home_screen_user_greetings_morning">Good morning! 👋</string>
@@ -41,9 +43,9 @@
     <string name="drawing_screen_rotate">Rotate</string>
 
     <!--  Profile screen  -->
-        <string name="profile_screen_contact">FAQ / Contact Us</string>
-        <string name="profile_screen_terms">Terms of Service</string>
-        <string name="profile_screen_privacy">Privacy Policy</string>
-        <string name="profile_screen_version">Version %1$s (%2$s)</string>
+    <string name="profile_screen_contact">FAQ / Contact Us</string>
+    <string name="profile_screen_terms">Terms of Service</string>
+    <string name="profile_screen_privacy">Privacy Policy</string>
+    <string name="profile_screen_version">Version %1$s (%2$s)</string>
 
 </resources>

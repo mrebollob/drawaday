@@ -30,6 +30,10 @@ private val DarkThemeColors = darkColors(
     error = Red200
 )
 
+val Colors.snackbarAction: Color
+    @Composable
+    get() = if (isLight) CustomYellow500 else CustomYellow700
+
 @Composable
 fun DrawADayTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
