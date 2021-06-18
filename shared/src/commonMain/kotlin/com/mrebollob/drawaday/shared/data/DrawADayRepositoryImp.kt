@@ -29,7 +29,7 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         }
     }
 
-    override fun fetchDrawImages(): Flow<List<DrawImage>> {
+    override fun fetchDrawImages(index: Int): Flow<List<DrawImage>> {
         return drawImageQueries?.selectAll(mapper = { id, title, drawing, source, publishDate ->
             DrawImage(
                 id = id,

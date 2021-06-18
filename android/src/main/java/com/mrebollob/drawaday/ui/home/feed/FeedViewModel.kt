@@ -5,18 +5,28 @@ import androidx.lifecycle.viewModelScope
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
 import com.mrebollob.drawaday.shared.domain.repository.UserRepository
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class FeedViewModel(
-    drawRepository: DrawADayRepository,
-    userRepository: UserRepository
+    private val drawRepository: DrawADayRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val drawImages: StateFlow<List<DrawImage>> = drawRepository.fetchDrawImages()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    private val _drawImages = MutableStateFlow(emptyList<DrawImage>())
+    val drawImages: StateFlow<List<DrawImage>> = _drawImages.asStateFlow()
 
-//    val user = userRepository.getUser()
-//        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    init {
+        loadImages()
+    }
+
+    private fun loadImages() {
+        viewModelScope.launch {
+            userRepository.getDaysInTheApp().map { index ->
+                drawRepository.fetchDrawImages(index)
+            }.flattenConcat().collect { images ->
+                _drawImages.value = images
+            }
+        }
+    }
 }

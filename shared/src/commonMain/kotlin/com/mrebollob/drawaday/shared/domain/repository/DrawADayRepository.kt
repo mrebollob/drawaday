@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface DrawADayRepository {
 
-    fun fetchDrawImages(): Flow<List<DrawImage>>
+    fun fetchDrawImages(index: Int): Flow<List<DrawImage>>
 
     fun fetchDrawImageByDate(date: String): Flow<DrawImage>
 }
