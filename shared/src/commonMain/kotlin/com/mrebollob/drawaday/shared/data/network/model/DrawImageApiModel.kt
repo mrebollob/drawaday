@@ -1,5 +1,6 @@
 package com.mrebollob.drawaday.shared.data.network.model
 
+import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,3 +17,13 @@ class DrawImageApiModel(
     @SerialName("publish_date")
     val publishDate: String
 )
+
+fun DrawImageApiModel.toDomain() = with(this) {
+    DrawImage(
+        id = id,
+        title = title,
+        drawing = drawing,
+        source = source,
+        publishDate = publishDate
+    )
+}

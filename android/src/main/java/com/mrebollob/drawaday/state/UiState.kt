@@ -36,5 +36,6 @@ fun <T> UiState<T>.copyWithResult(value: Result<T>): UiState<T> {
     return when (value) {
         is Result.Success -> copy(loading = false, exception = null, data = value.data)
         is Result.Error -> copy(loading = false, exception = value.exception)
+        is Result.Loading -> copy(loading = true, exception = null, data = value.data)
     }
 }
