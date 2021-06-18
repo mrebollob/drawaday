@@ -5,6 +5,7 @@ import com.mrebollob.drawaday.shared.domain.repository.UserRepository
 import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.math.max
 
 class UserRepositoryImp(
     private val userLocalDataSource: UserLocalDataSource
@@ -25,7 +26,7 @@ class UserRepositoryImp(
         return flow {
             val now = DateTime.now()
             val startDate = userLocalDataSource.getStartDate() ?: now
-            emit((startDate - now).days.toInt())
+            emit(max((startDate - now).days.toInt(), 0))
         }
     }
 }
