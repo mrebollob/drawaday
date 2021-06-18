@@ -38,7 +38,7 @@ fun FeedScreen(
         drawImages = drawImages.value,
         onProfileClick = onProfileClick,
         onDrawingClick = onDrawingClick,
-        onRefreshDrawImages = {},
+        onRefreshDrawImages = { viewModel.loadImages(true) },
         modifier = modifier
     )
 }

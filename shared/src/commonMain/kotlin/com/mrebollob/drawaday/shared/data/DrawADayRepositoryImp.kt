@@ -25,14 +25,20 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
 
     private val drawImageQueries = drawDatabase.instance?.drawADayQueries
 
-    override suspend fun fetchDrawImages(index: Int): Flow<Result<List<DrawImage>>> = flow {
+    override suspend fun fetchDrawImages(
+        index: Int,
+        refresh: Boolean
+    ): Flow<Result<List<DrawImage>>> = flow {
         emit(Result.Loading())
-        val cachedImages = getCachedImages()
-        if (cachedImages != null && cachedImages.isNotEmpty()) {
-            logger.d { "Emitting images from cache. count: ${cachedImages.size}" }
-            emit(Result.Loading(cachedImages))
-        } else {
-            logger.d { "Empty cache" }
+
+        if (refresh.not()) {
+            val cachedImages = getCachedImages()
+            if (cachedImages != null && cachedImages.isNotEmpty()) {
+                logger.d { "Emitting images from cache. count: ${cachedImages.size}" }
+                emit(Result.Loading(cachedImages))
+            } else {
+                logger.d { "Empty cache" }
+            }
         }
 
         val freshImages = getFreshImages(index)

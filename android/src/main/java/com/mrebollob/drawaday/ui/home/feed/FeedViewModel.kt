@@ -19,13 +19,13 @@ class FeedViewModel(
     val drawImages: StateFlow<UiState<List<DrawImage>>> = _drawImages.asStateFlow()
 
     init {
-        loadImages()
+        loadImages(false)
     }
 
-    private fun loadImages() {
+    fun loadImages(refresh: Boolean) {
         viewModelScope.launch {
             userRepository.getDaysInTheApp().map { index ->
-                drawRepository.fetchDrawImages(index)
+                drawRepository.fetchDrawImages(index, refresh)
             }.flattenConcat().collect { imagesResult ->
                 _drawImages.value = drawImages.value.copyWithResult(imagesResult)
             }
