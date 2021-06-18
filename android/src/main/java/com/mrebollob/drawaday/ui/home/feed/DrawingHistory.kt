@@ -25,40 +25,42 @@ fun DrawingHistory(
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        Text(
-            text = stringResource(id = R.string.home_screen_history_category),
-            style = MaterialTheme.typography.h6,
-            modifier = Modifier
-                .heightIn(min = 56.dp)
-                .padding(horizontal = 16.dp)
-                .wrapContentHeight()
-        )
-        VerticalGrid(
-            modifier
-                .padding(horizontal = 8.dp)
+    if (drawings.isNotEmpty()) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
         ) {
-            drawings.forEach { drawing ->
-                ImageCard(
-                    painter = rememberCoilPainter(
-                        request = drawing.getScaledDrawing(200),
-                        previewPlaceholder = R.drawable.placeholder,
-                    ),
-                    title = drawing.title,
-                    contentDescription = drawing.title,
-                    onClick = {
-                        onDrawingClick(drawing.id)
-                    },
-                    modifier = Modifier.padding(8.dp)
-                )
+            Text(
+                text = stringResource(id = R.string.home_screen_history_category),
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier
+                    .heightIn(min = 56.dp)
+                    .padding(horizontal = 16.dp)
+                    .wrapContentHeight()
+            )
+            VerticalGrid(
+                modifier
+                    .padding(horizontal = 8.dp)
+            ) {
+                drawings.forEach { drawing ->
+                    ImageCard(
+                        painter = rememberCoilPainter(
+                            request = drawing.getScaledDrawing(200),
+                            previewPlaceholder = R.drawable.placeholder,
+                        ),
+                        title = drawing.title,
+                        contentDescription = drawing.title,
+                        onClick = {
+                            onDrawingClick(drawing.id)
+                        },
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
             }
+            Spacer(Modifier.height(4.dp))
         }
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(32.dp))
     }
-    Spacer(Modifier.height(32.dp))
 }
 
 @Preview("Default colors")
