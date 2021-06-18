@@ -22,23 +22,28 @@ import com.google.accompanist.insets.navigationBarsPadding
 import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.components.InsetAwareTopAppBar
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
+import com.mrebollob.drawaday.state.UiState
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun DrawingScreen(
     drawingId: String,
     onBack: () -> Unit
 ) {
-    val drawImage = TestDataUtils.getTestDrawImage(drawingId)
+    val viewModel = getViewModel<DrawingViewModel> { parametersOf(drawingId) }
+    val image = viewModel.drawImage.collectAsState()
+
     var isBlackAndWhite by rememberSaveable { mutableStateOf(false) }
     var gridSize by rememberSaveable { mutableStateOf(0) }
     val scale = remember { mutableStateOf(1f) }
     val rotation = remember { mutableStateOf(0f) }
 
     DrawingScreen(
-        drawImage = drawImage,
+        drawImage = image.value,
         onBack = onBack,
         isBlackAndWhite = isBlackAndWhite,
         gridSize = gridSize.dp,
@@ -70,7 +75,7 @@ fun DrawingScreen(
 
 @Composable
 private fun DrawingScreen(
-    drawImage: DrawImage,
+    drawImage: UiState<DrawImage>,
     onBack: () -> Unit,
     isBlackAndWhite: Boolean,
     gridSize: Dp,
@@ -114,18 +119,20 @@ private fun DrawingScreen(
             )
         }
     ) { innerPadding ->
-        DrawingContent(
-            drawImage = drawImage,
-            modifier = Modifier
-                .background(MaterialTheme.colors.surface)
-                .padding(innerPadding)
-                .navigationBarsPadding(bottom = false)
-                .supportWideScreen(),
-            isBlackAndWhite = isBlackAndWhite,
-            gridSize = gridSize,
-            scale = scale,
-            rotation = rotation
-        )
+        if (drawImage.data != null) {
+            DrawingContent(
+                drawImage = drawImage.data,
+                modifier = Modifier
+                    .background(MaterialTheme.colors.surface)
+                    .padding(innerPadding)
+                    .navigationBarsPadding(bottom = false)
+                    .supportWideScreen(),
+                isBlackAndWhite = isBlackAndWhite,
+                gridSize = gridSize,
+                scale = scale,
+                rotation = rotation
+            )
+        }
     }
 }
 
@@ -196,7 +203,7 @@ fun ArticlePreview() {
     val drawImage = TestDataUtils.getTestDrawImage("#1")
     DrawADayTheme {
         DrawingScreen(
-            drawImage = drawImage,
+            drawImage = UiState(data = drawImage),
             onBack = { /*TODO*/ },
             isBlackAndWhite = true,
             gridSize = 100.dp,

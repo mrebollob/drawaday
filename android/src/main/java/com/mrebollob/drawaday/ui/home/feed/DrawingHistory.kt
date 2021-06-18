@@ -48,7 +48,7 @@ fun DrawingHistory(
                             request = drawing.getScaledDrawing(200),
                             previewPlaceholder = R.drawable.placeholder,
                         ),
-                        title = drawing.title,
+                        title = null,
                         contentDescription = drawing.title,
                         onClick = {
                             onDrawingClick(drawing.id)

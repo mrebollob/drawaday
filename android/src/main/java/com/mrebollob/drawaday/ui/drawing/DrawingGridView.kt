@@ -4,10 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mrebollob.drawaday.ui.theme.CustomTeal500
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 
 @Composable
@@ -33,7 +33,7 @@ fun DrawingGridView(
                         Modifier
                             .fillMaxHeight()
                             .width(1.dp)
-                            .background(color = Color.White)
+                            .background(color = CustomTeal500)
                     )
                 }
             }
@@ -54,7 +54,7 @@ fun DrawingGridView(
                         Modifier
                             .fillMaxWidth()
                             .height(1.dp)
-                            .background(color = Color.White)
+                            .background(color = CustomTeal500)
                     )
                 }
             }

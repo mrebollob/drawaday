@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,8 +31,8 @@ fun FeedScreen(
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val feedViewModel = getViewModel<FeedViewModel>()
-    val drawImages: State<UiState<List<DrawImage>>> = feedViewModel.drawImages.collectAsState()
+    val viewModel = getViewModel<FeedViewModel>()
+    val drawImages = viewModel.drawImages.collectAsState()
 
     FeedScreen(
         drawImages = drawImages.value,

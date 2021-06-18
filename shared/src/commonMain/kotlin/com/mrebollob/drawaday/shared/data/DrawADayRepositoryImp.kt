@@ -36,6 +36,17 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         saveImages(freshImages)
     }
 
+    override suspend fun fetchDrawImage(id: String): Flow<Result<DrawImage>> = flow {
+        emit(Result.Loading())
+
+        val image = getCachedImage(id)
+        if (image != null) {
+            emit(Result.Success(image))
+        } else {
+            emit(Result.Error(Exception("Image not found")))
+        }
+    }
+
     private suspend fun getCachedImages(): List<DrawImage>? =
         withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
             drawImageQueries?.selectAll(mapper = { id, title, drawing, source, publishDate ->
@@ -47,6 +58,21 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
                     publishDate = publishDate
                 )
             })?.executeAsList()
+        }
+
+    private suspend fun getCachedImage(id: String): DrawImage? =
+        withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+            drawImageQueries?.selectById(
+                id = id,
+                mapper = { id, title, drawing, source, publishDate ->
+                    DrawImage(
+                        id = id,
+                        title = title,
+                        drawing = drawing,
+                        source = source,
+                        publishDate = publishDate
+                    )
+                })?.executeAsList()?.firstOrNull()
         }
 
     private suspend fun getFreshImages(index: Int): List<DrawImage> {

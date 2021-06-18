@@ -13,5 +13,10 @@ INSERT OR REPLACE INTO DrawImage(id, title, drawing, source, publish_date)VALUES
 selectAll:
 SELECT * FROM DrawImage;
 
+selectById:
+SELECT *
+FROM DrawImage
+WHERE id = ?;
+
 deleteAll:
 DELETE FROM DrawImage;
