@@ -1,11 +1,10 @@
 package com.mrebollob.drawaday.ui.drawing
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -13,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,11 +29,13 @@ import com.mrebollob.drawaday.utils.supportWideScreen
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
+
 @Composable
 fun DrawingScreen(
     drawingId: String,
     onBack: () -> Unit
 ) {
+    val context = LocalContext.current
     val viewModel = getViewModel<DrawingViewModel> { parametersOf(drawingId) }
     val image = viewModel.drawImage.collectAsState()
 
@@ -69,6 +71,10 @@ fun DrawingScreen(
         },
         onToggleRotation = {
             rotation.value = rotation.value + 90f
+        },
+        onCreditsClick = {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(image.value.data?.source))
+            context.startActivity(browserIntent)
         }
     )
 }
@@ -84,7 +90,8 @@ private fun DrawingScreen(
     onToggleBlackAndWhite: () -> Unit,
     onToggleGridSize: () -> Unit,
     onToggleScale: () -> Unit,
-    onToggleRotation: () -> Unit
+    onToggleRotation: () -> Unit,
+    onCreditsClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -115,7 +122,8 @@ private fun DrawingScreen(
                 onToggleBlackAndWhite = onToggleBlackAndWhite,
                 onToggleGridSize = onToggleGridSize,
                 onToggleScale = onToggleScale,
-                onToggleRotation = onToggleRotation
+                onToggleRotation = onToggleRotation,
+                onCreditsClick = onCreditsClick
             )
         }
     ) { innerPadding ->
@@ -144,7 +152,8 @@ private fun BottomBar(
     onToggleBlackAndWhite: () -> Unit,
     onToggleGridSize: () -> Unit,
     onToggleScale: () -> Unit,
-    onToggleRotation: () -> Unit
+    onToggleRotation: () -> Unit,
+    onCreditsClick: () -> Unit
 ) {
     Surface(elevation = 8.dp) {
         Row(
@@ -190,6 +199,15 @@ private fun BottomBar(
                 disableText = R.string.drawing_screen_rotate,
                 tint = MaterialTheme.colors.primary
             )
+            Spacer(modifier = Modifier.weight(1f))
+            TextButton(
+                onClick = { onCreditsClick() },
+            ) {
+                Text(
+                    text = stringResource(id = R.string.drawing_screen_credits),
+                    color = MaterialTheme.colors.primary,
+                )
+            }
         }
     }
 }
@@ -212,7 +230,8 @@ fun ArticlePreview() {
             onToggleBlackAndWhite = { /*TODO*/ },
             onToggleGridSize = { /*TODO*/ },
             onToggleScale = { /*TODO*/ },
-            onToggleRotation = { /*TODO*/ }
+            onToggleRotation = { /*TODO*/ },
+            onCreditsClick = { /*TODO*/ }
         )
     }
 }
