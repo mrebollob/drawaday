@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun DrawingHistory(
     drawings: List<DrawImage>,
-    onDrawingClick: (String) -> Unit,
+    onDrawingClick: (DrawImage) -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
@@ -62,7 +62,7 @@ fun DrawingHistory(
 @Composable
 private fun ImagesHistory(
     drawings: List<DrawImage>,
-    onDrawingClick: (String) -> Unit
+    onDrawingClick: (DrawImage) -> Unit
 ) {
     drawings.forEach { drawing ->
         ImageCard(
@@ -73,7 +73,7 @@ private fun ImagesHistory(
             title = null,
             contentDescription = drawing.title,
             onClick = {
-                onDrawingClick(drawing.id)
+                onDrawingClick(drawing)
             },
             modifier = Modifier.padding(8.dp)
         )

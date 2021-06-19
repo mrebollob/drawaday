@@ -19,12 +19,16 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.mrebollob.drawaday.analytics.AnalyticsEvent
+import com.mrebollob.drawaday.analytics.AnalyticsManager
+import com.mrebollob.drawaday.analytics.toBundle
 import com.mrebollob.drawaday.components.ErrorSnackbar
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.state.UiState
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.TestDataUtils
 import com.mrebollob.drawaday.utils.supportWideScreen
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -33,6 +37,7 @@ fun FeedScreen(
     onDrawingClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val analyticsManager = get<AnalyticsManager>()
     val viewModel = getViewModel<FeedViewModel>()
     val drawImages = viewModel.drawImages.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -40,7 +45,10 @@ fun FeedScreen(
     FeedScreen(
         drawImages = drawImages.value,
         onProfileClick = onProfileClick,
-        onDrawingClick = onDrawingClick,
+        onDrawingClick = { image ->
+            analyticsManager.trackEvent(AnalyticsEvent.NAVIGATE_TO_IMAGE, image.toBundle())
+            onDrawingClick(image.id)
+        },
         onRefreshDrawImages = { viewModel.loadImages(true) },
         snackbarHostState = snackbarHostState,
         modifier = modifier
@@ -52,7 +60,7 @@ fun FeedScreen(
 private fun FeedScreen(
     drawImages: UiState<List<DrawImage>>,
     onProfileClick: () -> Unit,
-    onDrawingClick: (String) -> Unit,
+    onDrawingClick: (DrawImage) -> Unit,
     onRefreshDrawImages: () -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
@@ -117,7 +125,7 @@ private fun HomeScreenErrorAndContent(
     drawImages: UiState<List<DrawImage>>,
     onProfileClick: () -> Unit,
     onRefresh: () -> Unit,
-    onDrawingClick: (String) -> Unit,
+    onDrawingClick: (DrawImage) -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
@@ -142,7 +150,7 @@ private fun HomeScreenErrorAndContent(
 private fun DrawImageList(
     drawImages: List<DrawImage>,
     onProfileClick: () -> Unit,
-    onDrawingClick: (drawingId: String) -> Unit,
+    onDrawingClick: (DrawImage) -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {

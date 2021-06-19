@@ -1,6 +1,7 @@
 package com.mrebollob.drawaday.ui.onboarding
 
 import android.content.res.Configuration
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,11 +23,15 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.mrebollob.drawaday.R
+import com.mrebollob.drawaday.analytics.AnalyticsEvent
+import com.mrebollob.drawaday.analytics.AnalyticsManager
+import com.mrebollob.drawaday.analytics.AnalyticsParameter
 import com.mrebollob.drawaday.ui.theme.ColorTheme
 import com.mrebollob.drawaday.ui.theme.CustomOrange1
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
 import com.mrebollob.drawaday.utils.supportWideScreen
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.get
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -35,6 +40,7 @@ fun OnBoardingScreen(
     onBoardingContent: List<OnBoardingContent>,
     onDonePressed: () -> Unit
 ) {
+    val analyticsManager = get<AnalyticsManager>()
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = onBoardingContent.size)
 
@@ -66,7 +72,19 @@ fun OnBoardingScreen(
                             )
                         }
                     },
-                    onDonePressed = onDonePressed,
+                    onSkipClick = {
+                        val bundle = Bundle()
+                        bundle.putInt(
+                            AnalyticsParameter.ONBOARDING_PAGE_NUMBER.key,
+                            pagerState.currentPage
+                        )
+                        analyticsManager.trackEvent(AnalyticsEvent.ONBOARDING_SKIP, bundle)
+                        onDonePressed()
+                    },
+                    onDoneClick = {
+                        analyticsManager.trackEvent(AnalyticsEvent.ONBOARDING_DONE)
+                        onDonePressed()
+                    },
                 )
             }
         }
@@ -116,7 +134,8 @@ private fun OnBoardingContentView(
 private fun NavigationBottomBar(
     showDone: Boolean,
     onNextPressed: () -> Unit,
-    onDonePressed: () -> Unit
+    onSkipClick: () -> Unit,
+    onDoneClick: () -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth()
@@ -133,7 +152,7 @@ private fun NavigationBottomBar(
                         .height(48.dp)
                         .clip(RoundedCornerShape(50)),
                     colors = ButtonDefaults.buttonColors(backgroundColor = CustomOrange1),
-                    onClick = onDonePressed,
+                    onClick = onDoneClick,
                 ) {
                     Text(
                         text = stringResource(id = R.string.on_boarding_screen_done),
@@ -145,7 +164,7 @@ private fun NavigationBottomBar(
                     modifier = Modifier
                         .weight(1f)
                         .height(48.dp),
-                    onClick = onDonePressed,
+                    onClick = onSkipClick,
                 ) {
                     Text(
                         text = stringResource(id = R.string.on_boarding_screen_skip),

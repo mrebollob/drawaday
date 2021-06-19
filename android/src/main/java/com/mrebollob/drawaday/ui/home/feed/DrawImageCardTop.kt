@@ -19,7 +19,7 @@ import com.mrebollob.drawaday.utils.TestDataUtils
 @Composable
 fun DrawImageCardTop(
     drawing: DrawImage,
-    onDrawingClick: (String) -> Unit,
+    onDrawingClick: (DrawImage) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -44,7 +44,7 @@ fun DrawImageCardTop(
             title = null,
             contentDescription = drawing.title,
             onClick = {
-                onDrawingClick(drawing.id)
+                onDrawingClick(drawing)
             }
         )
     }
