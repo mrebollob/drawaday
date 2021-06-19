@@ -8,22 +8,25 @@ import kotlinx.serialization.Serializable
 class DrawImageApiModel(
     @SerialName("id")
     val id: String,
-    @SerialName("title")
-    val title: String,
-    @SerialName("drawing")
-    val drawing: String,
+    @SerialName("image")
+    val image: String,
     @SerialName("source")
     val source: String,
-    @SerialName("publish_date")
-    val publishDate: String
+    @SerialName("author")
+    val author: String,
+    @SerialName("description")
+    val description: String,
+    @SerialName("index")
+    val index: Int
 )
 
 fun DrawImageApiModel.toDomain() = with(this) {
     DrawImage(
         id = id,
-        title = title,
-        drawing = drawing,
+        image = image,
         source = source,
-        publishDate = publishDate
+        author = author,
+        description = description,
+        index = index
     )
 }

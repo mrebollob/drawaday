@@ -10,14 +10,14 @@ enum class AnalyticsParameter(val key: String) {
 
     // Image
     IMAGE_URL("image_url"),
-    IMAGE_TITLE("image_title"),
+    IMAGE_AUTHOR("image_author"),
     IMAGE_SOURCE("image_source")
 }
 
 fun DrawImage.toBundle(): Bundle = with(this) {
     val bundle = Bundle()
-    bundle.putString(AnalyticsParameter.IMAGE_URL.key, drawing)
-    bundle.putString(AnalyticsParameter.IMAGE_TITLE.key, title)
+    bundle.putString(AnalyticsParameter.IMAGE_URL.key, image)
+    bundle.putString(AnalyticsParameter.IMAGE_AUTHOR.key, author)
     bundle.putString(AnalyticsParameter.IMAGE_SOURCE.key, source)
     return bundle
 }

@@ -8,6 +8,7 @@ import com.mrebollob.drawaday.shared.data.network.model.toDomain
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.shared.domain.model.Result
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
+import com.soywiz.klock.max
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.math.max
 
 class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
 
@@ -32,7 +34,7 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         emit(Result.Loading())
 
         if (refresh.not()) {
-            val cachedImages = getCachedImages()
+            val cachedImages = getCachedImages()?.sortedByDescending { it.index }
             if (cachedImages != null && cachedImages.isNotEmpty()) {
                 logger.d { "Emitting images from cache. count: ${cachedImages.size}" }
                 emit(Result.Loading(cachedImages))
@@ -41,7 +43,7 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
             }
         }
 
-        val freshImages = getFreshImages(index)
+        val freshImages = getFreshImages(index)?.sortedByDescending { it.index }
         if (freshImages != null) {
             emit(Result.Success(freshImages))
             saveImages(freshImages)
@@ -63,13 +65,14 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
 
     private suspend fun getCachedImages(): List<DrawImage>? =
         withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-            drawImageQueries?.selectAll(mapper = { id, title, drawing, source, publishDate ->
+            drawImageQueries?.selectAll(mapper = { id, image, source, author, description, index ->
                 DrawImage(
                     id = id,
-                    title = title,
-                    drawing = drawing,
+                    image = image,
                     source = source,
-                    publishDate = publishDate
+                    author = author,
+                    description = description,
+                    index = index.toInt()
                 )
             })?.executeAsList()
         }
@@ -78,13 +81,14 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
             drawImageQueries?.selectById(
                 id = id,
-                mapper = { id, title, drawing, source, publishDate ->
+                mapper = { id, image, source, author, description, index ->
                     DrawImage(
                         id = id,
-                        title = title,
-                        drawing = drawing,
+                        image = image,
                         source = source,
-                        publishDate = publishDate
+                        author = author,
+                        description = description,
+                        index = index.toInt()
                     )
                 })?.executeAsList()?.firstOrNull()
         }
@@ -92,7 +96,10 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
     private suspend fun getFreshImages(index: Int): List<DrawImage>? {
 
         val result: Map<String, DrawImageApiModel>? = try {
-            drawApi.fetchDrawImages()
+            drawApi.fetchDrawImages(
+                startAt = max((index - 10), 0),
+                endAt = index
+            )
         } catch (e: IOException) {
             logger.e { "getFreshImages error" }
             null
@@ -108,10 +115,11 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
             images.forEach {
                 drawImageQueries?.insertItem(
                     id = it.id,
-                    title = it.title,
-                    drawing = it.drawing,
+                    image = it.image,
                     source = it.source,
-                    publish_date = it.publishDate
+                    author = it.author,
+                    description = it.description,
+                    image_index = it.index.toLong()
                 )
             }
         }

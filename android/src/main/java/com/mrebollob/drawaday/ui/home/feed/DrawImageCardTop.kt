@@ -38,11 +38,11 @@ fun DrawImageCardTop(
 
         ImageCard(
             painter = rememberCoilPainter(
-                request = drawing.getScaledDrawing(800),
+                request = drawing.getScaledImage(800),
                 previewPlaceholder = R.drawable.placeholder,
             ),
             title = null,
-            contentDescription = drawing.title,
+            contentDescription = drawing.description,
             onClick = {
                 onDrawingClick(drawing)
             }

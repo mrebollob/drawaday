@@ -67,11 +67,11 @@ private fun ImagesHistory(
     drawings.forEach { drawing ->
         ImageCard(
             painter = rememberCoilPainter(
-                request = drawing.getScaledDrawing(200),
+                request = drawing.getScaledImage(200),
                 previewPlaceholder = R.drawable.placeholder,
             ),
             title = null,
-            contentDescription = drawing.title,
+            contentDescription = drawing.description,
             onClick = {
                 onDrawingClick(drawing)
             },

@@ -2,10 +2,11 @@ package com.mrebollob.drawaday.shared.domain.model
 
 data class DrawImage(
     val id: String,
-    val title: String,
-    val drawing: String,
+    val image: String,
     val source: String,
-    val publishDate: String
+    val author: String,
+    val description: String,
+    val index: Int
 ) {
-    fun getScaledDrawing(widthInPx: Int) = drawing // "$drawing?fit=crop&w=$widthInPx&q=80"
+    fun getScaledImage(widthInPx: Int) = "$image?fit=crop&w=$widthInPx&q=80"
 }

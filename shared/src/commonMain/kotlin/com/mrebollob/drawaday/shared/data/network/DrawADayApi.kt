@@ -9,6 +9,10 @@ class DrawADayApi(
     private val client: HttpClient,
     private val baseUrl: String = "https://drawaday-6b6a5-default-rtdb.firebaseio.com",
 ) : KoinComponent {
-    suspend fun fetchDrawImages(): Map<String, DrawImageApiModel> =
-        client.get("$baseUrl/images.json")
+    suspend fun fetchDrawImages(startAt: Int, endAt: Int): Map<String, DrawImageApiModel> =
+        client.get("$baseUrl/images.json") {
+            parameter("orderBy", "\"index\"")
+            parameter("startAt", startAt)
+            parameter("endAt", endAt)
+        }
 }

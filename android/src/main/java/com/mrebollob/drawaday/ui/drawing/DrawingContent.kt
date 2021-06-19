@@ -67,11 +67,11 @@ private fun DrawingImage(
 ) {
     Image(
         painter = rememberCoilPainter(
-            request = drawImage.drawing,
+            request = drawImage.image,
             fadeIn = true,
             previewPlaceholder = R.drawable.placeholder,
         ),
-        contentDescription = drawImage.title,
+        contentDescription = drawImage.description,
         modifier = modifier
             .fillMaxSize()
             .graphicsLayer(

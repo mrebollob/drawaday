@@ -1,14 +1,15 @@
 
 CREATE TABLE DrawImage(
 id TEXT NOT NULL PRIMARY KEY,
-title TEXT NOT NULL,
-drawing TEXT NOT NULL,
+image TEXT NOT NULL,
 source TEXT NOT NULL,
-publish_date TEXT NOT NULL
+author TEXT NOT NULL,
+description TEXT NOT NULL,
+image_index INTEGER NOT NULL
 );
 
 insertItem:
-INSERT OR REPLACE INTO DrawImage(id, title, drawing, source, publish_date)VALUES(?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO DrawImage(id, image, source, author, description, image_index)VALUES(?, ?, ?, ?, ?, ?);
 
 selectAll:
 SELECT * FROM DrawImage;
