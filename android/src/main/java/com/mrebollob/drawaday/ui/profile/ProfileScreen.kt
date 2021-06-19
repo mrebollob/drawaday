@@ -1,6 +1,9 @@
 package com.mrebollob.drawaday.ui.profile
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,6 +12,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
@@ -24,6 +28,9 @@ import com.mrebollob.drawaday.utils.supportWideScreen
 fun ProfileScreen(
     onBack: () -> Unit
 ) {
+
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             InsetAwareTopAppBar(
@@ -41,6 +48,24 @@ fun ProfileScreen(
         }
     ) { innerPadding ->
         ProfileScreenContent(
+            onTermsClick = {
+                openLink(
+                    context = context,
+                    url = "https://www.notion.so/Terms-of-Service-1f19ed4f2c274cc389eda46cc0be7934"
+                )
+            },
+            onPrivacyClick = {
+                openLink(
+                    context = context,
+                    url = "https://www.notion.so/Privacy-policy-c5f9aed5301842b8aa958d43f55a705a"
+                )
+            },
+            onContactClick = {
+                openLink(
+                    context = context,
+                    url = "https://www.notion.so/Knowledge-Center-c90ed4784ceb4758a09f38128c6407e2"
+                )
+            },
             modifier = Modifier
                 .padding(innerPadding)
                 .background(MaterialTheme.colors.surface)
@@ -50,9 +75,17 @@ fun ProfileScreen(
     }
 }
 
+private fun openLink(context: Context, url: String) {
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(browserIntent)
+}
+
 @Composable
 private fun ProfileScreenContent(
-    modifier: Modifier
+    onTermsClick: () -> Unit,
+    onPrivacyClick: () -> Unit,
+    onContactClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -61,7 +94,7 @@ private fun ProfileScreenContent(
     ) {
 
         Button(
-            onClick = { },
+            onClick = { onContactClick() },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
@@ -72,7 +105,7 @@ private fun ProfileScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(
-            onClick = { },
+            onClick = { onTermsClick() },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
@@ -83,7 +116,7 @@ private fun ProfileScreenContent(
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(
-            onClick = { },
+            onClick = { onPrivacyClick() },
             modifier = Modifier
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
@@ -113,8 +146,10 @@ private fun ProfileScreenContent(
 @Composable
 fun ProfileUserNameScreenPreview() {
     DrawADayTheme {
-        ProfileScreen(
-            onBack = { /*TODO*/ },
+        ProfileScreenContent(
+            onTermsClick = { /*TODO*/ },
+            onPrivacyClick = { /*TODO*/ },
+            onContactClick = { /*TODO*/ },
         )
     }
 }
