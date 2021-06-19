@@ -44,7 +44,7 @@ fun DrawingContent(
         contentAlignment = Alignment.Center
     ) {
         DrawingImage(
-            drawImage = drawImage,
+            image = drawImage,
             isBlackAndWhite = isBlackAndWhite,
             scale = scale,
             rotation = rotation
@@ -59,7 +59,7 @@ fun DrawingContent(
 
 @Composable
 private fun DrawingImage(
-    drawImage: DrawImage,
+    image: DrawImage,
     isBlackAndWhite: Boolean,
     scale: Float,
     rotation: Float,
@@ -67,11 +67,11 @@ private fun DrawingImage(
 ) {
     Image(
         painter = rememberCoilPainter(
-            request = drawImage.image,
+            request = image.getScaledImage(1000),
             fadeIn = true,
             previewPlaceholder = R.drawable.placeholder,
         ),
-        contentDescription = drawImage.description,
+        contentDescription = image.description,
         modifier = modifier
             .fillMaxSize()
             .graphicsLayer(
