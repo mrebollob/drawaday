@@ -8,7 +8,6 @@ import com.mrebollob.drawaday.shared.data.network.model.toDomain
 import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.shared.domain.model.Result
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
-import com.soywiz.klock.max
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
