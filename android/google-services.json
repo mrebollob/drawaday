@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "276724554029",
+    "firebase_url": "https://drawaday-6b6a5-default-rtdb.firebaseio.com",
+    "project_id": "drawaday-6b6a5",
+    "storage_bucket": "drawaday-6b6a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276724554029:android:50c1347fe78a802696dba4",
+        "android_client_info": {
+          "package_name": "com.mrebollob.drawaday"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276724554029-g45jhr1hlbihgv0so5qblp7ja7sbf9kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXondUD80UdBQVUf3zSZZHObOeHwiMjZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276724554029-g45jhr1hlbihgv0so5qblp7ja7sbf9kk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276724554029:android:50c1347fe78a802696dba4",
+        "android_client_info": {
+          "package_name": "com.mrebollob.drawaday.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276724554029-g45jhr1hlbihgv0so5qblp7ja7sbf9kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXondUD80UdBQVUf3zSZZHObOeHwiMjZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276724554029-g45jhr1hlbihgv0so5qblp7ja7sbf9kk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

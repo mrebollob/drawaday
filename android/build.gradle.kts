@@ -2,6 +2,7 @@ import java.io.ByteArrayOutputStream
 
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
     kotlin("android")
 }
 
@@ -18,6 +19,9 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+        }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -66,6 +70,8 @@ dependencies {
 
     implementation("com.google.accompanist:accompanist-pager:${Versions.accompanist}")
     implementation("com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}")
+
+    implementation("com.google.firebase:firebase-analytics-ktx:19.0.0")
 
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
