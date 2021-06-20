@@ -2,9 +2,11 @@ package com.mrebollob.drawaday.shared.di
 
 import co.touchlab.kermit.Kermit
 import com.mrebollob.drawaday.shared.data.DrawADayRepositoryImp
+import com.mrebollob.drawaday.shared.data.DrawADayRepositoryNativeImp
 import com.mrebollob.drawaday.shared.data.UserRepositoryImp
 import com.mrebollob.drawaday.shared.data.network.DrawADayApi
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
+import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepositoryNative
 import com.mrebollob.drawaday.shared.domain.repository.UserRepository
 import io.ktor.client.*
 import io.ktor.client.features.json.*
@@ -24,13 +26,14 @@ fun initKoin(enableNetworkLogs: Boolean = false, appDeclaration: KoinAppDeclarat
         )
     }
 
-// called by iOS etc
+// called by iOS
 fun initKoin() = initKoin(enableNetworkLogs = false) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
     single<DrawADayRepository> { DrawADayRepositoryImp() }
+    single<DrawADayRepositoryNative> { DrawADayRepositoryNativeImp(get(), get()) }
     single<UserRepository> { UserRepositoryImp(get(), get()) }
     single { DrawADayApi(get()) }
     single { Kermit(logger = get()) }
