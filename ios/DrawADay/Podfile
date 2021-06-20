@@ -1,0 +1,3 @@
+target 'DrawADay' do
+    pod 'shared', :path => '../../shared'
+end

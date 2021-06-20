@@ -32,22 +32,20 @@ android {
 }
 
 kotlin {
+    val sdkName: String? = System.getenv("SDK_NAME")
+
+    val isiOSDevice = sdkName.orEmpty().startsWith("iphoneos")
+    if (isiOSDevice) {
+        iosArm64("ios")
+    } else {
+        iosX64("ios")
+    }
+
     android()
 
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
-
-    iosTarget("ios") {}
-
     cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
-        podfile = project.file("../ios/Podfile")
+        summary = "Draw a day"
+        homepage = "https://github.com/mrebollob/drawaday-android"
     }
 
     sourceSets {
