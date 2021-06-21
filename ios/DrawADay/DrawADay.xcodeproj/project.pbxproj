@@ -11,7 +11,10 @@
 		0304E8EF267FCD1D004D5510 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0304E8EE267FCD1D004D5510 /* ContentView.swift */; };
 		0304E8F1267FCD1F004D5510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0304E8F0267FCD1F004D5510 /* Assets.xcassets */; };
 		0304E8F4267FCD1F004D5510 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0304E8F3267FCD1F004D5510 /* Preview Assets.xcassets */; };
-		ACC95B95A4AF85F3F4F784D1 /* libPods-DrawADay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06A701AC3F3B5DDB6CB254F8 /* libPods-DrawADay.a */; };
+		037F76AB267FD5D3000EB03C /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F76AA267FD5D3000EB03C /* FeedViewModel.swift */; };
+		038DB827267FFA32004446C7 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038DB826267FFA32004446C7 /* ImageCard.swift */; };
+		038DB834267FFE02004446C7 /* ImageWithURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038DB833267FFE02004446C7 /* ImageWithURL.swift */; };
+		CA6DA5466E43A01A1EC01BFD /* libPods-DrawADay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D102A0AF25B17AEEE00CEFD0 /* libPods-DrawADay.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +24,11 @@
 		0304E8F0267FCD1F004D5510 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0304E8F3267FCD1F004D5510 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0304E8F5267FCD1F004D5510 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		06A701AC3F3B5DDB6CB254F8 /* libPods-DrawADay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DrawADay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		037F76AA267FD5D3000EB03C /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		038DB826267FFA32004446C7 /* ImageCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCard.swift; sourceTree = "<group>"; };
+		038DB833267FFE02004446C7 /* ImageWithURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithURL.swift; sourceTree = "<group>"; };
 		8656A47E027D40BEB6C509A5 /* Pods-DrawADay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawADay.debug.xcconfig"; path = "Target Support Files/Pods-DrawADay/Pods-DrawADay.debug.xcconfig"; sourceTree = "<group>"; };
+		D102A0AF25B17AEEE00CEFD0 /* libPods-DrawADay.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DrawADay.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D708248244E311C6783D04B4 /* Pods-DrawADay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawADay.release.xcconfig"; path = "Target Support Files/Pods-DrawADay/Pods-DrawADay.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -31,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACC95B95A4AF85F3F4F784D1 /* libPods-DrawADay.a in Frameworks */,
+				CA6DA5466E43A01A1EC01BFD /* libPods-DrawADay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,11 +65,13 @@
 		0304E8EB267FCD1D004D5510 /* DrawADay */ = {
 			isa = PBXGroup;
 			children = (
+				038DB825267FF9FD004446C7 /* Views */,
 				0304E8EC267FCD1D004D5510 /* DrawADayApp.swift */,
 				0304E8EE267FCD1D004D5510 /* ContentView.swift */,
 				0304E8F0267FCD1F004D5510 /* Assets.xcassets */,
 				0304E8F5267FCD1F004D5510 /* Info.plist */,
 				0304E8F2267FCD1F004D5510 /* Preview Content */,
+				037F76AA267FD5D3000EB03C /* FeedViewModel.swift */,
 			);
 			path = DrawADay;
 			sourceTree = "<group>";
@@ -76,10 +84,19 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		038DB825267FF9FD004446C7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				038DB826267FFA32004446C7 /* ImageCard.swift */,
+				038DB833267FFE02004446C7 /* ImageWithURL.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3EEAB2B8A5BA349864318A3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				06A701AC3F3B5DDB6CB254F8 /* libPods-DrawADay.a */,
+				D102A0AF25B17AEEE00CEFD0 /* libPods-DrawADay.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -90,7 +107,6 @@
 				8656A47E027D40BEB6C509A5 /* Pods-DrawADay.debug.xcconfig */,
 				D708248244E311C6783D04B4 /* Pods-DrawADay.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -191,6 +207,9 @@
 			files = (
 				0304E8EF267FCD1D004D5510 /* ContentView.swift in Sources */,
 				0304E8ED267FCD1D004D5510 /* DrawADayApp.swift in Sources */,
+				037F76AB267FD5D3000EB03C /* FeedViewModel.swift in Sources */,
+				038DB827267FFA32004446C7 /* ImageCard.swift in Sources */,
+				038DB834267FFE02004446C7 /* ImageWithURL.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

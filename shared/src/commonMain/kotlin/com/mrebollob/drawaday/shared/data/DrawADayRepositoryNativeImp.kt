@@ -5,9 +5,11 @@ import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.shared.domain.model.Result
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepositoryNative
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.launch
 
 class DrawADayRepositoryNativeImp(
     private val logger: Kermit,
@@ -16,10 +18,6 @@ class DrawADayRepositoryNativeImp(
 
     private val coroutineScope: CoroutineScope = MainScope()
     private var imagesJob: Job? = null
-
-    override fun getNativeScope(): CoroutineScope {
-        return iosScope
-    }
 
     override fun startObservingDrawImagesUpdates(
         index: Int,
@@ -37,10 +35,5 @@ class DrawADayRepositoryNativeImp(
     override fun stopObservingDrawImagesUpdates() {
         logger.d { "stopObservingDrawImagesUpdates, imagesJob = $imagesJob" }
         imagesJob?.cancel()
-    }
-
-    private val iosScope: CoroutineScope = object : CoroutineScope {
-        override val coroutineContext: CoroutineContext
-            get() = SupervisorJob() + Dispatchers.Main
     }
 }
