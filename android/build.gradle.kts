@@ -3,6 +3,7 @@ import java.io.ByteArrayOutputStream
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     kotlin("android")
 }
 
@@ -72,6 +73,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}")
 
     implementation("com.google.firebase:firebase-analytics-ktx:19.0.0")
+    implementation("com.google.firebase:firebase-crashlytics-ktx:18.1.0")
 
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
