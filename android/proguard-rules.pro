@@ -35,6 +35,8 @@
 -keepclassmembers class com.mrebollob.drawaday.** {
     *** Companion;
 }
--keepclasseswithmembers class com.mrebollob.** {
+-keepclasseswithmembers class com.mrebollob.drawaday.** {
     kotlinx.serialization.KSerializer serializer(...);
 }
+
+-keep class com.mrebollob.drawaday.shared.data.network** { *; }
