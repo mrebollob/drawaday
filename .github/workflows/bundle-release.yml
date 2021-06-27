@@ -9,7 +9,7 @@ on:
 jobs:
   run:
     continue-on-error: true
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       fail-fast: false
     steps:

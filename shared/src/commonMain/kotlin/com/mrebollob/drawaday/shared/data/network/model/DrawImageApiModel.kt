@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class DrawImageApiModel(
+data class DrawImageApiModel(
     @SerialName("id")
     val id: String,
     @SerialName("image")
