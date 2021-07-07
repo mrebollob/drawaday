@@ -68,10 +68,10 @@
 				038DB825267FF9FD004446C7 /* Views */,
 				0304E8EC267FCD1D004D5510 /* DrawADayApp.swift */,
 				0304E8EE267FCD1D004D5510 /* ContentView.swift */,
+				037F76AA267FD5D3000EB03C /* FeedViewModel.swift */,
 				0304E8F0267FCD1F004D5510 /* Assets.xcassets */,
 				0304E8F5267FCD1F004D5510 /* Info.plist */,
 				0304E8F2267FCD1F004D5510 /* Preview Content */,
-				037F76AA267FD5D3000EB03C /* FeedViewModel.swift */,
 			);
 			path = DrawADay;
 			sourceTree = "<group>";
