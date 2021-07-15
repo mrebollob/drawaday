@@ -10,14 +10,37 @@ import shared
 
 struct ContentView: View {
     
+    @StateObject var viewModel = FeedViewModel(repository: DrawADayRepositoryNativeImp())
+    
     var body: some View {
-        VStack{
-            Text("Hello, world!")
-                .padding()
-            
-            
-            ImageCard()
+        FeedView(viewModel: viewModel)
+    }
+}
+
+struct FeedView: View {
+    @ObservedObject var viewModel: FeedViewModel
+    
+    var body: some View {
+        NavigationView {
+            List(viewModel.images, id: \.id) { drawing in
+                DrawingView(viewModel: viewModel, drawing: drawing)
+            }
+            .navigationBarTitle(Text("Draw a day"))
+            .onAppear {
+                viewModel.startObservingDrawImagesUpdates()
+            }.onDisappear {
+                viewModel.stopObservingDrawImagesUpdates()
+            }
         }
+    }
+}
+
+struct DrawingView: View {
+    var viewModel: FeedViewModel
+    var drawing: DrawImage
+    
+    var body: some View {
+        ImageCard()
     }
 }
 

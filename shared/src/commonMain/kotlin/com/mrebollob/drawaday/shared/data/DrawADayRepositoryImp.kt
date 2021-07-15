@@ -9,11 +9,10 @@ import com.mrebollob.drawaday.shared.domain.model.DrawImage
 import com.mrebollob.drawaday.shared.domain.model.Result
 import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
 import io.ktor.utils.io.errors.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flowOn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.max
@@ -26,7 +25,7 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
 
     private val drawImageQueries = drawDatabase.instance?.drawADayQueries
 
-    override suspend fun fetchDrawImages(
+    override fun fetchDrawImages(
         index: Int,
         refresh: Boolean
     ): Flow<Result<List<DrawImage>>> = flow {
@@ -49,9 +48,9 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         } else {
             emit(Result.Error(Exception("Network error")))
         }
-    }
+    }.flowOn(Dispatchers.Default)
 
-    override suspend fun fetchDrawImage(id: String): Flow<Result<DrawImage>> = flow {
+    override fun fetchDrawImage(id: String): Flow<Result<DrawImage>> = flow {
         emit(Result.Loading())
 
         val image = getCachedImage(id)
@@ -60,37 +59,33 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         } else {
             emit(Result.Error(Exception("Image not found")))
         }
-    }
+    }.flowOn(Dispatchers.Default)
 
-    private suspend fun getCachedImages(): List<DrawImage>? =
-        withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-            drawImageQueries?.selectAll(mapper = { id, image, source, author, description, index ->
-                DrawImage(
-                    id = id,
-                    image = image,
-                    source = source,
-                    author = author,
-                    description = description,
-                    index = index.toInt()
-                )
-            })?.executeAsList()
-        }
-
-    private suspend fun getCachedImage(id: String): DrawImage? =
-        withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-            drawImageQueries?.selectById(
+    private fun getCachedImages(): List<DrawImage>? =
+        drawImageQueries?.selectAll(mapper = { id, image, source, author, description, index ->
+            DrawImage(
                 id = id,
-                mapper = { id, image, source, author, description, index ->
-                    DrawImage(
-                        id = id,
-                        image = image,
-                        source = source,
-                        author = author,
-                        description = description,
-                        index = index.toInt()
-                    )
-                })?.executeAsList()?.firstOrNull()
-        }
+                image = image,
+                source = source,
+                author = author,
+                description = description,
+                index = index.toInt()
+            )
+        })?.executeAsList()
+
+    private fun getCachedImage(id: String): DrawImage? = drawImageQueries?.selectById(
+        id = id,
+        mapper = { id, image, source, author, description, index ->
+            DrawImage(
+                id = id,
+                image = image,
+                source = source,
+                author = author,
+                description = description,
+                index = index.toInt()
+            )
+        })?.executeAsList()?.firstOrNull()
+
 
     private suspend fun getFreshImages(index: Int): List<DrawImage>? {
 
@@ -107,19 +102,18 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
         return result?.values?.map { it.toDomain() }
     }
 
-    private suspend fun saveImages(images: List<DrawImage>) =
-        withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
-            logger.d { "${images.size} saved in cache" }
-            drawImageQueries?.deleteAll()
-            images.forEach {
-                drawImageQueries?.insertItem(
-                    id = it.id,
-                    image = it.image,
-                    source = it.source,
-                    author = it.author,
-                    description = it.description,
-                    image_index = it.index.toLong()
-                )
-            }
+    private fun saveImages(images: List<DrawImage>) {
+        logger.d { "${images.size} saved in cache" }
+        drawImageQueries?.deleteAll()
+        images.forEach {
+            drawImageQueries?.insertItem(
+                id = it.id,
+                image = it.image,
+                source = it.source,
+                author = it.author,
+                description = it.description,
+                image_index = it.index.toLong()
+            )
         }
+    }
 }

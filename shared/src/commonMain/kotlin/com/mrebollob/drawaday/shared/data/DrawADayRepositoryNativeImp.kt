@@ -10,14 +10,19 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class DrawADayRepositoryNativeImp(
-    private val logger: Kermit,
-    private val repository: DrawADayRepository
-) : DrawADayRepositoryNative {
+class DrawADayRepositoryNativeImp : DrawADayRepositoryNative, KoinComponent {
 
+    private val logger: Kermit by inject()
+    private val repository: DrawADayRepository by inject()
     private val coroutineScope: CoroutineScope = MainScope()
     private var imagesJob: Job? = null
+
+    init {
+        
+    }
 
     override fun startObservingDrawImagesUpdates(
         index: Int,

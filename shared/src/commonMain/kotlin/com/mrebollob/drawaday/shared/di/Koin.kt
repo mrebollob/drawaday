@@ -33,7 +33,6 @@ fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
     single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
     single<DrawADayRepository> { DrawADayRepositoryImp() }
-    single<DrawADayRepositoryNative> { DrawADayRepositoryNativeImp(get(), get()) }
     single<UserRepository> { UserRepositoryImp(get(), get()) }
     single { DrawADayApi(get()) }
     single { Kermit(logger = get()) }
