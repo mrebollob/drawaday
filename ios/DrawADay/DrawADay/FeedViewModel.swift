@@ -22,21 +22,22 @@ class FeedViewModel: ObservableObject {
     
     func startObservingDrawImagesUpdates() {
         repository.startObservingDrawImagesUpdates(index: 1, refresh: false, success: { result in
-            
-            if let images = (result as? ResultSuccess)?.data as? [DrawImage] {
-                self.images = images
-                self.hasError = false
-                self.isLoading = false
-                
-            } else if let images = (result as? ResultLoading)?.data as? [DrawImage] {
-                self.images = images
-                self.hasError = false
-                self.isLoading = true
-                
-            } else if result is ResultError {
-                self.hasError = true
-                self.isLoading = false
-            }
+
+
+//            if let images = (result as? ResultSuccess)?.data as? [DrawImage] {
+//                self.images = images
+//                self.hasError = false
+//                self.isLoading = false
+//
+//            } else if let images = (result as? ResultLoading)?.data as? [DrawImage] {
+//                self.images = images
+//                self.hasError = false
+//                self.isLoading = true
+//
+//            } else if result is ResultError {
+//                self.hasError = true
+//                self.isLoading = false
+//            }
         })
     }
     

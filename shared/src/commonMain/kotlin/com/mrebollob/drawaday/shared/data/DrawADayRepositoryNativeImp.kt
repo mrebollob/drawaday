@@ -20,19 +20,21 @@ class DrawADayRepositoryNativeImp : DrawADayRepositoryNative, KoinComponent {
     private val coroutineScope: CoroutineScope = MainScope()
     private var imagesJob: Job? = null
 
-    init {
-        
-    }
-
     override fun startObservingDrawImagesUpdates(
         index: Int,
         refresh: Boolean,
-        success: (Result<List<DrawImage>>) -> Unit
+        success: (List<DrawImage>) -> Unit,
+        loading: (List<DrawImage>) -> Unit,
+        error: () -> Unit
     ) {
         logger.d { "startObservingDrawImagesUpdates" }
         imagesJob = coroutineScope.launch {
             repository.fetchDrawImages(index, refresh).collect {
-                success(it)
+                when (it) {
+                    is Result.Success -> success(it.data)
+                    is Result.Error -> error()
+                    is Result.Loading -> loading(it.data ?: emptyList())
+                }
             }
         }
     }

@@ -41,8 +41,12 @@ fun DrawADayTheme(
 ) {
 
     val systemUiController = rememberSystemUiController()
+    val useDarkIcons = MaterialTheme.colors.isLight
     SideEffect {
-        systemUiController.setStatusBarColor(LightThemeColors.surface)
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = useDarkIcons
+        )
     }
 
     MaterialTheme(

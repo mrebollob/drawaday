@@ -9,7 +9,9 @@ interface DrawADayRepositoryNative {
     fun startObservingDrawImagesUpdates(
         index: Int,
         refresh: Boolean,
-        success: (Result<List<DrawImage>>) -> Unit
+        success: (List<DrawImage>) -> Unit,
+        loading: (List<DrawImage>) -> Unit,
+        error: () -> Unit
     )
 
     fun stopObservingDrawImagesUpdates()

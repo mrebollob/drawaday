@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -13,11 +13,16 @@ plugins {
 version = "1.0"
 
 android {
-    compileSdk = AndroidSdk.compile
+    compileSdk = Versions.androidCompileSdk
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = AndroidSdk.min
-        targetSdk = AndroidSdk.target
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     // Workaround from https://youtrack.jetbrains.com/issue/KT-43944
@@ -51,34 +56,46 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}") {
+                implementation(Deps.Kotlinx.coroutinesCore) {
                     isForce = true
                 }
 
-                implementation(Ktor.clientCore)
-                implementation(Ktor.clientJson)
-                implementation(Ktor.clientLogging)
-                implementation(Ktor.clientSerialization)
+                with(Deps.Ktor) {
+                    implementation(clientCore)
+                    implementation(clientJson)
+                    implementation(clientLogging)
+                    implementation(clientSerialization)
+                }
 
-                implementation(Serialization.core)
+                with(Deps.Kotlinx) {
+                    implementation(serializationCore)
+                }
 
-                implementation(SqlDelight.runtime)
-                implementation(SqlDelight.coroutineExtensions)
+                with(Deps.SqlDelight) {
+                    implementation(runtime)
+                    implementation(coroutineExtensions)
+                }
 
-                api(Koin.core)
-                api(Koin.test)
+                with(Deps.Koin) {
+                    api(core)
+                    api(test)
+                }
 
-                implementation(Deps.klock)
-                api(Deps.kermit)
+                with(Deps.Log) {
+                    api(kermit)
+                }
+
+                with(Deps.Utils) {
+                    api(klock)
+                }
             }
         }
         val commonTest by getting
 
         val androidMain by getting {
             dependencies {
-                implementation(Ktor.clientAndroid)
-                implementation(Ktor.slf4j)
-                implementation(SqlDelight.androidDriver)
+                implementation(Deps.Ktor.clientAndroid)
+                implementation(Deps.SqlDelight.androidDriver)
             }
         }
 
@@ -86,15 +103,15 @@ kotlin {
 
         val iosMain by getting {
             dependencies {
-                implementation(Ktor.clientIos)
-                implementation(SqlDelight.nativeDriver)
+                implementation(Deps.Ktor.clientIos)
+                implementation(Deps.SqlDelight.nativeDriver)
             }
         }
         val iosTest by getting
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+tasks.withType<KotlinCompile> {
     kotlinOptions {
         jvmTarget = "1.8"
     }

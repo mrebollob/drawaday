@@ -9,11 +9,12 @@ plugins {
 }
 
 android {
-    compileSdk = AndroidSdk.compile
+    compileSdk = Versions.androidCompileSdk
+
     defaultConfig {
         applicationId = "com.mrebollob.drawaday"
-        minSdk = AndroidSdk.min
-        targetSdk = AndroidSdk.target
+        minSdk = Versions.androidMinSdk
+        targetSdk = Versions.androidTargetSdk
 
         versionCode = computeVersionCode()
         versionName = "1.0"
@@ -83,10 +84,41 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-    implementation("com.google.android.material:material:1.3.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha05")
+    with(Deps.Android) {
+        implementation(material)
+        implementation(osmdroidAndroid)
+    }
+
+    with(Deps.AndroidX) {
+        implementation(lifecycleRuntimeKtx)
+        implementation(lifecycleViewmodelKtx)
+        implementation(activityCompose)
+    }
+
+    with(Deps.Compose) {
+        implementation(ui)
+        implementation(uiGraphics)
+        implementation(uiTooling)
+        implementation(foundationLayout)
+        implementation(material)
+        implementation(navigation)
+
+        implementation(iconsExtended)
+
+        implementation(accompanistCoil)
+        implementation(accompanistPlaceholder)
+        implementation(accompanistSwipeRefresh)
+        implementation(accompanistInsets)
+        implementation(accompanistSystemUIController)
+    }
+
+    with(Deps.Koin) {
+        implementation(core)
+        implementation(android)
+        implementation(compose)
+        testImplementation(test)
+        testImplementation(testJUnit4)
+    }
 
     implementation("com.google.accompanist:accompanist-pager:${Versions.accompanist}")
     implementation("com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}")
@@ -94,28 +126,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx:19.0.0")
     implementation("com.google.firebase:firebase-crashlytics-ktx:18.1.0")
 
-    implementation(Compose.ui)
-    implementation(Compose.uiGraphics)
-    implementation(Compose.uiTooling)
-    implementation(Compose.foundationLayout)
-    implementation(Compose.material)
-    implementation(Compose.navigation)
-    implementation(Compose.iconsExtended)
-    implementation(Compose.accompanistCoil)
-    implementation(Compose.accompanistSwipeRefresh)
-    implementation(Compose.accompanistInsets)
-    implementation(Compose.accompanistSystemUIController)
-
-    implementation(Koin.core)
-    implementation(Koin.android)
-    implementation(Koin.compose)
-
-    implementation(Deps.klock)
-
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.3.0")
-    testImplementation("org.robolectric:robolectric:4.4")
-    androidTestImplementation("androidx.test:runner:1.3.0")
+    implementation(Deps.Utils.klock)
 
     implementation(project(":shared"))
 }
