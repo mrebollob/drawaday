@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0304E8ED267FCD1D004D5510 /* DrawADayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0304E8EC267FCD1D004D5510 /* DrawADayApp.swift */; };
 		0304E8EF267FCD1D004D5510 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0304E8EE267FCD1D004D5510 /* ContentView.swift */; };
 		0304E8F1267FCD1F004D5510 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0304E8F0267FCD1F004D5510 /* Assets.xcassets */; };
 		0304E8F4267FCD1F004D5510 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0304E8F3267FCD1F004D5510 /* Preview Assets.xcassets */; };
-		0341FB5A2696393D00421CB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0341FB592696393D00421CB2 /* AppDelegate.swift */; };
 		037F76AB267FD5D3000EB03C /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F76AA267FD5D3000EB03C /* FeedViewModel.swift */; };
 		038DB827267FFA32004446C7 /* ImageCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038DB826267FFA32004446C7 /* ImageCard.swift */; };
 		038DB834267FFE02004446C7 /* ImageWithURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038DB833267FFE02004446C7 /* ImageWithURL.swift */; };
+		03A00BA226A7AB300036B1A4 /* DrawADayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0304E8EC267FCD1D004D5510 /* DrawADayApp.swift */; };
 		CA6DA5466E43A01A1EC01BFD /* libPods-DrawADay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D102A0AF25B17AEEE00CEFD0 /* libPods-DrawADay.a */; };
 /* End PBXBuildFile section */
 
@@ -67,14 +66,14 @@
 		0304E8EB267FCD1D004D5510 /* DrawADay */ = {
 			isa = PBXGroup;
 			children = (
-				038DB825267FF9FD004446C7 /* Views */,
 				0304E8EC267FCD1D004D5510 /* DrawADayApp.swift */,
+				0341FB592696393D00421CB2 /* AppDelegate.swift */,
 				0304E8EE267FCD1D004D5510 /* ContentView.swift */,
 				037F76AA267FD5D3000EB03C /* FeedViewModel.swift */,
+				038DB825267FF9FD004446C7 /* Views */,
 				0304E8F0267FCD1F004D5510 /* Assets.xcassets */,
 				0304E8F5267FCD1F004D5510 /* Info.plist */,
 				0304E8F2267FCD1F004D5510 /* Preview Content */,
-				0341FB592696393D00421CB2 /* AppDelegate.swift */,
 			);
 			path = DrawADay;
 			sourceTree = "<group>";
@@ -208,9 +207,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0341FB5A2696393D00421CB2 /* AppDelegate.swift in Sources */,
+				03A00BA226A7AB300036B1A4 /* DrawADayApp.swift in Sources */,
 				0304E8EF267FCD1D004D5510 /* ContentView.swift in Sources */,
-				0304E8ED267FCD1D004D5510 /* DrawADayApp.swift in Sources */,
 				037F76AB267FD5D3000EB03C /* FeedViewModel.swift in Sources */,
 				038DB827267FFA32004446C7 /* ImageCard.swift in Sources */,
 				038DB834267FFE02004446C7 /* ImageWithURL.swift in Sources */,
@@ -345,6 +343,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DrawADay/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DrawADay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -375,6 +374,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DrawADay/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = DrawADay/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
