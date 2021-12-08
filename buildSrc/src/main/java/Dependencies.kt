@@ -1,21 +1,21 @@
 object Versions {
     const val androidMinSdk = 21
-    const val androidCompileSdk = 30
+    const val androidCompileSdk = 31
     const val androidTargetSdk = androidCompileSdk
 
-    const val kotlin = "1.5.10"
+    const val kotlin = "1.5.31"
     const val kotlinCoroutines = "1.5.0-native-mt"
     const val ktor = "1.6.1"
     const val kotlinxSerialization = "1.2.1"
     const val koin = "3.1.2"
     const val sqlDelight = "1.5.0"
 
-    const val compose = "1.0.0-rc02"
-    const val nav_compose = "2.4.0-alpha04"
-    const val accompanist = "0.9.0"
+    const val compose = "1.0.5"
+    const val nav_compose = "2.4.0-beta02"
+    const val accompanist = "0.20.0"
 
     const val material = "1.4.0"
-    const val activityCompose = "1.3.0-rc02"
+    const val activityCompose = "1.4.0"
     const val lifecycleKtx = "2.4.0-alpha01"
     const val lifecycleRuntimeKtx = lifecycleKtx
     const val lifecycleViewmodelKtx = lifecycleKtx
@@ -51,7 +51,7 @@ object Deps {
         const val iconsExtended =
             "androidx.compose.material:material-icons-extended:${Versions.compose}"
         const val accompanistCoil =
-            "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
+            "com.google.accompanist:accompanist-coil:0.15.0"
         const val accompanistSwipeRefresh =
             "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}"
         const val accompanistInsets =

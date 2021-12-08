@@ -75,9 +75,9 @@ class DrawADayRepositoryImp : DrawADayRepository, KoinComponent {
 
     private fun getCachedImage(id: String): DrawImage? = drawImageQueries?.selectById(
         id = id,
-        mapper = { id, image, source, author, description, index ->
+        mapper = { imageId, image, source, author, description, index ->
             DrawImage(
-                id = id,
+                id = imageId,
                 image = image,
                 source = source,
                 author = author,

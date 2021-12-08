@@ -6,7 +6,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.mrebollob.drawaday.ui.MainDestinations.DRAWING_ID_KEY
 import com.mrebollob.drawaday.ui.drawing.DrawingScreen
 import com.mrebollob.drawaday.ui.home.HomeSections

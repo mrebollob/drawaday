@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.mrebollob.drawaday.ui.home.HomeSections
 import com.mrebollob.drawaday.ui.theme.DrawADayTheme
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                                         selected = currentRoute == section.route,
                                         onClick = {
                                             navController.navigate(section.route) {
-                                                popUpTo(navController.graph.startDestination) {
+                                                popUpTo(navController.graph.startDestinationId) {
                                                 }
                                                 launchSingleTop = true
                                             }

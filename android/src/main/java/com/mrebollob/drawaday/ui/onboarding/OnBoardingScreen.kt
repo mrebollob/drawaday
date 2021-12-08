@@ -42,7 +42,7 @@ fun OnBoardingScreen(
 ) {
     val analyticsManager = get<AnalyticsManager>()
     val coroutineScope = rememberCoroutineScope()
-    val pagerState = rememberPagerState(pageCount = onBoardingContent.size)
+    val pagerState = rememberPagerState()
 
     ColorTheme(color = onBoardingContent[pagerState.currentPage].screenColor) {
         Surface(
@@ -50,6 +50,7 @@ fun OnBoardingScreen(
         ) {
             Column(Modifier.fillMaxSize()) {
                 HorizontalPager(
+                    count = onBoardingContent.size,
                     state = pagerState,
                     modifier = Modifier.weight(1f)
                 ) { page ->
