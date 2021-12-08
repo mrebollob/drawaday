@@ -26,6 +26,8 @@
     <string name="home_screen_feed_section">Home</string>
     <string name="home_screen_feed_image_placeholder">Image placeholder</string>
     <string name="home_screen_feed_history">This should be available tomorrow</string>
+    <string name="home_screen_feed_refresh_content">Tap to load content</string>
+    <string name="home_screen_feed_reset_content">Tap to reset content</string>
     <string name="home_screen_learn_section">Learn</string>
     <string name="home_screen_user_profile">Profile</string>
     <string name="home_screen_user_greetings_morning">Good morning! 👋</string>

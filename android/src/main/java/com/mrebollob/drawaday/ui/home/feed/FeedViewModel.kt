@@ -7,6 +7,7 @@ import com.mrebollob.drawaday.shared.domain.repository.DrawADayRepository
 import com.mrebollob.drawaday.shared.domain.repository.UserRepository
 import com.mrebollob.drawaday.state.UiState
 import com.mrebollob.drawaday.state.copyWithResult
+import com.soywiz.klock.DateTime
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,13 @@ class FeedViewModel(
             }.flattenConcat().collect { imagesResult ->
                 _drawImages.value = drawImages.value.copyWithResult(imagesResult)
             }
+        }
+    }
+
+    fun resetData() {
+        viewModelScope.launch {
+            userRepository.setStartDate(DateTime.now())
+            loadImages(true)
         }
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,6 +20,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.toPaddingValues
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.mrebollob.drawaday.R
 import com.mrebollob.drawaday.analytics.AnalyticsEvent
 import com.mrebollob.drawaday.analytics.AnalyticsManager
 import com.mrebollob.drawaday.analytics.toBundle
@@ -50,6 +52,7 @@ fun FeedScreen(
             onDrawingClick(image.id)
         },
         onRefreshDrawImages = { viewModel.loadImages(true) },
+        onResetStartDate = { viewModel.resetData() },
         snackbarHostState = snackbarHostState,
         modifier = modifier
     )
@@ -62,6 +65,7 @@ private fun FeedScreen(
     onProfileClick: () -> Unit,
     onDrawingClick: (DrawImage) -> Unit,
     onRefreshDrawImages: () -> Unit,
+    onResetStartDate: () -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
@@ -77,8 +81,11 @@ private fun FeedScreen(
                 HomeScreenErrorAndContent(
                     drawImages = drawImages,
                     onProfileClick = onProfileClick,
-                    onRefresh = {
+                    onRefreshClick = {
                         onRefreshDrawImages()
+                    },
+                    onResetContentClick = {
+                        onResetStartDate()
                     },
                     onDrawingClick = onDrawingClick,
                     snackbarHostState = snackbarHostState,
@@ -86,7 +93,6 @@ private fun FeedScreen(
                         .fillMaxSize()
                         .background(MaterialTheme.colors.surface)
                         .supportWideScreen()
-
                 )
             }
         )
@@ -124,12 +130,13 @@ private fun LoadingContent(
 private fun HomeScreenErrorAndContent(
     drawImages: UiState<List<DrawImage>>,
     onProfileClick: () -> Unit,
-    onRefresh: () -> Unit,
+    onRefreshClick: () -> Unit,
+    onResetContentClick: () -> Unit,
     onDrawingClick: (DrawImage) -> Unit,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
-    if (drawImages.data != null) {
+    if (drawImages.data != null && drawImages.data.isNotEmpty()) {
         DrawImageList(
             drawImages = drawImages.data,
             onProfileClick = onProfileClick,
@@ -137,12 +144,26 @@ private fun HomeScreenErrorAndContent(
             snackbarHostState = snackbarHostState,
             modifier = modifier
         )
-    } else if (!drawImages.hasError) {
-        TextButton(onClick = onRefresh, modifier.fillMaxSize()) {
-            Text("Tap to load content", textAlign = TextAlign.Center)
+    } else if (drawImages.hasError) {
+        TextButton(
+            onClick = onRefreshClick,
+            modifier.fillMaxSize()
+        ) {
+            Text(
+                text = stringResource(R.string.home_screen_feed_refresh_content),
+                textAlign = TextAlign.Center
+            )
         }
     } else {
-        Box(modifier.fillMaxSize()) { /* empty screen */ }
+        TextButton(
+            onClick = onResetContentClick,
+            modifier.fillMaxSize()
+        ) {
+            Text(
+                text = stringResource(R.string.home_screen_feed_reset_content),
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
 
@@ -192,9 +213,10 @@ fun HomeScreenPreview() {
     DrawADayTheme {
         FeedScreen(
             drawImages = UiState(data = drawImages),
-            onProfileClick = { /*TODO*/ },
-            onDrawingClick = { /*TODO*/ },
-            onRefreshDrawImages = { /*TODO*/ },
+            onProfileClick = {},
+            onDrawingClick = {},
+            onRefreshDrawImages = {},
+            onResetStartDate = {},
             snackbarHostState = snackbarHostState
         )
     }
